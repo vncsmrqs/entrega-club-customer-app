@@ -1,0 +1,18 @@
+@import './tailwind.css';
+
+body {
+  min-height: 100vh;
+  /* color: blue; */
+  /* background: red; */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a.router-link-exact-active {
+  color: red;
+}
+
+a.router-link-exact-active:hover {
+  background-color: transparent;
+}
