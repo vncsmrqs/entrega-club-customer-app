@@ -1,6 +1,6 @@
 {
   "name": "entrega-club-customer-app",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "vite --host",
@@ -15,8 +15,10 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "flowbite": "^1.6.6",
     "pinia": "^2.1.3",
     "pinia-plugin-persistedstate": "^3.1.0",
+    "uuid": "^9.0.0",
     "vue": "^3.3.4",
     "vue-material-design-icons": "^5.2.0",
     "vue-router": "^4.2.2"
@@ -26,6 +28,7 @@
     "@tsconfig/node18": "^2.0.1",
     "@types/jsdom": "^21.1.1",
     "@types/node": "^18.16.17",
+    "@types/uuid": "^9.0.2",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vue/eslint-config-prettier": "^7.1.0",
     "@vue/eslint-config-typescript": "^11.0.3",

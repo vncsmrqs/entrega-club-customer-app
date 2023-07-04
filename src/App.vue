@@ -1,22 +1,16 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
-// import SampleComponentToTest from './components/SampleComponentToTest.vue';
+  import { onMounted } from 'vue';
+  import { RouterView } from 'vue-router';
+  // import SampleComponentToTest from './components/SampleComponentToTest.vue';
+
+  import { initFlowbite } from 'flowbite';
+
+  onMounted(() => {
+    initFlowbite();
+  });
 </script>
 
 <template>
-  <header class="">
-    <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
-
-    <div>
-      <!-- <SampleComponentToTest msg="You did it!" /> -->
-
-      <nav>
-        <RouterLink :to="{ name: 'home' }">Home</RouterLink>
-        <RouterLink :to="{ name: 'about' }">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
   <RouterView />
 </template>
 

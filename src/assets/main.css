@@ -1,18 +1,31 @@
 @import './tailwind.css';
 
-body {
-  min-height: 100vh;
-  /* color: blue; */
-  /* background: red; */
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body,
+#app {
+    min-height: 100vh;
+    /* color: blue; */
+    /* background: red; */
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    @apply max-w-screen-sm mx-auto;
 }
 
-a.router-link-exact-active {
-  color: red;
+
+.aspect-photo {
+    aspect-ratio: 4/3;
 }
 
-a.router-link-exact-active:hover {
-  background-color: transparent;
+.aspect-banner {
+    aspect-ratio: 2/1;
 }
+
+
+/*a.router-link-exact-active {*/
+/*  color: red;*/
+/*}*/
+
+/*a.router-link-exact-active:hover {*/
+/*  background-color: transparent;*/
+/*}*/
