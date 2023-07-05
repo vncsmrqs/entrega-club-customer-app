@@ -51,7 +51,7 @@ const productFixture: Product = {
           name: 'Chicken Duplo',
           description:
             '2 frangos crocantes, queijo derretido, salada fresca (alface) e maionese Bk.',
-          imageUrl: '/icon-192x192.png',
+          imageUrl: '/icon-maskable-192x192.png',
           unitPrice: 0,
         },
         {

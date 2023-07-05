@@ -75,7 +75,7 @@
             <div
               class="rounded-lg bg-gray-100 dark:bg-gray-800 border aspect-photo overflow-hidden"
             >
-              <img class="w-full" src="/icon-192x192.png" alt="Restaurante" />
+              <img class="w-full" src="/icon-maskable-192x192.png" alt="Restaurante" />
             </div>
             <div class="mt-1">Restaurante {{ i }}</div>
           </RouterLink>
