@@ -19,37 +19,102 @@ export default defineConfig({
         background_color: '#ffffff',
         display: 'standalone',
         scope: '/',
-        start_url: '/',
-        name: 'Entrega Club: Seu app de entrega de comida e bebida',
+        start_url: '/?utm_source=homescreen&utm_medium=shortcut',
+        name: 'Entrega Club',
         short_name: 'Entrega Club',
         description: 'Seu app de entrega de comida e bebida',
-        icons: [
+        android_package_name: 'br.com.entregaclub.android',
+        screenshots: [
           {
-            src: '/icon-180x180.png',
-            sizes: '180x180',
-            type: 'imageUrl/png',
+            src: '/screenshot-1-586x1041.png',
+            sizes: '586x1041',
+            type: 'image/png',
           },
+          {
+            src: '/screenshot-1-586x1041.png',
+            sizes: '586x1041',
+            type: 'image/png',
+          },
+          {
+            src: '/screenshot-1-586x1041.png',
+            sizes: '586x1041',
+            type: 'image/png',
+          },
+        ],
+        shortcuts: [
+          {
+            name: 'Buscar',
+            url: '/buscar?utm_source=jumplist&utm_medium=shortcut',
+            icons: [
+              {
+                src: 'icon-circle-192x192.png',
+                type: 'image/png',
+                sizes: '192x192',
+              },
+            ],
+          },
+          {
+            name: 'Pedidos',
+            url: '/pedidos?utm_source=jumplist&utm_medium=shortcut',
+            icons: [
+              {
+                src: 'icon-circle-192x192.png',
+                type: 'image/png',
+                sizes: '192x192',
+              },
+            ],
+          },
+          {
+            name: 'Notificações',
+            url: '/notificacoes?utm_source=jumplist&utm_medium=shortcut',
+            icons: [
+              {
+                src: 'icon-circle-192x192.png',
+                type: 'image/png',
+                sizes: '192x192',
+              },
+            ],
+          },
+          {
+            name: 'Perfil',
+            url: '/perfil?utm_source=jumplist&utm_medium=shortcut',
+            icons: [
+              {
+                src: '/icon-circle-192x192.png',
+                type: 'image/png',
+                sizes: '192x192',
+              },
+            ],
+          },
+        ],
+        icons: [
           {
             src: '/icon-192x192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/icon-256x256.png',
-            sizes: '256x256',
-            type: 'imageUrl/png',
+            src: '/icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
           },
           {
-            src: '/icon-384x384.png',
-            sizes: '384x384',
-            type: 'imageUrl/png',
+            purpose: 'maskable',
+            src: '/icon-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
           },
           {
+            purpose: 'maskable',
             src: '/icon-512x512.png',
             sizes: '512x512',
             type: 'image/png',
           },
         ],
+        launch_handler: {
+          route_to: 'existing-client',
+          navigate_existing_client: 'never',
+        },
       },
     }),
   ],
