@@ -15,7 +15,7 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2}'],
       },
       manifest: {
-        theme_color: '#ffffff',
+        theme_color: '#f05252',
         background_color: '#f05252',
         display: 'standalone',
         scope: '/',
