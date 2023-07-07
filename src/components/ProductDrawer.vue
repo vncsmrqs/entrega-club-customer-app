@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import MobileFullDrawer from '@/components/MobileFullDrawer.vue';
-  import { onMounted, ref, watch } from 'vue';
+  import { computed, onMounted, reactive, ref, watch } from 'vue';
   import MobileTopBar from '@/components/MobileTopBar.vue';
   import MainViewLayout from '@/components/MainViewLayout.vue';
   import StoreOutlineIcon from 'vue-material-design-icons/StoreOutline.vue';
@@ -12,6 +12,8 @@
   import { useRoute } from 'vue-router';
   import type { LocationQueryValue } from 'vue-router';
   import { useProductStore } from '@/stores/product';
+
+  import type { Choice, GarnishItem, Product } from '@/stores/product';
   import { useMerchantStore } from '@/stores/merchant';
 
   const route = useRoute();
@@ -62,14 +64,279 @@
 
   const drawer = ref<InstanceType<typeof MobileFullDrawer> | null>(null);
 
-  const loading = ref(true);
+  const loading = ref(false);
 
   onMounted(async () => {
     await handleRouteEnter(route.query.productId);
+  });
 
-    setTimeout(() => {
-      loading.value = false;
-    }, 2000);
+  type ProductCart = {
+    productDetails: Product;
+    selectedChoices: ChoiceCart[];
+    totalItems: number;
+    comment: string | null;
+  };
+
+  type ChoiceCart = {
+    choiceDetails: Choice;
+    selectedGarnishItems: GarnishItemCart[];
+  };
+
+  type GarnishItemCart = {
+    garnishItemDetails: GarnishItem;
+    totalItems: number;
+  };
+
+  const generateProductCart = (product: Product): ProductCart => {
+    const productCart: ProductCart = {
+      productDetails: product,
+      selectedChoices: [],
+      totalItems: 1,
+      comment: null,
+    };
+
+    return reactive<ProductCart>(productCart);
+  };
+
+  const productCart = generateProductCart(product);
+
+  const findSelectedChoiceIndexById = (
+    productCart: ProductCart,
+    choiceId: string,
+  ): [boolean, number] => {
+    const index = productCart.selectedChoices.findIndex(
+      (selectedChoice) => selectedChoice.choiceDetails.id === choiceId,
+    );
+
+    return [index > -1, index];
+  };
+
+  const getSelectedChoice = (
+    productCart: ProductCart,
+    choice: Choice,
+  ): ChoiceCart | null => {
+    const [selectedChoiceExists, selectedChoiceIndex] =
+      findSelectedChoiceIndexById(productCart, choice.id);
+
+    if (selectedChoiceExists) {
+      return productCart.selectedChoices[selectedChoiceIndex];
+    }
+
+    return null;
+  };
+
+  const addSelectedChoice = (
+    productCart: ProductCart,
+    choice: Choice,
+  ): ChoiceCart => {
+    const [selectedChoiceExists] = findSelectedChoiceIndexById(
+      productCart,
+      choice.id,
+    );
+
+    if (!selectedChoiceExists) {
+      productCart.selectedChoices.push({
+        choiceDetails: choice,
+        selectedGarnishItems: [],
+      });
+    }
+
+    return getSelectedChoice(productCart, choice) as ChoiceCart;
+  };
+
+  const findSelectedGarnishItemIndexById = (
+    selectedChoice: ChoiceCart,
+    garnishItemId: string,
+  ): [boolean, number] => {
+    const index = selectedChoice.selectedGarnishItems.findIndex(
+      (selectedGarnishItem) =>
+        selectedGarnishItem.garnishItemDetails.id === garnishItemId,
+    );
+
+    return [index > -1, index];
+  };
+
+  const getSelectedGarnishItem = (
+    selectedChoice: ChoiceCart,
+    garnishItem: GarnishItem,
+  ): GarnishItemCart => {
+    const [selectedGarnishItemExists] = findSelectedGarnishItemIndexById(
+      selectedChoice,
+      garnishItem.id,
+    );
+
+    if (!selectedGarnishItemExists) {
+      selectedChoice.selectedGarnishItems.push({
+        garnishItemDetails: garnishItem,
+        totalItems: 0,
+      });
+    }
+
+    const [, selectedGarnishItemIndex] = findSelectedGarnishItemIndexById(
+      selectedChoice,
+      garnishItem.id,
+    );
+
+    return selectedChoice.selectedGarnishItems[selectedGarnishItemIndex];
+  };
+
+  const incrementGarnishItem = (
+    productCart: ProductCart,
+    choice: Choice,
+    garnishItem: GarnishItem,
+  ) => {
+    const selectedChoice = addSelectedChoice(productCart, choice);
+
+    const selectedGarnishItem = getSelectedGarnishItem(
+      selectedChoice,
+      garnishItem,
+    );
+
+    const totalSelected = getTotalOfSelectedItemsOnChoice(productCart, choice);
+
+    if (totalSelected >= choice.max) {
+      return;
+    }
+    selectedGarnishItem.totalItems++;
+  };
+
+  const decrementGarnishItem = (
+    productCart: ProductCart,
+    choice: Choice,
+    garnishItem: GarnishItem,
+  ) => {
+    const totalSelected = getTotalOfSelectedItemsOnChoice(productCart, choice);
+    if (totalSelected <= 0) {
+      return;
+    }
+
+    const selectedChoice = getSelectedChoice(productCart, choice);
+
+    if (!selectedChoice) {
+      return;
+    }
+
+    const [selectedGarnishItemExists] = findSelectedGarnishItemIndexById(
+      selectedChoice,
+      garnishItem.id,
+    );
+
+    if (!selectedGarnishItemExists) {
+      return;
+    }
+
+    const selectedGarnishItem = getSelectedGarnishItem(
+      selectedChoice,
+      garnishItem,
+    );
+
+    if (selectedGarnishItem.totalItems <= 0) {
+      return;
+    }
+
+    selectedGarnishItem.totalItems--;
+  };
+
+  const getTotalOfSelectedItemsOnChoice = (
+    productCart: ProductCart,
+    choice: Choice,
+  ) => {
+    const selectedChoice = getSelectedChoice(productCart, choice);
+
+    if (!selectedChoice) {
+      return 0;
+    }
+
+    return selectedChoice.selectedGarnishItems.reduce(
+      (total, selectedGarnishItem) => total + selectedGarnishItem.totalItems,
+      0,
+    );
+  };
+
+  const getNumberOfGarnishItemsAddedToChoice = (
+    productCart: ProductCart,
+    choice: Choice,
+    garnishItem: GarnishItem,
+  ): number => {
+    const selectedChoice = getSelectedChoice(productCart, choice);
+
+    if (selectedChoice) {
+      const [selectedGarnishItemExists] = findSelectedGarnishItemIndexById(
+        selectedChoice,
+        garnishItem.id,
+      );
+
+      if (selectedGarnishItemExists) {
+        const selectedGarnishItem = getSelectedGarnishItem(
+          selectedChoice,
+          garnishItem,
+        );
+
+        return selectedGarnishItem.totalItems;
+      }
+    }
+
+    return 0;
+  };
+
+  const selectGarnishItem = (
+    productCart: ProductCart,
+    choice: Choice,
+    garnishItem: GarnishItem,
+  ) => {
+    const selectedChoice = addSelectedChoice(productCart, choice);
+
+    const [hasGarnishItem] = findSelectedGarnishItemIndexById(
+      selectedChoice,
+      garnishItem.id,
+    );
+
+    selectedChoice.selectedGarnishItems = [];
+
+    if (hasGarnishItem) {
+      return;
+    }
+
+    const selectedGarnishItem = getSelectedGarnishItem(
+      selectedChoice,
+      garnishItem,
+    );
+
+    selectedGarnishItem.totalItems = 1;
+  };
+
+  const clickGarnishItem = (
+    productCart: ProductCart,
+    choice: Choice,
+    garnishItem: GarnishItem,
+  ) => {
+    if (choice.max === 1) {
+      return selectGarnishItem(productCart, choice, garnishItem);
+    }
+    incrementGarnishItem(productCart, choice, garnishItem);
+  };
+
+  const totalPrice = computed(() => {
+    const totalChoicesPrice = productCart.selectedChoices.reduce(
+      (totalChoicesPrice, selectedChoice) => {
+        const totalChoicePrice = selectedChoice.selectedGarnishItems.reduce(
+          (totalChoicePrice, selectedGarnishItem) => {
+            const totalGarnishItemPrice =
+              selectedGarnishItem.totalItems *
+              (selectedGarnishItem.garnishItemDetails?.unitPrice || 0);
+            return totalChoicePrice + totalGarnishItemPrice;
+          },
+          0,
+        );
+        return totalChoicesPrice + totalChoicePrice;
+      },
+      0,
+    );
+
+    return (
+      productCart.productDetails.unitPrice +
+      totalChoicesPrice * productCart.totalItems
+    );
   });
 
   defineExpose({
@@ -126,17 +393,40 @@
       </div>
       <div v-for="choice in product.choices" :key="choice.id">
         <div
-          class="sticky top-16 bg-gray-100 text-gray-500 p-4 text-xl flex flex-col"
+          class="sticky top-16 bg-gray-100 text-gray-500 p-4 text-xl flex justify-between"
         >
-          <span class="font-bold">{{ choice.name }}</span>
-          <span class="text-sm text-gray-400"
-            >Escolha até {{ choice.max }} opções</span
-          >
+          <div class="flex flex-col">
+            <span class="font-bold">{{ choice.name }}</span>
+            <div class="text-sm text-gray-400">
+              <span v-if="choice.min">
+                <span v-if="choice.min != choice.max" class="mr-2">
+                  Escolha pelo menos {{ choice.min }}
+                  {{ choice.min == 1 ? 'opção' : 'opções' }}.
+                </span>
+                <span
+                  >{{ getTotalOfSelectedItemsOnChoice(productCart, choice) }} de
+                  {{ choice.max }}</span
+                >
+              </span>
+              <span v-if="!choice.min">
+                Escolha até {{ choice.max }} opções
+              </span>
+            </div>
+          </div>
+          <div>
+            <span
+              v-if="choice.min"
+              class="text-xs bg-gray-500 rounded-md px-2 py-1 text-gray-100"
+            >
+              OBRIGATÓRIO
+            </span>
+          </div>
         </div>
         <div
           v-for="garnishItem in choice.garnishItems"
           :key="garnishItem.id"
-          class="p-4 flex border-b gap-4"
+          class="p-4 flex border-b gap-4 cursor-pointer"
+          @click="() => clickGarnishItem(productCart, choice, garnishItem)"
         >
           <div class="flex-1 flex items-center justify-between">
             <div class="flex flex-col">
@@ -148,9 +438,9 @@
                 {{ garnishItem.description }}
               </span>
               <div v-if="garnishItem.unitPrice" class="mt-1 flex items-center">
-                <span class="text-green-700 text-sm"
-                  >+ {{ currencyFormatter.format(garnishItem.unitPrice) }}</span
-                >
+                <span class="text-green-700 text-sm">
+                  + {{ currencyFormatter.format(garnishItem.unitPrice) }}
+                </span>
               </div>
             </div>
           </div>
@@ -170,15 +460,36 @@
               v-if="choice.max > 1"
               class="border inline-flex items-center px-2 py-1 rounded-md"
             >
-              <MinusIcon :size="16" class="text-red-500"></MinusIcon>
-              <span class="px-2 text-sm">1</span>
-              <PlusIcon :size="16" class="text-red-500"></PlusIcon>
+              <MinusIcon
+                :size="16"
+                class="text-red-500"
+                @click.stop="
+                  () => decrementGarnishItem(productCart, choice, garnishItem)
+                "
+              ></MinusIcon>
+              <span class="inline-flex justify-center w-8 text-sm">
+                {{
+                  getNumberOfGarnishItemsAddedToChoice(
+                    productCart,
+                    choice,
+                    garnishItem,
+                  )
+                }}
+              </span>
+              <PlusIcon
+                :size="16"
+                class="text-red-500"
+                @click.stop="
+                  () => incrementGarnishItem(productCart, choice, garnishItem)
+                "
+              ></PlusIcon>
             </div>
             <div v-else>
               <input
                 :id="choice.id + garnishItem.id"
                 type="radio"
                 :value="garnishItem.id"
+                :checked="true"
                 :name="choice.id"
                 class="w-5 h-5 text-red-500 bg-gray-100 border-gray-200 focus:ring-red-300 focus:ring-2"
               />
@@ -206,6 +517,24 @@
       </div>
     </MainViewLayout>
     <div class="w-full bg-white fixed bottom-0 px-4 py-3 flex border-t gap-4">
+      <!--      {{ garnishItemIsSelected }}-->
+      <!--      <div class="fixed bottom-20 left-0 w-full text-xs z-50 bg-red-100">-->
+      <!--        <div-->
+      <!--          v-for="selectedChoice in productCart.selectedChoices"-->
+      <!--          :key="selectedChoice.choiceDetails.id"-->
+      <!--        >-->
+      <!--          <span>{{ selectedChoice.choiceDetails.name }}</span>-->
+      <!--          <ul class="ml-10">-->
+      <!--            <li-->
+      <!--              v-for="selectedGarnishItem in selectedChoice.selectedGarnishItems"-->
+      <!--              :key="selectedGarnishItem.garnishItemDetails.id"-->
+      <!--            >-->
+      <!--              {{ selectedGarnishItem.totalItems }} - -->
+      <!--              {{ selectedGarnishItem.garnishItemDetails.name }}-->
+      <!--            </li>-->
+      <!--          </ul>-->
+      <!--        </div>-->
+      <!--      </div>-->
       <div class="border inline-flex items-center px-2 py-1 rounded-md">
         <MinusIcon :size="24" class="text-red-500"></MinusIcon>
         <span class="px-2 text-sm">1</span>
@@ -215,7 +544,7 @@
         class="flex-1 px-4 py-3 flex justify-between items-center rounded-lg bg-red-500 text-white font-bold"
       >
         <span>Adicionar</span>
-        <span>R$ 54,99</span>
+        <span>{{ currencyFormatter.format(totalPrice) }}</span>
       </button>
     </div>
   </MobileFullDrawer>

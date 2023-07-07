@@ -1,7 +1,7 @@
 import { reactive } from 'vue';
 import { defineStore } from 'pinia';
 
-type Product = {
+export type Product = {
   id: string;
   name: string;
   available: boolean;
@@ -13,7 +13,7 @@ type Product = {
   choices?: Choice[];
 };
 
-type Choice = {
+export type Choice = {
   id: string;
   name: string;
   max: number;
@@ -21,7 +21,7 @@ type Choice = {
   garnishItems: GarnishItem[];
 };
 
-type GarnishItem = {
+export type GarnishItem = {
   id: string;
   name: string;
   description?: string;
