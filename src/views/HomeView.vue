@@ -1,12 +1,14 @@
 <script setup lang="ts">
   import { initDropdowns } from 'flowbite';
-  import { onMounted } from 'vue';
+  import { onMounted, ref } from 'vue';
 
   import ChevronDownIcon from 'vue-material-design-icons/ChevronDown.vue';
   import BellOutlineIcon from 'vue-material-design-icons/BellOutline.vue';
   import MopedOutlineIcon from 'vue-material-design-icons/MopedOutline.vue';
   import MainViewLayout from '@/components/MainViewLayout.vue';
   import IconRounded from '@/components/IconRounded.vue';
+
+  const defaultMerchantLogoUrl = ref('/images/merchant/logo-default.png');
 
   onMounted(() => {
     initDropdowns();
@@ -22,8 +24,8 @@
           <div class="ml-5 flex items-center text-red-500">
             <MopedOutlineIcon :size="36"></MopedOutlineIcon>
             <h1 class="ml-1 text-lg font-bold">
-              <span class="">Entrega</span>
-              <span class="text-yellow-300">Club</span>
+              <span>Entrega</span>
+              <span>Club</span>
             </h1>
           </div>
           <div class="flex-1"></div>
@@ -73,9 +75,13 @@
             class=""
           >
             <div
-              class="rounded-lg bg-gray-100 dark:bg-gray-800 border aspect-photo overflow-hidden"
+              class="rounded-lg bg-red-100 dark:bg-gray-800 border aspect-photo overflow-hidden"
             >
-              <img class="w-full" src="/icon-maskable-192x192.png" alt="Restaurante" />
+              <img
+                class="w-full"
+                :src="defaultMerchantLogoUrl"
+                alt="Restaurante"
+              />
             </div>
             <div class="mt-1">Restaurante {{ i }}</div>
           </RouterLink>

@@ -472,7 +472,7 @@
           <div
             v-for="garnishItem in choice.garnishItems"
             :key="garnishItem.id"
-            class="p-4 flex border-b gap-4 cursor-pointer"
+            class="garnish-item p-4 flex border-b gap-4 cursor-pointer"
             @click="() => clickGarnishItem(productCart, choice, garnishItem)"
           >
             <div class="flex-1 flex items-center justify-between">
@@ -518,6 +518,7 @@
                       garnishItem,
                     ) > 0
                   "
+                  class="p-2"
                   :size="20"
                   :class="[
                     getNumberOfGarnishItemsAddedToChoice(
@@ -552,6 +553,7 @@
                 </span>
                 <PlusIcon
                   :size="20"
+                  class="p-2"
                   :class="[
                     getTotalOfSelectedItemsOnChoice(productCart, choice) <
                     choice.max
@@ -648,4 +650,8 @@
   </MobileFullDrawer>
 </template>
 
-<style scoped></style>
+<style scoped>
+  .garnish-item {
+    min-height: 5rem;
+  }
+</style>

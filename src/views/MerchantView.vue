@@ -5,6 +5,8 @@
   import IconRounded from '@/components/IconRounded.vue';
   import MagnifyIcon from 'vue-material-design-icons/Magnify.vue';
   import StarIcon from 'vue-material-design-icons/Star.vue';
+  import IntersectionItem from '@/components/IntersectionItem.vue';
+  import { debounce } from '@/utils';
 
   const merchant = computed(() => ({
     id: 'd9969801-5203-4f6a-ba4b-6bc8af8d8fac',
@@ -12,7 +14,8 @@
     available: true,
     preparationTime: 10,
     name: 'O rei da pizza',
-    logo: '/icon-maskable-192x192.png',
+    logo: '/icon-maskable-512x512.png',
+    banner: null,
     minimumOrderValue: 'R$ 40,00',
     userRating: 4.7,
     categories: ['Pizza'],
@@ -40,19 +43,9 @@
     ],
   }));
 
-  import { useRouter, useRoute } from 'vue-router';
-  import IntersectionItem from '@/components/IntersectionItem.vue';
-  import { debounce } from '@/utils';
-
-  const router = useRouter();
-  const route = useRoute();
-
-  const showProduct = (productId: string) => {
-    router.push({
-      path: route.fullPath,
-      query: { productId },
-    });
-  };
+  const defaultMerchantBannerImgUrl = ref(
+    '/images/merchant/banner-default.png',
+  );
 
   const intersectMenu = (entry: IntersectionObserverEntry, menu: number) => {
     if (entry.isIntersecting) {
@@ -92,12 +85,21 @@
         </button>
       </template>
     </MobileTopBar>
-    <div class="bg-red-500 w-full aspect-banner"></div>
+    <div class="bg-red-500 max-w-md w-full aspect-banner">
+      <div
+        class="w-full h-full object-cover bg-fixed"
+        :style="{
+          backgroundImage: merchant.banner
+            ? merchant.banner
+            : `url(${defaultMerchantBannerImgUrl})`,
+        }"
+      />
+    </div>
     <div class="p-4 flex gap-4">
       <div
         class="w-12 h-12 bg-gray-100 rounded-full overflow-hidden border-gray-200"
       >
-        <img :src="merchant.logo" :alt="merchant.name" />
+        <img class="w-full" :src="merchant.logo" :alt="merchant.name" />
       </div>
       <div class="flex-1">
         <h2 class="font-bold">{{ merchant.name }}</h2>
@@ -116,16 +118,17 @@
     <div class="bg-white my-4">
       <div class="w-full text-xl font-bold px-4">Os mais pedidos</div>
       <div class="gap-4 flex flex-nowrap overflow-x-auto py-4 px-4">
-        <div
-          v-for="i in 10"
-          :key="i"
+        <RouterLink
+          v-for="product in ['1', '3', '3', '4', '5']"
+          :key="product"
           class="w-2/5 flex-shrink-0 rounded-lg border"
+          :to="`?productId=${product}`"
         >
           <div class="w-full aspect-photo bg-gray-100"></div>
           <div class="text-sm p-2 flex flex-col gap-2">
             <div class="h-10 text-ellipsis overflow-hidden">
               Nome do produto
-              {{ i === 3 ? '(Nome bem grande mesmo)' : '' }}
+              {{ product === '3' ? '(Nome bem grande mesmo)' : '' }}
             </div>
             <div class="flex items-center mt-2">
               <span class="text-green-700">R$ 40,00</span>
@@ -134,7 +137,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </RouterLink>
       </div>
     </div>
     <div
@@ -161,10 +164,10 @@
         :threshold="1"
       >
         <div class="text-xl font-bold mb-4">Menu {{ menu }}</div>
-        <div
+        <RouterLink
           v-for="product in ['1', '2', '3']"
           :key="product"
-          @click="() => showProduct(product)"
+          :to="`?productId=${product}`"
           class="py-4 w-full border-y flex justify-between cursor-pointer"
         >
           <div>
@@ -181,7 +184,7 @@
           <div>
             <div class="w-32 aspect-photo rounded-lg border bg-gray-100"></div>
           </div>
-        </div>
+        </RouterLink>
       </IntersectionItem>
     </div>
   </MainViewLayout>
