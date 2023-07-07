@@ -42,6 +42,7 @@
 
   import { useRouter, useRoute } from 'vue-router';
   import IntersectionItem from '@/components/IntersectionItem.vue';
+  import { debounce } from '@/utils';
 
   const router = useRouter();
   const route = useRoute();
@@ -55,22 +56,26 @@
 
   const intersectMenu = (entry: IntersectionObserverEntry, menu: number) => {
     if (entry.isIntersecting) {
-      menuActive.value = menu;
-      const container = document.querySelector('.menu-tab-container');
-      const tab = document.querySelector(`#menu-tab-${menu}`);
-      if (!container || !tab) return;
-      const { left } = tab.getBoundingClientRect();
-      container.scrollLeft = container.scrollLeft + left - 16;
+      scrollToTab(menu);
     }
   };
 
-  const selectMenuTab = (menu: number) => {
+  const scrollToTab = debounce((menu: number) => {
+    menuActive.value = menu;
+    const container = document.querySelector('.menu-tab-container');
+    const tab = document.querySelector(`#menu-tab-${menu}`);
+    if (!container || !tab) return;
+    const { left } = tab.getBoundingClientRect();
+    container.scrollLeft = container.scrollLeft + left - 16;
+  }, 300);
+
+  const selectMenuTab = debounce((menu: number) => {
     const content = document.querySelector(`#menu-content-item-${menu}`);
     if (content) {
       const { y } = content.getBoundingClientRect();
-      window.scrollTo(0, window.scrollY + y);
+      window.scrollTo(0, window.scrollY + y - 17 * 8);
     }
-  };
+  }, 100);
 
   const menuActive = ref(1);
 
@@ -133,7 +138,7 @@
       </div>
     </div>
     <div
-      class="menu-tab-container sticky top-16 bg-white px-4 py-2 flex flex-nowrap overflow-x-auto gap-2 border-y scroll-smooth"
+      class="menu-tab-container sticky top-16 bg-white px-4 py-2 flex flex-nowrap overflow-x-auto gap-4 border-y scroll-smooth"
     >
       <button
         v-for="menu in 10"
