@@ -65,8 +65,6 @@
 
   const drawer = ref<InstanceType<typeof MobileFullDrawer> | null>(null);
 
-  const loading = ref(false);
-
   onMounted(async () => {
     await handleRouteEnter(route.query.productId);
   });
@@ -334,10 +332,11 @@
       0,
     );
 
-    return (
+    const totalUniqueProduct =
       productCart.productDetails.unitPrice +
-      totalChoicesPrice * productCart.totalItems
-    );
+      totalChoicesPrice * productCart.totalItems;
+
+    return totalUniqueProduct * productCart.totalItems;
   });
 
   defineExpose({
@@ -348,8 +347,8 @@
 
 <template>
   <MobileFullDrawer ref="drawer">
-    <MainViewLayout v-if="!loading" class="product-drawer">
-      <MobileTopBar class="z-10" :title="product.name" />
+    <MainViewLayout class="product-drawer">
+      <MobileTopBar class="z-20" :title="product.name" />
       <div class="bg-red-500 w-full aspect-photo overflow-hidden">
         <img class="w-full" :src="product.imageUrl" :alt="product.name" />
       </div>
@@ -394,7 +393,7 @@
       </div>
       <div v-for="choice in product.choices" :key="choice.id">
         <div
-          class="sticky top-16 bg-gray-100 text-gray-500 p-4 text-xl flex justify-between"
+          class="sticky top-16 bg-gray-100 text-gray-500 p-4 text-xl flex justify-between z-10"
         >
           <div class="flex flex-col">
             <span class="font-bold">{{ choice.name }}</span>
@@ -415,7 +414,7 @@
               </span>
             </div>
           </div>
-          <div v-if="choice.min">
+          <div v-if="choice.min" class="w-1/4 text-right">
             <span
               v-if="
                 choice.min >
@@ -425,7 +424,11 @@
             >
               OBRIGATÓRIO
             </span>
-            <CheckIcon v-else size="32" class="text-green-500"></CheckIcon>
+            <CheckIcon
+              v-else
+              size="24"
+              class="inline-block text-green-500"
+            ></CheckIcon>
           </div>
         </div>
         <div
@@ -461,19 +464,43 @@
               />
             </div>
           </div>
-          <div class="flex items-center">
+          <div class="items-center relative w-5 inline-flex justify-end">
             <div
               v-if="choice.max > 1"
-              class="border inline-flex items-center px-2 py-1 rounded-md"
+              class="bg-white border inline-flex items-center py-0.5 rounded-md absolute right-0"
             >
               <MinusIcon
-                :size="16"
-                class="text-red-500"
+                v-if="
+                  getNumberOfGarnishItemsAddedToChoice(
+                    productCart,
+                    choice,
+                    garnishItem,
+                  ) > 0
+                "
+                :size="20"
+                :class="[
+                  getNumberOfGarnishItemsAddedToChoice(
+                    productCart,
+                    choice,
+                    garnishItem,
+                  ) > 0
+                    ? 'text-red-500'
+                    : 'text-gray-300',
+                ]"
                 @click.stop="
                   () => decrementGarnishItem(productCart, choice, garnishItem)
                 "
               ></MinusIcon>
-              <span class="inline-flex justify-center w-8 text-sm">
+              <span
+                v-if="
+                  getNumberOfGarnishItemsAddedToChoice(
+                    productCart,
+                    choice,
+                    garnishItem,
+                  ) > 0
+                "
+                class="inline-flex justify-center w-8 text-sm"
+              >
                 {{
                   getNumberOfGarnishItemsAddedToChoice(
                     productCart,
@@ -483,8 +510,13 @@
                 }}
               </span>
               <PlusIcon
-                :size="16"
-                class="text-red-500"
+                :size="20"
+                :class="[
+                  getTotalOfSelectedItemsOnChoice(productCart, choice) <
+                  choice.max
+                    ? 'text-red-500'
+                    : 'text-gray-300',
+                ]"
                 @click.stop="
                   () => incrementGarnishItem(productCart, choice, garnishItem)
                 "
@@ -526,7 +558,9 @@
         ></textarea>
       </div>
     </MainViewLayout>
-    <div class="w-full bg-white fixed bottom-0 px-4 py-3 flex border-t gap-4">
+    <div
+      class="w-full bg-white fixed bottom-0 px-4 py-3 flex border-t gap-4 z-10"
+    >
       <!--      {{ garnishItemIsSelected }}-->
       <!--      <div class="fixed bottom-20 left-0 w-full text-xs z-50 bg-red-100">-->
       <!--        <div-->
@@ -546,9 +580,20 @@
       <!--        </div>-->
       <!--      </div>-->
       <div class="border inline-flex items-center px-2 py-1 rounded-md">
-        <MinusIcon :size="24" class="text-red-500"></MinusIcon>
-        <span class="px-2 text-sm">1</span>
-        <PlusIcon :size="24" class="text-red-500"></PlusIcon>
+        <button @click="productCart.totalItems--">
+          <MinusIcon
+            :size="24"
+            :class="[
+              productCart.totalItems > 0 ? 'text-red-500' : 'text-gray-300',
+            ]"
+          ></MinusIcon>
+        </button>
+        <span class="px-2 w-10 text-center text-sm">
+          {{ productCart.totalItems }}
+        </span>
+        <button @click="productCart.totalItems++">
+          <PlusIcon :size="24" class="text-red-500"></PlusIcon>
+        </button>
       </div>
       <button
         class="flex-1 px-4 py-3 flex justify-between items-center rounded-lg bg-red-500 text-white font-bold"
