@@ -14,7 +14,7 @@
 
 <template>
   <div class="mobile-top-bar">
-    <div class="relative flex justify-between gap-4">
+    <div class="relative flex justify-between">
       <slot name="left">
         <button
           v-if="!props.hideBack"

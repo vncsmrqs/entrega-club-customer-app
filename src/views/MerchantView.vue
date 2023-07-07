@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, onMounted } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
   import MobileTopBar from '@/components/MobileTopBar.vue';
   import MainViewLayout from '@/components/MainViewLayout.vue';
   import IconRounded from '@/components/IconRounded.vue';
@@ -41,6 +41,7 @@
   }));
 
   import { useRouter, useRoute } from 'vue-router';
+  import IntersectionItem from '@/components/IntersectionItem.vue';
 
   const router = useRouter();
   const route = useRoute();
@@ -52,10 +53,31 @@
     });
   };
 
+  const intersectMenu = (entry: IntersectionObserverEntry, menu: number) => {
+    if (entry.isIntersecting) {
+      menuActive.value = menu;
+      const container = document.querySelector('.menu-tab-container');
+      const tab = document.querySelector(`#menu-tab-${menu}`);
+      if (!container || !tab) return;
+      const { left } = tab.getBoundingClientRect();
+      container.scrollLeft = container.scrollLeft + left - 16;
+    }
+  };
+
+  const selectMenuTab = (menu: number) => {
+    const content = document.querySelector(`#menu-content-item-${menu}`);
+    if (content) {
+      const { y } = content.getBoundingClientRect();
+      window.scrollTo(0, window.scrollY + y);
+    }
+  };
+
+  const menuActive = ref(1);
+
   onMounted(() => {});
 </script>
 <template>
-  <MainViewLayout class="notification-view">
+  <MainViewLayout class="merchant-view">
     <MobileTopBar :title="merchant.name">
       <template #right>
         <button>
@@ -111,19 +133,28 @@
       </div>
     </div>
     <div
-      class="sticky top-16 bg-white px-4 py-2 flex flex-nowrap overflow-x-auto gap-2 border-y"
+      class="menu-tab-container sticky top-16 bg-white px-4 py-2 flex flex-nowrap overflow-x-auto gap-2 border-y scroll-smooth"
     >
       <button
-        v-for="i in 10"
-        :key="i"
+        v-for="menu in 10"
+        :key="menu"
         class="whitespace-nowrap px-4 py-2 rounded-lg bg-gray-100"
-        :class="{ 'bg-red-100 text-red-500': i === 1 }"
+        :class="{ 'bg-red-100 text-red-500': menu === menuActive }"
+        :id="`menu-tab-${menu}`"
+        @click="() => selectMenuTab(menu)"
       >
-        Grupo {{ i }}
+        Menu {{ menu }}
       </button>
     </div>
     <div class="mt-8 flex flex-wrap gap-4 px-4">
-      <div v-for="menu in 5" :key="menu" class="w-full">
+      <IntersectionItem
+        :id="`menu-content-item-${menu}`"
+        v-for="menu in 10"
+        :key="menu"
+        class="menu w-full"
+        @intersect="(entry) => intersectMenu(entry, menu)"
+        :threshold="1"
+      >
         <div class="text-xl font-bold mb-4">Menu {{ menu }}</div>
         <div
           v-for="product in ['1', '2', '3']"
@@ -146,13 +177,13 @@
             <div class="w-32 aspect-photo rounded-lg border bg-gray-100"></div>
           </div>
         </div>
-      </div>
+      </IntersectionItem>
     </div>
   </MainViewLayout>
 </template>
 
 <style>
-  .notification-view {
+  .merchant-view {
     @apply min-h-screen flex flex-col;
   }
 </style>

@@ -1,5 +1,9 @@
 @import './tailwind.css';
 
+html {
+    scroll-behavior: smooth;
+}
+
 body,
 #app {
     min-height: 100vh;
@@ -9,7 +13,7 @@ body,
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    @apply max-w-screen-sm mx-auto;
+    @apply max-w-screen-sm mx-auto scroll-smooth;
 }
 
 
