@@ -8,6 +8,7 @@
   import CircleSmallIcon from 'vue-material-design-icons/CircleSmall.vue';
   import PlusIcon from 'vue-material-design-icons/Plus.vue';
   import MinusIcon from 'vue-material-design-icons/Minus.vue';
+  import CheckIcon from 'vue-material-design-icons/Check.vue';
   import CommentTextOutlineIcon from 'vue-material-design-icons/CommentTextOutline.vue';
   import { useRoute } from 'vue-router';
   import type { LocationQueryValue } from 'vue-router';
@@ -399,7 +400,7 @@
             <span class="font-bold">{{ choice.name }}</span>
             <div class="text-sm text-gray-400">
               <span v-if="choice.min">
-                <span v-if="choice.min != choice.max" class="mr-2">
+                <span v-if="choice.min != choice.max" class="mr-1">
                   Escolha pelo menos {{ choice.min }}
                   {{ choice.min == 1 ? 'opção' : 'opções' }}.
                 </span>
@@ -409,17 +410,22 @@
                 >
               </span>
               <span v-if="!choice.min">
-                Escolha até {{ choice.max }} opções
+                Escolha até {{ choice.max }}
+                {{ choice.max == 1 ? 'opção' : 'opções' }}
               </span>
             </div>
           </div>
-          <div>
+          <div v-if="choice.min">
             <span
-              v-if="choice.min"
+              v-if="
+                choice.min >
+                getTotalOfSelectedItemsOnChoice(productCart, choice)
+              "
               class="text-xs bg-gray-500 rounded-md px-2 py-1 text-gray-100"
             >
               OBRIGATÓRIO
             </span>
+            <CheckIcon v-else size="32" class="text-green-500"></CheckIcon>
           </div>
         </div>
         <div

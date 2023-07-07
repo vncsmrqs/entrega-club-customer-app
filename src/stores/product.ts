@@ -203,7 +203,7 @@ const productFixture: Product = {
     {
       id: 'F932FB',
       name: 'Deseja adicionar Brownie?',
-      min: 1,
+      min: 0,
       max: 1,
       garnishItems: [
         {
