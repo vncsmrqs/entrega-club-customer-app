@@ -484,15 +484,19 @@
                 "
               ></PlusIcon>
             </div>
+
             <div v-else>
-              <input
-                :id="choice.id + garnishItem.id"
-                type="radio"
-                :value="garnishItem.id"
-                :checked="true"
-                :name="choice.id"
-                class="w-5 h-5 text-red-500 bg-gray-100 border-gray-200 focus:ring-red-300 focus:ring-2"
-              />
+              <div
+                class="w-5 h-5 bg-gray-100 border rounded-full"
+                :class="{
+                  'border-red-500 border-4 bg-white':
+                    !!getNumberOfGarnishItemsAddedToChoice(
+                      productCart,
+                      choice,
+                      garnishItem,
+                    ),
+                }"
+              ></div>
             </div>
           </div>
         </div>

@@ -23,7 +23,7 @@
     const options: DrawerOptions = {
       placement: 'right',
       backdrop: false,
-      bodyScrolling: true,
+      bodyScrolling: false,
       // edge: false,
       // edgeOffset: '',
       // backdropClasses: '',
