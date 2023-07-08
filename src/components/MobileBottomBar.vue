@@ -49,6 +49,6 @@
 
 <style scoped>
   .mobile-bottom-bar {
-    @apply fixed max-w-screen-sm z-10 bottom-0 bg-white w-full flex justify-around border-t;
+    @apply fixed z-10 bottom-0 bg-white w-full flex justify-around border-t;
   }
 </style>

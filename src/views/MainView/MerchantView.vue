@@ -1,76 +1,50 @@
 <script setup lang="ts">
-  import { computed, onMounted, ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import MobileTopBar from '@/components/MobileTopBar.vue';
   import MainViewLayout from '@/components/MainViewLayout.vue';
   import IconRounded from '@/components/IconRounded.vue';
   import MagnifyIcon from 'vue-material-design-icons/Magnify.vue';
   import StarIcon from 'vue-material-design-icons/Star.vue';
   import IntersectionItem from '@/components/IntersectionItem.vue';
-  import { debounce } from '@/utils';
+  import { debounce, formatToCurrency } from '@/utils';
+  import { useMerchantStore } from '@/stores/merchant';
+  import type { MerchantCatalog } from '@/stores/merchant-catalog';
+  import { useMerchantCatalogStore } from '@/stores/merchant-catalog';
 
-  const merchant = computed(() => ({
-    id: 'd9969801-5203-4f6a-ba4b-6bc8af8d8fac',
-    slug: 'jaiba-mg/o-rei-da-pizza',
-    available: true,
-    preparationTime: 10,
-    name: 'O rei da pizza',
-    logo: '/icon-maskable-512x512.png',
-    banner: null,
-    minimumOrderValue: 'R$ 40,00',
-    userRating: 4.7,
-    categories: ['Pizza'],
-    distance: 3,
-    type: 'RESTAURANT',
-    priceRange: 1,
-    deliveryFee: 10,
-    deliveryMethods: [
-      {
-        deliveredBy: 'MERCHANT',
-        mode: 'DELIVERY',
-        subtitle: 'O entregador leva até você agora',
-        title: 'Entrega',
-        maxTime: 10,
-        minTime: 0,
-      },
-      {
-        deliveredBy: null,
-        maxTime: 10,
-        minTime: 0,
-        mode: 'TAKEOUT',
-        subtitle: 'Você retira seu pedido no local',
-        title: 'Retirada',
-      },
-    ],
-  }));
+  const merchantStore = useMerchantStore();
+  const merchant = merchantStore.merchant;
+
+  const merchantCatalogStore = useMerchantCatalogStore();
+  const merchantCatalog: MerchantCatalog = merchantCatalogStore.merchantCatalog;
 
   const defaultMerchantBannerImgUrl = ref(
     '/images/merchant/banner-default.png',
   );
 
-  const intersectMenu = (entry: IntersectionObserverEntry, menu: number) => {
+  const intersectMenu = (entry: IntersectionObserverEntry, menuId: string) => {
     if (entry.isIntersecting) {
-      scrollToTab(menu);
+      scrollToMenu(menuId);
     }
   };
 
-  const scrollToTab = debounce((menu: number) => {
-    menuActive.value = menu;
+  const scrollToMenu = debounce((menuId: string) => {
+    menuActive.value = menuId;
     const container = document.querySelector('.menu-tab-container');
-    const tab = document.querySelector(`#menu-tab-${menu}`);
+    const tab = document.querySelector(`#menu-tab-${menuId}`);
     if (!container || !tab) return;
     const { left } = tab.getBoundingClientRect();
     container.scrollLeft = container.scrollLeft + left - 16;
   }, 300);
 
-  const selectMenuTab = debounce((menu: number) => {
-    const content = document.querySelector(`#menu-content-item-${menu}`);
+  const selectMenuTab = debounce((menuId: string) => {
+    const content = document.querySelector(`#menu-content-item-${menuId}`);
     if (content) {
       const { y } = content.getBoundingClientRect();
       window.scrollTo(0, window.scrollY + y - 17 * 8);
     }
   }, 100);
 
-  const menuActive = ref(1);
+  const menuActive = ref('');
 
   onMounted(() => {});
 </script>
@@ -85,29 +59,29 @@
         </button>
       </template>
     </MobileTopBar>
-    <div class="bg-red-500 max-w-md w-full aspect-banner">
-      <div
-        class="w-full h-full object-cover bg-fixed"
-        :style="{
-          backgroundImage: merchant.banner
-            ? merchant.banner
-            : `url(${defaultMerchantBannerImgUrl})`,
-        }"
+    <div class="bg-red-500 w-full aspect-banner">
+      <img
+        class="w-full h-full object-cover"
+        :src="
+          merchant.bannerUrl ? merchant.bannerUrl : defaultMerchantBannerImgUrl
+        "
+        :alt="merchant.name"
       />
     </div>
     <div class="p-4 flex gap-4">
       <div
         class="w-12 h-12 bg-gray-100 rounded-full overflow-hidden border-gray-200"
       >
-        <img class="w-full" :src="merchant.logo" :alt="merchant.name" />
+        <img class="w-full" :src="merchant.logoUrl" :alt="merchant.name" />
       </div>
       <div class="flex-1">
         <h2 class="font-bold">{{ merchant.name }}</h2>
         <div class="w-full flex items-center text-sm">
           <!--          <span class="text-red-500">Ver mais</span>-->
-          <span class="flex-1 text-gray-500"
-            >Pedido mínimo: {{ merchant.minimumOrderValue }}</span
-          >
+          <span class="flex-1 text-gray-500">
+            Pedido mínimo:
+            {{ formatToCurrency(merchant.minimumOrderValue) }}
+          </span>
           <div class="inline-flex text-yellow-300 items-center">
             <StarIcon :size="14"></StarIcon>
             <span>{{ merchant.userRating }}</span>
@@ -144,45 +118,56 @@
       class="menu-tab-container sticky top-16 bg-white px-4 py-2 flex flex-nowrap overflow-x-auto gap-4 border-y scroll-smooth"
     >
       <button
-        v-for="menu in 10"
-        :key="menu"
+        v-for="menu in merchantCatalog.menus"
+        :key="menu.id"
         class="whitespace-nowrap px-4 py-2 rounded-lg bg-gray-100"
-        :class="{ 'bg-red-100 text-red-500': menu === menuActive }"
-        :id="`menu-tab-${menu}`"
-        @click="() => selectMenuTab(menu)"
+        :class="{ 'bg-red-100 text-red-500': menu.id === menuActive }"
+        :id="`menu-tab-${menu.id}`"
+        @click="() => selectMenuTab(menu.id)"
       >
-        Menu {{ menu }}
+        {{ menu.name }}
       </button>
     </div>
     <div class="mt-8 flex flex-wrap gap-4 px-4">
       <IntersectionItem
-        :id="`menu-content-item-${menu}`"
-        v-for="menu in 10"
-        :key="menu"
+        v-for="menu in merchantCatalog.menus"
+        :key="menu.id"
+        :id="`menu-content-item-${menu.id}`"
         class="menu w-full"
-        @intersect="(entry) => intersectMenu(entry, menu)"
-        :threshold="1"
+        @intersect="(entry) => intersectMenu(entry, menu.id)"
+        :threshold="0.5"
       >
-        <div class="text-xl font-bold mb-4">Menu {{ menu }}</div>
+        <div class="text-xl font-bold mb-4">{{ menu.name }}</div>
         <RouterLink
-          v-for="product in ['1', '2', '3']"
-          :key="product"
-          :to="`?productId=${product}`"
-          class="py-4 w-full border-y flex justify-between cursor-pointer"
+          v-for="product in menu.products"
+          :key="product.id"
+          :to="`?productId=${product.id}`"
+          class="py-4 w-full border-y flex justify-between cursor-pointer gap-4"
         >
           <div>
-            <div>Produto {{ product }}</div>
-            <div class="text-gray-500 text-sm">Descrição do produto</div>
+            <div>{{ product.name }}</div>
+            <div class="text-gray-500 text-sm">{{ product.description }}</div>
             <div class="mt-2 text-xs">Serve até 1 pessoa</div>
             <div class="flex items-center mt-2">
-              <span class="text-green-700">R$ 40,00</span>
-              <div class="text-gray-500 ml-2 text-sm line-through">
-                R$ 40,00
+              <span class="text-green-700">{{
+                formatToCurrency(product.unitPrice)
+              }}</span>
+              <div
+                v-if="product.originalUnitPrice"
+                class="text-gray-500 ml-2 text-sm line-through"
+              >
+                {{ formatToCurrency(product.originalUnitPrice) }}
               </div>
             </div>
           </div>
           <div>
-            <div class="w-32 aspect-photo rounded-lg border bg-gray-100"></div>
+            <div class="w-32 aspect-photo rounded-lg border bg-red-100">
+              <img
+                class="w-full h-full object-cover"
+                :src="product.imageUrl"
+                :alt="product.name"
+              />
+            </div>
           </div>
         </RouterLink>
       </IntersectionItem>

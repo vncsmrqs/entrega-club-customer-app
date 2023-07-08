@@ -5,7 +5,7 @@
 </script>
 
 <template>
-  <div class="home-view dark:bg-gray-900">
+  <div class="main-view dark:bg-gray-900">
     <RouterView />
     <CartMobileBar />
     <ProductDrawer />
@@ -14,7 +14,7 @@
 </template>
 
 <style scoped>
-  .home-view {
-    @apply min-h-screen flex flex-col;
+  .main-view {
+    @apply w-screen min-h-screen flex flex-col mx-auto;
   }
 </style>

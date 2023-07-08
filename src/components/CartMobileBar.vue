@@ -3,16 +3,10 @@
   import CartDrawer from '@/components/CartDrawer.vue';
   import { ref } from 'vue';
 
-  const showCartDrawer = ref(false);
+  const drawer = ref<InstanceType<typeof CartDrawer> | null>(null);
 
   const showCart = () => {
-    if (showCartDrawer.value === true) return;
-    showCartDrawer.value = true;
-  };
-
-  const closeCart = () => {
-    if (showCartDrawer.value === false) return;
-    showCartDrawer.value = false;
+    drawer.value?.show();
   };
 </script>
 
@@ -36,7 +30,7 @@
       <span class="text-right">R$ 54,99</span>
     </button>
   </div>
-  <CartDrawer :show="showCartDrawer" @close="closeCart"></CartDrawer>
+  <CartDrawer ref="drawer"></CartDrawer>
 </template>
 
 <style scoped></style>

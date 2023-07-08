@@ -11,6 +11,9 @@
   import ListItem from '@/components/ListItem.vue';
 
   import { version } from '@/../package.json';
+  import {ref} from "vue";
+
+  const appVersion = ref(version);
 </script>
 
 <template>
@@ -61,7 +64,7 @@
     </ListItem>
 
     <div class="py-8 text-gray-500 text-center">
-      Versão do app: {{ version }}
+      Versão do app: {{ appVersion }}
     </div>
   </MainViewLayout>
 </template>

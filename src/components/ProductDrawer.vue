@@ -16,6 +16,7 @@
 
   import type { Choice, GarnishItem, Product } from '@/stores/product';
   import { useMerchantStore } from '@/stores/merchant';
+  import { formatToCurrency } from '@/utils';
 
   const route = useRoute();
   const router = useRouter();
@@ -59,14 +60,6 @@
     selectedChoices: [],
     totalItems: 1,
     comment: null,
-  });
-
-  const currencyFormatter = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-    // These options are needed to round to whole numbers if that's what you want.
-    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
   });
 
   let productId = ref<string | null>('');
@@ -371,7 +364,11 @@
   };
 
   const addProductToCart = () => {
-    router.push({ name: 'home' });
+    closeProductDrawer();
+  };
+
+  const closeProductDrawer = () => {
+    router.push({ path: route.path, replace: true });
   };
 
   defineExpose({
@@ -381,12 +378,21 @@
 </script>
 
 <template>
-  <MobileFullDrawer ref="drawer">
+  <MobileFullDrawer
+    ref="drawer"
+    @on-hide="closeProductDrawer"
+    position="right"
+    class="w-screen h-screen"
+  >
     <template v-if="showInfo">
       <MainViewLayout class="product-drawer">
         <MobileTopBar class="z-20" :title="product.name" />
         <div class="bg-red-500 w-full aspect-photo overflow-hidden">
-          <img class="w-full" :src="product.imageUrl" :alt="product.name" />
+          <img
+            class="w-full h-full object-cover"
+            :src="product.imageUrl"
+            :alt="product.name"
+          />
         </div>
         <div class="p-4 flex gap-4">
           <div class="flex-1">
@@ -396,13 +402,13 @@
             </div>
             <div class="mt-4 flex items-center">
               <span class="text-green-700">{{
-                currencyFormatter.format(product.unitPrice)
+                formatToCurrency(product.unitPrice)
               }}</span>
               <div
                 v-if="product.originalUnitPrice"
                 class="text-gray-500 ml-2 text-sm line-through"
               >
-                {{ currencyFormatter.format(product.originalUnitPrice) }}
+                {{ formatToCurrency(product.originalUnitPrice) }}
               </div>
             </div>
           </div>
@@ -424,7 +430,7 @@
           >
             <span>30-90 min</span>
             <CircleSmallIcon></CircleSmallIcon>
-            <span>{{ currencyFormatter.format(merchant.deliveryFee) }}</span>
+            <span>{{ formatToCurrency(merchant.deliveryFee) }}</span>
           </div>
         </div>
         <div v-for="choice in product.choices" :key="choice.id">
@@ -489,7 +495,7 @@
                   class="mt-1 flex items-center"
                 >
                   <span class="text-green-700 text-sm">
-                    + {{ currencyFormatter.format(garnishItem.unitPrice) }}
+                    + {{ formatToCurrency(garnishItem.unitPrice) }}
                   </span>
                 </div>
               </div>
@@ -643,7 +649,7 @@
           class="flex-1 px-4 py-3 flex justify-between items-center rounded-lg bg-red-500 text-white font-bold"
         >
           <span>Adicionar</span>
-          <span>{{ currencyFormatter.format(totalPrice(productCart)) }}</span>
+          <span>{{ formatToCurrency(totalPrice(productCart)) }}</span>
         </button>
       </div>
     </template>

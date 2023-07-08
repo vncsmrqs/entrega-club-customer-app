@@ -2,38 +2,51 @@
   import type { DrawerOptions, DrawerInterface } from 'flowbite';
   import { v4 as generateId } from 'uuid';
 
-  import { onMounted, onUnmounted } from 'vue';
+  import { onMounted, onUnmounted, reactive } from 'vue';
   import { Drawer } from 'flowbite';
 
   let drawer: DrawerInterface | null;
-
-  const show = () => {
-    drawer?.show();
-  };
-
-  const hide = () => {
-    drawer?.hide();
-  };
 
   const drawerId = generateId();
 
   onMounted(() => {
     const $targetEl = document.getElementById(drawerId);
 
-    const options: DrawerOptions = {
-      placement: 'right',
-      backdrop: false,
+    const options: DrawerOptions = reactive({
+      placement: props.position,
       bodyScrolling: false,
-      // edge: false,
+      // edge: true,
       // edgeOffset: '',
-      // backdropClasses: '',
+      backdrop: true,
+      // backdropClasses:
+      //   'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-30',
       onHide,
       onShow,
       onToggle,
-    };
+    });
 
     drawer = new Drawer($targetEl, options);
   });
+
+  const show = () => {
+    if (drawer?.isHidden()) {
+      drawer?.show();
+    }
+  };
+
+  const hide = () => {
+    if (drawer?.isVisible()) {
+      drawer?.hide();
+    }
+  };
+
+  const isVisible = () => {
+    return drawer?.isVisible();
+  };
+
+  const isHidden = () => {
+    return drawer?.isHidden();
+  };
 
   onUnmounted(() => {
     hide();
@@ -53,18 +66,35 @@
     emit('onToggle');
   };
 
+  const props = withDefaults(
+    defineProps<{
+      position?: 'left' | 'right' | 'bottom' | 'top';
+    }>(),
+    {
+      position: 'left',
+    },
+  );
+
   defineExpose({
     show,
     hide,
+    isVisible,
+    isHidden,
   });
 </script>
 
 <template>
   <div
     :id="drawerId"
-    class="bg-red-100 fixed z-40 w-screen h-screen overflow-y-auto transition-transform translate-x-full"
+    class="fixed max-w-screen max-h-screen z-40 transition-transform"
+    :class="{
+      'overflow-y-auto': true,
+      '-translate-x-full top-0 left-0': props.position === 'left',
+      'translate-x-full top-0 right-0': props.position === 'right',
+      'translate-y-full left-0 bottom-0': props.position === 'bottom',
+      '-translate-y-full left-0 top-0': props.position === 'top',
+    }"
     tabindex="-1"
-    aria-labelledby="drawer-right-label"
   >
     <slot></slot>
   </div>

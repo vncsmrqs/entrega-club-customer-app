@@ -29,7 +29,7 @@ export type GarnishItem = {
   imageUrl?: string;
 };
 
-const productFixture: Product = {
+export const productFixture: Product = {
   id: 'be77bc92-7ef5-446f-8795-149541f2d574',
   name: '2 Sanduíches Favoritos + Batata',
   description:
@@ -38,7 +38,7 @@ const productFixture: Product = {
   preparationTime: 10,
   unitPrice: 48.9,
   originalUnitPrice: 63.9,
-  imageUrl: 'images/product/default.png',
+  imageUrl: '/images/product/default.png',
   choices: [
     {
       id: '65FFB8',
