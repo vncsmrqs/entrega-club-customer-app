@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue';
+  import { markRaw, onMounted, ref } from 'vue';
   import MobileTopBar from '@/components/MobileTopBar.vue';
   import MainViewLayout from '@/components/MainViewLayout.vue';
   import IconRounded from '@/components/IconRounded.vue';
@@ -10,6 +10,11 @@
   import { useMerchantStore } from '@/stores/merchant';
   import type { MerchantCatalog } from '@/stores/merchant-catalog';
   import { useMerchantCatalogStore } from '@/stores/merchant-catalog';
+  import type { Product } from '@/stores/product';
+  import AddressSelection from '@/components/AddressSelection.vue';
+  import ProductDrawer from '@/components/ProductDrawer.vue';
+  import { useDrawersControlStore } from '@/stores/drawers-control';
+  import { useRouter } from 'vue-router';
 
   const merchantStore = useMerchantStore();
   const merchant = merchantStore.merchant;
@@ -42,9 +47,16 @@
       const { y } = content.getBoundingClientRect();
       window.scrollTo(0, window.scrollY + y - 17 * 8);
     }
-  }, 100);
+  }, 10);
 
   const menuActive = ref('');
+
+  const router = useRouter();
+  const drawersControlStore = useDrawersControlStore();
+  const showProduct = (product: Product) => {
+    const drawer = drawersControlStore.add(markRaw(ProductDrawer), { product });
+    router.push({ hash: `#${drawer.id}` });
+  };
 
   onMounted(() => {});
 </script>
@@ -138,16 +150,16 @@
         :threshold="0.5"
       >
         <div class="text-xl font-bold mb-4">{{ menu.name }}</div>
-        <RouterLink
+        <div
           v-for="product in menu.products"
           :key="product.id"
-          :to="`?productId=${product.id}`"
+          @click="() => showProduct(product)"
           class="py-4 w-full border-y flex justify-between cursor-pointer gap-4"
         >
           <div>
             <div>{{ product.name }}</div>
             <div class="text-gray-500 text-sm">{{ product.description }}</div>
-            <div class="mt-2 text-xs">Serve até 1 pessoa</div>
+            <!--            <div class="mt-2 text-xs">Serve até 1 pessoa</div>-->
             <div class="flex items-center mt-2">
               <span class="text-green-700">{{
                 formatToCurrency(product.unitPrice)
@@ -161,7 +173,7 @@
             </div>
           </div>
           <div>
-            <div class="w-32 aspect-photo rounded-lg border bg-red-100">
+            <div class="w-24 aspect-photo rounded-lg border bg-red-100">
               <img
                 class="w-full h-full object-cover"
                 :src="product.imageUrl"
@@ -169,13 +181,17 @@
               />
             </div>
           </div>
-        </RouterLink>
+        </div>
       </IntersectionItem>
     </div>
   </MainViewLayout>
 </template>
 
 <style>
+  html {
+    scroll-behavior: smooth;
+  }
+
   .merchant-view {
     @apply min-h-screen flex flex-col;
   }

@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <main class="main-view-layout bg-white">
+  <main class="main-view-layout bg-white max-w-screen-lg w-full mx-auto">
     <slot />
   </main>
 </template>

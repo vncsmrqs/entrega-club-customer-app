@@ -1,15 +1,51 @@
 <script setup lang="ts">
   import MobileBottomBar from '@/components/MobileBottomBar.vue';
-  import CartMobileBar from '@/components/CartMobileBar.vue';
-  import ProductDrawer from '@/components/ProductDrawer.vue';
+  import { useCustomerAddressStore } from '@/stores/address';
+  import { onMounted, ref } from 'vue';
+  import AnonymousDrawerWrapper from '@/components/AnonymousDrawerWrapper.vue';
+  import RightDrawer from '@/components/RightDrawer.vue';
+  import { useDrawersControlStore } from '@/stores/drawers-control';
+  import AddressSelection from '@/components/AddressSelection.vue';
+  import { useRouter } from 'vue-router';
+
+  const customerAddressStore = useCustomerAddressStore();
+
+  const ready = ref(true);
+
+  const drawersControlStore = useDrawersControlStore();
+
+  const router = useRouter();
+
+  onMounted(async () => {
+    await customerAddressStore.loadCurrentAddress();
+    if (!customerAddressStore.selectedAddress) {
+      const drawer = drawersControlStore.add(AddressSelection, {});
+      await router.push({ hash: `#${drawer.id}` });
+      return;
+    }
+    ready.value = true;
+  });
 </script>
 
 <template>
-  <div class="main-view dark:bg-gray-900">
-    <RouterView />
-    <CartMobileBar />
-    <ProductDrawer />
-    <MobileBottomBar />
+  <div class="main-view dark:bg-gray-900 max-w-screen-lg w-full">
+    <AnonymousDrawerWrapper></AnonymousDrawerWrapper>
+    <template v-if="ready">
+      <RouterView v-slot="{ Component }">
+        <transition name="fade">
+          <component :is="Component" />
+        </transition>
+      </RouterView>
+      <!--      <CartMobileBar />-->
+      <MobileBottomBar />
+      <!--      <ProductDrawer />-->
+    </template>
+    <template v-else>
+      <div class="w-full h-full flex justify-center items-center">
+        Carregando...
+      </div>
+    </template>
+    <div id="target"></div>
   </div>
 </template>
 

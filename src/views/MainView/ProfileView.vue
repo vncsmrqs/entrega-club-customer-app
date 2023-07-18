@@ -8,10 +8,22 @@
   import CreditCardOutlineIcon from 'vue-material-design-icons/CreditCardOutline.vue';
   import CogOutlineIcon from 'vue-material-design-icons/CogOutline.vue';
   import ExitToAppIcon from 'vue-material-design-icons/ExitToApp.vue';
-  import ListItem from '@/components/ListItem.vue';
+  import ListItem from '@/components/Profile/ListItem.vue';
 
+  import { markRaw, ref } from 'vue';
   import { version } from '@/../package.json';
-  import {ref} from "vue";
+  import { useDrawersControlStore } from '@/stores/drawers-control';
+  import AddressSelection from '@/components/AddressSelection.vue';
+  import { useRouter } from 'vue-router';
+
+  const drawersControlStore = useDrawersControlStore();
+
+  const router = useRouter();
+
+  const navigateToAddress = () => {
+    const drawer = drawersControlStore.add(markRaw(AddressSelection), {});
+    router.push({ hash: `#${drawer.id}` });
+  };
 
   const appVersion = ref(version);
 </script>
@@ -26,7 +38,7 @@
       <template #default>Chats</template>
       <template #subtitle>Suas conversas com os estabelecimentos</template>
     </ListItem>
-    <ListItem>
+    <ListItem @click="navigateToAddress">
       <template #icon>
         <MapMarkerOutlineIcon></MapMarkerOutlineIcon>
       </template>

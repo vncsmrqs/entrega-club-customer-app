@@ -7,6 +7,10 @@ const router = createRouter({
       return;
     }
 
+    if (to.meta.scrollBehavior) {
+      return to.meta.scrollBehavior;
+    }
+
     if (savedPosition) {
       return savedPosition;
     }
@@ -41,9 +45,9 @@ const router = createRouter({
             },
             {
               path: '/bebidas',
-              name: 'drinks',
+              name: 'liquor-store',
               component: () =>
-                import('../views/MainView/HomeView/DrinksView.vue'),
+                import('../views/MainView/HomeView/LiquorStoreView.vue'),
             },
           ],
         },
@@ -70,6 +74,11 @@ const router = createRouter({
         {
           path: '/estabelecimento/:merchantId',
           name: 'merchant',
+          meta: {
+            scrollBehavior: {
+              behavior: 'smooth',
+            },
+          },
           component: () => import('../views/MainView/MerchantView.vue'),
         },
       ],
@@ -80,6 +89,10 @@ const router = createRouter({
       component: () => import('../views/NotFoundView.vue'),
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  next();
 });
 
 export default router;

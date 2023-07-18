@@ -1,25 +1,34 @@
 import { reactive } from 'vue';
 import { defineStore } from 'pinia';
+import type { Address } from '@/stores/address';
+import { addressFixtureFunc } from '@/stores/address';
 
 export type Merchant = {
   id: string;
   slug: string;
+  name: string;
   available: boolean;
   preparationTime: number;
-  name: string;
   logoUrl?: string;
   bannerUrl?: string;
   minimumOrderValue: number;
   userRating: number;
   categories: string[];
   distance: number;
-  type: 'RESTAURANT' | 'DRINKS';
-  priceRange: 1 | 2 | 3 | 4 | 5;
+  type: 'RESTAURANT' | 'LIQUOR_STORE';
+  priceRange:
+    | 'VERY_CHEAP'
+    | 'CHEAP'
+    | 'REGULAR'
+    | 'EXPENSIVE'
+    | 'VERY_EXPENSIVE';
   deliveryFee: number;
-  deliveryMethods: DeliveryMethod[];
+  deliveryMethods: MerchantDeliveryMethod[];
+  address: Address;
+  shifts: MerchantShift[];
 };
 
-export type DeliveryMethod = {
+export type MerchantDeliveryMethod = {
   deliveredBy: 'MERCHANT' | null;
   mode: 'DELIVERY' | 'TAKEOUT';
   subtitle: string;
@@ -28,7 +37,22 @@ export type DeliveryMethod = {
   minTime: number;
 };
 
+export type MerchantShift = {
+  dayOfWeek:
+    | 'SUNDAY'
+    | 'MONDAY'
+    | 'TUESDAY'
+    | 'WEDNESDAY'
+    | 'THURSDAY'
+    | 'FRIDAY'
+    | 'SATURDAY';
+  duration: number;
+  start: string; // '12:00:00';
+};
+
 const merchantFixture: Merchant = {
+  address: addressFixtureFunc(1),
+  shifts: [],
   id: 'd9969801-5203-4f6a-ba4b-6bc8af8d8fac',
   slug: 'jaiba-mg/o-rei-da-pizza',
   available: true,
@@ -40,7 +64,7 @@ const merchantFixture: Merchant = {
   categories: ['Pizza'],
   distance: 3,
   type: 'RESTAURANT',
-  priceRange: 1,
+  priceRange: 'VERY_CHEAP',
   deliveryFee: 10,
   deliveryMethods: [
     {

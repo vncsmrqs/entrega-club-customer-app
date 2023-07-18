@@ -15,17 +15,9 @@
 <template>
   <div class="mobile-top-bar">
     <div class="relative flex justify-between">
-      <slot name="left">
-        <button
-          v-if="!props.hideBack"
-          @click="goBack"
-          class="text-red-500 p-5 rounded-full"
-        >
-          <ChevronLeftIcon />
-        </button>
-      </slot>
-      <div class="h-16 flex flex-1 items-center">
-        <h1 class="uppercase">
+      <slot name="left"></slot>
+      <div class="h-16 flex flex-1 items-center font-bold">
+        <h1 class="text-lg">
           {{ props.title }}
         </h1>
       </div>

@@ -1,12 +1,15 @@
 <script setup lang="ts">
   import CartOutlineIcon from 'vue-material-design-icons/CartOutline.vue';
   import CartDrawer from '@/components/CartDrawer.vue';
-  import { ref } from 'vue';
+  import { useDrawersControlStore } from '@/stores/drawers-control';
+  import { markRaw } from 'vue';
+  import { useRouter } from 'vue-router';
 
-  const drawer = ref<InstanceType<typeof CartDrawer> | null>(null);
-
+  const router = useRouter();
+  const drawersControlStore = useDrawersControlStore();
   const showCart = () => {
-    drawer.value?.show();
+    const drawer = drawersControlStore.add(markRaw(CartDrawer), {});
+    router.push({ hash: `#${drawer.id}` });
   };
 </script>
 
@@ -30,7 +33,6 @@
       <span class="text-right">R$ 54,99</span>
     </button>
   </div>
-  <CartDrawer ref="drawer"></CartDrawer>
 </template>
 
 <style scoped></style>

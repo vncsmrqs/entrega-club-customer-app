@@ -23,7 +23,6 @@ export default defineConfig({
         name: 'Entrega Club',
         short_name: 'Entrega Club',
         description: 'Seu app de entrega de comida e bebida',
-        android_package_name: 'br.com.entregaclub.android',
         screenshots: [
           {
             src: '/screenshot-1-586x1041.png',
@@ -111,10 +110,6 @@ export default defineConfig({
             type: 'image/png',
           },
         ],
-        launch_handler: {
-          route_to: 'existing-client',
-          navigate_existing_client: 'never',
-        },
       },
     }),
   ],

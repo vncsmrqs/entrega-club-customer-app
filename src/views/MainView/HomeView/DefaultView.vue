@@ -55,7 +55,7 @@
             :alt="merchant.name"
           />
         </div>
-        <div class="mt-1">{{ merchant.name }}</div>
+        <div class="mt-1 text-sm text-gray-700">{{ merchant.name }}</div>
       </RouterLink>
     </div>
   </div>
