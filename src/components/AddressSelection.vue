@@ -9,6 +9,7 @@
   import type { Address } from '@/stores/address';
   import SearchInput from '@/components/SearchInput.vue';
   import { useRouter } from 'vue-router';
+  import LoaderComponent from '@/components/LoaderComponent.vue';
 
   const customerAddressStore = useCustomerAddressStore();
 
@@ -66,6 +67,12 @@
       class="m-4 p-4 bg-red-100 text-red-500 border border-red-500 rounded-lg"
     >
       {{ customerAddressStore.error }}
+    </div>
+    <div
+      v-if="customerAddressStore.loading"
+      class="w-full text-red-500 flex justify-center"
+    >
+      <LoaderComponent />
     </div>
     <div
       v-if="['SEARCH_ADDRESS', 'ADDRESS_SELECTION'].includes(step)"
