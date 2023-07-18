@@ -1,12 +1,12 @@
 <script setup lang="ts">
   import MobileBottomBar from '@/components/MobileBottomBar.vue';
   import { useCustomerAddressStore } from '@/stores/address';
-  import { onMounted, ref } from 'vue';
+  import { markRaw, onMounted, ref } from 'vue';
   import AnonymousDrawerWrapper from '@/components/AnonymousDrawerWrapper.vue';
-  import RightDrawer from '@/components/RightDrawer.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import AddressSelection from '@/components/AddressSelection.vue';
   import { useRouter } from 'vue-router';
+  import CartMobileBar from '@/components/CartMobileBar.vue';
 
   const customerAddressStore = useCustomerAddressStore();
 
@@ -19,7 +19,7 @@
   onMounted(async () => {
     await customerAddressStore.loadCurrentAddress();
     if (!customerAddressStore.selectedAddress) {
-      const drawer = drawersControlStore.add(AddressSelection, {});
+      const drawer = drawersControlStore.add(markRaw(AddressSelection), {});
       await router.push({ hash: `#${drawer.id}` });
       return;
     }
@@ -36,7 +36,7 @@
           <component :is="Component" />
         </transition>
       </RouterView>
-      <!--      <CartMobileBar />-->
+      <CartMobileBar />
       <MobileBottomBar />
       <!--      <ProductDrawer />-->
     </template>

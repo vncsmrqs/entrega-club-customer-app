@@ -30,6 +30,6 @@
 
 <style scoped>
   .mobile-top-bar {
-    @apply w-full sticky top-0 border-b bg-white;
+    @apply w-full top-0 border-b bg-white;
   }
 </style>
