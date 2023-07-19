@@ -2,7 +2,7 @@
 
 <template>
   <div class="w-full top-0 lef-0 border-b bg-white">
-    <div class="relative flex p-2 gap-4">
+    <div class="relative flex p-2 gap-3">
       <div class="min-w-0">
         <slot name="left"></slot>
       </div>

@@ -9,7 +9,6 @@
   import DefaultButton from '@/components/DefaultButton.vue';
   import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue';
   import type { Address } from '@/stores/address';
-  import EmoticonSadOutlineIcon from 'vue-material-design-icons/EmoticonSadOutline.vue';
 
   const props = defineProps<{
     address: Address;
@@ -54,7 +53,7 @@
         <template #left>
           <DeleteOutlineIcon />
         </template>
-        Exluir
+        Excluir
       </SecondaryButton>
       <DefaultButton @click="back">Cancelar</DefaultButton>
     </ScreenFooter>

@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="p-6 w-full h-full overflow-auto">
+  <div class="p-5 w-full h-full overflow-auto">
     <slot>ScreenMain</slot>
   </div>
 </template>

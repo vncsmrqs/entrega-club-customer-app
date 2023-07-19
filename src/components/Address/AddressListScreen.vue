@@ -1,10 +1,8 @@
 <script setup lang="ts">
   import { markRaw, onMounted, ref } from 'vue';
   import ScreenHeader from '@/components/Screen/ScreenHeader.vue';
-  import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue';
-  import CheckIcon from 'vue-material-design-icons/Check.vue';
+  import ChevronRightIcon from 'vue-material-design-icons/ChevronRight.vue';
   import PlusIcon from 'vue-material-design-icons/Plus.vue';
-  import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue';
   import { useCustomerAddressStore } from '@/stores/address';
   import type { Address } from '@/stores/address';
   import { useRouter } from 'vue-router';
@@ -12,7 +10,6 @@
   import ScreenRoot from '@/components/Screen/ScreenRoot.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import ScreenFooter from '@/components/Screen/ScreenFooter.vue';
-  import PrimaryButton from '@/components/PrimaryButton.vue';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
   import ScreenLoader from '@/components/Screen/ScreenLoader.vue';
   import ScreenError from '@/components/Screen/ScreenError.vue';
@@ -45,13 +42,6 @@
     router.push({ hash: `#${drawer.id}` });
   };
 
-  const deleteAddress = (address: Address) => {
-    const drawer = drawersControlStore.add(markRaw(DeleteAddressScreen), {
-      address,
-    });
-    router.push({ hash: `#${drawer.id}` });
-  };
-
   const hide = () => {
     router.back();
   };
@@ -60,6 +50,13 @@
 
   const isSelected = (address: Address) => {
     return selectedAddress.value?.id === address.id;
+  };
+
+  const selectAddress = (address: Address) => {
+    selectedAddress.value = address;
+    setTimeout(() => {
+      saveAndClose();
+    }, 200);
   };
 
   const saveAndClose = () => {
@@ -87,7 +84,9 @@
             <div
               v-for="address in customerAddressStore.availableAddressList"
               :key="address.id"
-              class="p-4 rounded-lg border flex items-center gap-4"
+              class="p-4 flex items-center gap-4 border rounded-xl cursor-pointer transition-colors"
+              :class="{ 'border-red-600': isSelected(address) }"
+              @click="() => selectAddress(address)"
             >
               <input
                 class="text-red-600 ring-0"
@@ -104,34 +103,22 @@
                   {{ address.state }}
                 </div>
               </div>
-              <div class="inline-flex gap-2">
-                <IconButton
-                  class="text-red-600"
-                  @click="() => deleteAddress(address)"
-                >
-                  <DeleteOutlineIcon :size="16" />
-                </IconButton>
-                <IconButton @click="() => editAddress(address)">
-                  <PencilOutlineIcon :size="16" />
+              <div class="inline-flex flex-col gap-2">
+                <IconButton @click.stop="() => editAddress(address)">
+                  <ChevronRightIcon />
                 </IconButton>
               </div>
             </div>
-            <SecondaryButton @click="addAddress">
-              <template #left>
-                <PlusIcon />
-              </template>
-              Adicionar endereço
-            </SecondaryButton>
           </div>
         </ScreenContent>
       </ScreenMain>
       <ScreenFooter>
-        <PrimaryButton @click="saveAndClose">
-          Salvar
-          <template #right>
-            <CheckIcon />
+        <SecondaryButton @click="addAddress">
+          <template #left>
+            <PlusIcon />
           </template>
-        </PrimaryButton>
+          Adicionar endereço
+        </SecondaryButton>
       </ScreenFooter>
     </template>
   </ScreenRoot>
