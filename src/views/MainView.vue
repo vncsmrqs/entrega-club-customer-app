@@ -4,9 +4,9 @@
   import { markRaw, onMounted, ref } from 'vue';
   import AnonymousDrawerWrapper from '@/components/AnonymousDrawerWrapper.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
-  import AddressSelection from '@/components/AddressSelection.vue';
+  import AddressSelection from '@/components/Address/AddressListScreen.vue';
   import { useRouter } from 'vue-router';
-  import CartMobileBar from '@/components/CartMobileBar.vue';
+  import CartMobileBar from '@/components/BagMobileBar.vue';
 
   const customerAddressStore = useCustomerAddressStore();
 

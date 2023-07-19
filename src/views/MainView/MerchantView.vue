@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { markRaw, onMounted, ref } from 'vue';
-  import MobileTopBar from '@/components/MobileTopBar.vue';
+  import MobileTopBar from '@/components/Screen/ScreenHeader.vue';
   import MainViewLayout from '@/components/MainViewLayout.vue';
   import IconRounded from '@/components/IconRounded.vue';
   import MagnifyIcon from 'vue-material-design-icons/Magnify.vue';
@@ -11,7 +11,7 @@
   import type { MerchantCatalog } from '@/stores/merchant-catalog';
   import { useMerchantCatalogStore } from '@/stores/merchant-catalog';
   import type { Product } from '@/stores/product';
-  import AddressSelection from '@/components/AddressSelection.vue';
+  import AddressSelection from '@/components/Address/AddressListScreen.vue';
   import ProductDrawer from '@/components/ProductDrawer.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import { useRouter } from 'vue-router';

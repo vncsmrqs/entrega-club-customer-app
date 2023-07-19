@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { onMounted } from 'vue';
-  import MobileTopBar from '@/components/MobileTopBar.vue';
+  import MobileTopBar from '@/components/Screen/ScreenHeader.vue';
   import MainViewLayout from '@/components/MainViewLayout.vue';
 
   onMounted(() => {});

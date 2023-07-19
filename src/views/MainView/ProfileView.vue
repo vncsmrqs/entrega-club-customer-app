@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import MainViewLayout from '@/components/MainViewLayout.vue';
-  import MobileTopBar from '@/components/MobileTopBar.vue';
+  import MobileTopBar from '@/components/Screen/ScreenHeader.vue';
   import ChatOutlineIcon from 'vue-material-design-icons/ChatOutline.vue';
   import MapMarkerOutlineIcon from 'vue-material-design-icons/MapMarkerOutline.vue';
   import HeartOutlineIcon from 'vue-material-design-icons/HeartOutline.vue';
@@ -13,7 +13,7 @@
   import { markRaw, ref } from 'vue';
   import { version } from '@/../package.json';
   import { useDrawersControlStore } from '@/stores/drawers-control';
-  import AddressSelection from '@/components/AddressSelection.vue';
+  import AddressSelection from '@/components/Address/AddressListScreen.vue';
   import { useRouter } from 'vue-router';
 
   const drawersControlStore = useDrawersControlStore();

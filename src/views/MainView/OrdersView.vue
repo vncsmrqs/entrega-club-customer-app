@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import MainViewLayout from '@/components/MainViewLayout.vue';
-  import MobileTopBar from '@/components/MobileTopBar.vue';
+  import MobileTopBar from '@/components/Screen/ScreenHeader.vue';
   import FoodIcon from 'vue-material-design-icons/Food.vue';
   import ChevronLeftIcon from 'vue-material-design-icons/ChevronLeft.vue';
   import CloseIcon from 'vue-material-design-icons/Close.vue';

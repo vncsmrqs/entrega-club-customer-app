@@ -1,10 +1,10 @@
 <script setup lang="ts">
   import { markRaw, onMounted } from 'vue';
-  import MobileTopBar from '@/components/MobileTopBar.vue';
+  import MobileTopBar from '@/components/Screen/ScreenHeader.vue';
   import ChevronLeftIcon from 'vue-material-design-icons/ChevronLeft.vue';
   import CloseIcon from 'vue-material-design-icons/Close.vue';
   import { useRouter } from 'vue-router';
-  import AddressSelection from '@/components/AddressSelection.vue';
+  import AddressSelection from '@/components/Address/AddressListScreen.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
 
   onMounted(() => {});
@@ -24,7 +24,7 @@
 </script>
 
 <template>
-  <div class="cart-drawer w-full md:max-w-lg h-screen">
+  <div class="bag-drawer w-full md:max-w-lg h-screen">
     <div class="h-screen flex flex-col bg-white">
       <MobileTopBar class="z-10" title="Sacola">
         <template #left>

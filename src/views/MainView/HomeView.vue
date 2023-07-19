@@ -7,7 +7,7 @@
   import MainViewLayout from '@/components/MainViewLayout.vue';
   import IconRounded from '@/components/IconRounded.vue';
   import { useCustomerAddressStore } from '@/stores/address';
-  import AddressSelection from '@/components/AddressSelection.vue';
+  import AddressSelection from '@/components/Address/AddressListScreen.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import { useRouter } from 'vue-router';
 

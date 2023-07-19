@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { onMounted, reactive, ref, watch } from 'vue';
-  import MobileTopBar from '@/components/MobileTopBar.vue';
+  import MobileTopBar from '@/components/Screen/ScreenHeader.vue';
   import StoreOutlineIcon from 'vue-material-design-icons/StoreOutline.vue';
   import StarIcon from 'vue-material-design-icons/Star.vue';
   import CircleSmallIcon from 'vue-material-design-icons/CircleSmall.vue';

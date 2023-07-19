@@ -1,14 +1,14 @@
 <script setup lang="ts">
-  import CartOutlineIcon from 'vue-material-design-icons/CartOutline.vue';
-  import CartDrawer from '@/components/CartDrawer.vue';
+  import ShoppingOutlineIcon from 'vue-material-design-icons/ShoppingOutline.vue';
+  import BagDrawer from '@/components/BagDrawer.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import { markRaw } from 'vue';
   import { useRouter } from 'vue-router';
 
   const router = useRouter();
   const drawersControlStore = useDrawersControlStore();
-  const showCart = () => {
-    const drawer = drawersControlStore.add(markRaw(CartDrawer), {});
+  const showBag = () => {
+    const drawer = drawersControlStore.add(markRaw(BagDrawer), {});
     router.push({ hash: `#${drawer.id}` });
   };
 </script>
@@ -17,7 +17,7 @@
   <div class="bg-white sticky bottom-16 p-4 flex border-t gap-4">
     <button
       class="flex-1 px-4 py-3 grid grid-cols-3 items-center rounded-lg bg-red-500 text-white font-bold"
-      @click="showCart"
+      @click="showBag"
     >
       <span class="inline-flex">
         <span class="relative">
@@ -26,7 +26,7 @@
           >
             1
           </span>
-          <CartOutlineIcon />
+          <ShoppingOutlineIcon />
         </span>
       </span>
       <span>Ver sacola</span>
