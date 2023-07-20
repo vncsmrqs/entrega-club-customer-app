@@ -236,7 +236,7 @@
   window.initMap = initMap;
 
   const distanceError = ref(false);
-  let distanceErrorTimeoutId = 0;
+  let distanceErrorTimeoutId: any = 0;
   onMounted(() => {
     initMap();
   });
