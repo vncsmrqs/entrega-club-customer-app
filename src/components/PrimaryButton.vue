@@ -10,6 +10,6 @@
 
 <style scoped>
   .primary-button {
-    @apply w-full rounded-xl text-lg text-white bg-red-600 p-3 font-semibold flex justify-center gap-2 items-center;
+    @apply w-full rounded-xl text-lg text-white bg-purple-600 p-3 font-semibold flex justify-center gap-2 items-center;
   }
 </style>

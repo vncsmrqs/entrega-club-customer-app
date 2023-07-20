@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { markRaw, onMounted, ref } from 'vue';
+  import { markRaw, onMounted } from 'vue';
   import ScreenHeader from '@/components/Screen/ScreenHeader.vue';
   import ChevronRightIcon from 'vue-material-design-icons/ChevronRight.vue';
   import PlusIcon from 'vue-material-design-icons/Plus.vue';
@@ -78,12 +78,12 @@
                 v-for="address in customerAddressStore.availableAddressList"
                 :key="address.id"
                 class="p-4 flex items-center gap-4 border rounded-xl cursor-pointer transition-colors"
-                :class="{ 'border-red-600': isSelected(address) }"
+                :class="{ 'border-purple-600': isSelected(address) }"
                 @click="() => selectAddress(address)"
               >
                 <input
                   v-if="isSelected(address)"
-                  class="text-red-600 ring-0"
+                  class="text-purple-600 ring-0"
                   type="checkbox"
                   checked
                 />

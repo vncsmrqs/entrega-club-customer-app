@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <button class="secondary-button">
@@ -11,6 +10,6 @@
 
 <style scoped>
   .secondary-button {
-    @apply w-full rounded-xl text-lg text-red-600 bg-red-100 p-3 font-semibold flex justify-center gap-2 items-center;
+    @apply w-full rounded-xl text-lg text-purple-600 bg-purple-100 p-3 font-semibold flex justify-center gap-2 items-center;
   }
 </style>

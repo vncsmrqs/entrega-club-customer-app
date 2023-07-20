@@ -145,20 +145,22 @@
     }
 
     const locationCenter = new google.maps.Circle({
-      strokeColor: '#FF0000',
-      strokeOpacity: 0.3,
+      strokeColor: '#7d3af2',
+      strokeOpacity: 0.2,
       strokeWeight: 2,
-      fillColor: '#FF0000',
-      fillOpacity: 0.1,
+      fillColor: '#7d3af2',
+      fillOpacity: 0.05,
       map,
       center: centerCoordinates,
       radius: 200,
     });
 
-    locationButton.textContent = 'Pan to Current Location';
-    locationButton.classList.add('custom-map-control-button');
-
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+    // locationButton.textContent = 'Pan to Current Location';
+    // locationButton.classList.add('custom-map-control-button');
+    // map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+    // locationButton.addEventListener('click', () => {
+    //   goToCurrentLocation();
+    // });
 
     map.addListener('center_changed', () => {
       idle.value = false;
@@ -173,15 +175,15 @@
         longitude: coordinates?.lng() || 0,
       };
 
-      if (circleContainsLocation(coordinates, locationCenter)) {
-      } else {
+      if (!circleContainsLocation(coordinates, locationCenter)) {
+        distanceError.value = true;
+        clearTimeout(distanceErrorTimeoutId);
+        distanceErrorTimeoutId = setTimeout(() => {
+          distanceError.value = false;
+        }, 5000);
         map.setCenter(centerCoordinates);
+        map.setZoom(16);
       }
-    });
-
-    locationButton.addEventListener('click', () => {
-      // Try HTML5 geolocation.
-      goToCurrentLocation();
     });
   }
 
@@ -233,6 +235,8 @@
   }
   window.initMap = initMap;
 
+  const distanceError = ref(false);
+  let distanceErrorTimeoutId = 0;
   onMounted(() => {
     initMap();
   });
@@ -246,13 +250,32 @@
       </template>
       Adicionar endereço
     </ScreenHeader>
-    <ScreenMain class="p-0 relative w-full h-full">
+    <ScreenMain class="relative w-full h-full" :with-padding="false">
+      <Transition name="fade">
+        <div
+          v-if="distanceError"
+          class="w-full z-10 bg-red-500 font-semibold text-white px-5 py-4 absolute top-0"
+        >
+          Você informou um local muito longe do endereço selecionado.
+        </div>
+      </Transition>
       <div class="marker">
+        <Transition name="fade">
+          <div
+            v-if="idle"
+            class="w-64 absolute bottom-0 mb-14 px-6 p-4 rounded-lg bg-white shadow text-center flex flex-col"
+          >
+            <span class="text-lg font-semibold">Você está aqui?</span>
+            <span class="text-sm text-gray-600"
+              >Ajuste para a localização exata</span
+            >
+          </div>
+        </Transition>
         <MapMarkerIcon
           class="marker-icon absolute bottom-0"
           :class="{
-            'text-gray-800 bottom-2': !idle,
-            'text-red-600': idle,
+            'text-gray-800 opacity-50 bottom-2': !idle,
+            'text-purple-600': idle,
           }"
           :size="48"
         ></MapMarkerIcon>
