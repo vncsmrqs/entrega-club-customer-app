@@ -51,6 +51,11 @@
 
   const idle = ref(true);
 
+  const centerCoordinates = {
+    lat: -18.913878,
+    lng: -48.213595,
+  };
+
   // Note: This example requires that you consent to location sharing when
   // prompted by your browser. If you see the error "The Geolocation service
   // failed.", it means you probably did not give permission for the browser to
@@ -60,15 +65,13 @@
 
   function initMap(): void {
     map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
-      center: {
-        lat: -18.913878,
-        lng: -48.213595,
-      },
+      center: centerCoordinates,
       zoom: 16,
       zoomControl: false,
       streetViewControl: false,
       fullscreenControl: false,
       mapTypeControl: false,
+      gestureHandling: 'greedy',
       styles: [
         {
           featureType: 'landscape.man_made',
@@ -132,55 +135,82 @@
 
     const locationButton = document.createElement('button');
 
+    function circleContainsLocation(point: any, circle: any) {
+      var radius = circle.getRadius();
+      var center = circle.getCenter();
+      return (
+        google.maps.geometry.spherical.computeDistanceBetween(point, center) <=
+        radius
+      );
+    }
+
+    const locationCenter = new google.maps.Circle({
+      strokeColor: '#FF0000',
+      strokeOpacity: 0.3,
+      strokeWeight: 2,
+      fillColor: '#FF0000',
+      fillOpacity: 0.1,
+      map,
+      center: centerCoordinates,
+      radius: 200,
+    });
+
     locationButton.textContent = 'Pan to Current Location';
     locationButton.classList.add('custom-map-control-button');
 
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 
-    // let i = 0;
-    // map.addListener('center_changed', () => {
-    //   console.log('mudou ' + i++);
-    // });
-
-    map.addListener('dragstart', () => {
+    map.addListener('center_changed', () => {
       idle.value = false;
     });
 
-    map.addListener('dragend', () => {
+    map.addListener('idle', () => {
       idle.value = true;
       const coordinates = map.getCenter();
+
       form.coordinates = {
         latitude: coordinates?.lat() || 0,
         longitude: coordinates?.lng() || 0,
       };
-      console.log(form.coordinates);
+
+      if (circleContainsLocation(coordinates, locationCenter)) {
+      } else {
+        map.setCenter(centerCoordinates);
+      }
     });
 
     locationButton.addEventListener('click', () => {
       // Try HTML5 geolocation.
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position: GeolocationPosition) => {
-            const pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            };
-
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
-            map.setCenter(pos);
-          },
-          () => {
-            handleLocationError(true, infoWindow, map.getCenter()!);
-          },
-        );
-      } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter()!);
-      }
+      goToCurrentLocation();
     });
   }
+
+  const goToCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position: GeolocationPosition) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+
+          infoWindow.setPosition(pos);
+          infoWindow.setContent('Location found.');
+          infoWindow.open(map);
+          map.setCenter(pos);
+        },
+        () => {
+          handleLocationError(true, infoWindow, map.getCenter()!);
+        },
+        {
+          enableHighAccuracy: true,
+        },
+      );
+    } else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false, infoWindow, map.getCenter()!);
+    }
+  };
 
   function handleLocationError(
     browserHasGeolocation: boolean,
@@ -255,7 +285,7 @@
     @apply flex flex-col items-center absolute z-10 pointer-events-none;
     top: 50%;
     left: 50%;
-    transform: translateX(-50%) translateY(-100%);
+    transform: translateX(-50%);
   }
 
   .marker-shadow {
