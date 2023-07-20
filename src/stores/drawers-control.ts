@@ -6,9 +6,10 @@ import { generateId } from '@/utils';
 export type Drawer<ComponentType = any, ComponentProps = any> = {
   id: string;
   state: 'CLOSED' | 'OPENED';
-  beforeHide?: Function;
+  destroyWhenClosed: boolean;
   component: ComponentType;
   componentProps: ComponentProps;
+  beforeHide?: Function;
 };
 
 export const useDrawersControlStore = defineStore('drawers-control', () => {
@@ -26,15 +27,17 @@ export const useDrawersControlStore = defineStore('drawers-control', () => {
   const add = <ComponentType = Component, ComponentProps = any>(
     component: ComponentType,
     componentProps: ComponentProps,
+    destroyWhenClosed: boolean = true,
     beforeHide?: Function,
   ) => {
     const id = generateId(8);
     const drawer: Drawer<ComponentType, ComponentProps> = {
       id,
       state: 'CLOSED',
-      beforeHide,
+      destroyWhenClosed,
       component,
       componentProps,
+      beforeHide,
     };
     drawersControl.drawers.push(drawer);
     return drawer;

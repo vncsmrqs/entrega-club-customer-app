@@ -1,4 +1,4 @@
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { generateId, timeout } from '@/utils';
 
@@ -45,20 +45,34 @@ export const addressListFixture: Address[] = [1, 2, 3, 4, 5].map((_, i) =>
 export const useCustomerAddressStore = defineStore('customer-address', () => {
   /* state */
   const selectedAddress = ref<Address | null>(null);
-  const availableAddressList = ref<Address[]>([]);
+  const _availableAddressList = ref<Address[]>([]);
   const loading = ref<boolean>(false);
   const error = ref<string | null>(null);
+
+  const deleteAddress = (addressId: string) => {
+    _availableAddressList.value = _availableAddressList.value.filter(
+      (address) => addressId !== address.id,
+    );
+  };
+
   /* getters */
+  const availableAddressList = computed(() => {
+    return _availableAddressList.value
+      .map((address) => address)
+      .sort((address) => {
+        return address.id === selectedAddress.value?.id ? -1 : 0;
+      });
+  });
 
   /* actions */
   const loadCustomerAddresses = async (): Promise<void> => {
     loading.value = true;
     try {
-      await timeout(3000);
-      availableAddressList.value = addressListFixture;
+      await timeout(1000);
+      _availableAddressList.value = addressListFixture;
       error.value = null;
     } catch (e: any) {
-      availableAddressList.value = [];
+      _availableAddressList.value = [];
       error.value = e.toString();
     } finally {
       loading.value = false;
@@ -87,13 +101,14 @@ export const useCustomerAddressStore = defineStore('customer-address', () => {
   return {
     /* state */
     selectedAddress,
-    availableAddressList,
     loading,
     error,
 
     /* getters */
+    availableAddressList,
 
     /* actions */
+    deleteAddress,
     loadCustomerAddresses,
     loadCurrentAddress,
     selectAddress,

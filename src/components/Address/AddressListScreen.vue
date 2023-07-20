@@ -17,7 +17,6 @@
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import AddAddressScreen from '@/components/Address/AddAddressScreen.vue';
   import IconButton from '@/components/IconButton.vue';
-  import DeleteAddressScreen from '@/components/Address/DeleteAddressScreen.vue';
   import EditAddressScreen from '@/components/Address/EditAddressScreen.vue';
 
   const customerAddressStore = useCustomerAddressStore();
@@ -42,7 +41,7 @@
     router.push({ hash: `#${drawer.id}` });
   };
 
-  const hide = () => {
+  const back = () => {
     router.back();
   };
 
@@ -54,16 +53,10 @@
 
   const selectAddress = (address: Address) => {
     selectedAddress.value = address;
+    customerAddressStore.selectAddress(address);
     setTimeout(() => {
-      saveAndClose();
-    }, 200);
-  };
-
-  const saveAndClose = () => {
-    if (selectedAddress.value) {
-      customerAddressStore.selectAddress(selectedAddress.value);
-    }
-    hide();
+      back();
+    }, 300);
   };
 </script>
 
@@ -80,35 +73,37 @@
     <template v-else>
       <ScreenMain>
         <ScreenContent>
-          <div class="flex flex-col gap-4">
-            <div
-              v-for="address in customerAddressStore.availableAddressList"
-              :key="address.id"
-              class="p-4 flex items-center gap-4 border rounded-xl cursor-pointer transition-colors"
-              :class="{ 'border-red-600': isSelected(address) }"
-              @click="() => selectAddress(address)"
-            >
-              <input
-                class="text-red-600 ring-0"
-                v-model="selectedAddress"
-                type="radio"
-                :value="address"
-              />
-              <div class="flex-1">
-                <div class="text-gray-700">
-                  {{ address.streetName }}, {{ address.streetNumber }}
+          <div class="flex flex-col gap-4 relative">
+            <TransitionGroup name="list">
+              <div
+                v-for="address in customerAddressStore.availableAddressList"
+                :key="address.id"
+                class="p-4 flex items-center gap-4 border rounded-xl cursor-pointer transition-colors"
+                :class="{ 'border-red-600': isSelected(address) }"
+                @click="() => selectAddress(address)"
+              >
+                <input
+                  class="text-red-600 ring-0"
+                  v-model="selectedAddress"
+                  type="radio"
+                  :value="address"
+                />
+                <div class="flex-1">
+                  <div class="text-gray-700">
+                    {{ address.streetName }}, {{ address.streetNumber }}
+                  </div>
+                  <div class="text-sm text-gray-500">
+                    {{ address.neighborhood }}, {{ address.city }} -
+                    {{ address.state }}
+                  </div>
                 </div>
-                <div class="text-sm text-gray-500">
-                  {{ address.neighborhood }}, {{ address.city }} -
-                  {{ address.state }}
+                <div class="inline-flex flex-col gap-2">
+                  <IconButton @click.stop="() => editAddress(address)">
+                    <ChevronRightIcon />
+                  </IconButton>
                 </div>
               </div>
-              <div class="inline-flex flex-col gap-2">
-                <IconButton @click.stop="() => editAddress(address)">
-                  <ChevronRightIcon />
-                </IconButton>
-              </div>
-            </div>
+            </TransitionGroup>
           </div>
         </ScreenContent>
       </ScreenMain>

@@ -8,7 +8,7 @@
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import { useRouter } from 'vue-router';
   import type { Address } from '@/stores/address';
-  import { markRaw } from 'vue';
+  import { markRaw, onMounted } from 'vue';
   import DeleteAddressScreen from '@/components/Address/DeleteAddressScreen.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import IconButton from '@/components/IconButton.vue';
@@ -16,6 +16,7 @@
   import DefaultButton from '@/components/DefaultButton.vue';
 
   const props = defineProps<{
+    // isOpened: boolean;
     address: Address;
   }>();
 
@@ -23,9 +24,13 @@
   const drawersControlStore = useDrawersControlStore();
 
   const deleteAddress = (address: Address) => {
-    const drawer = drawersControlStore.add(markRaw(DeleteAddressScreen), {
-      address,
-    });
+    const drawer = drawersControlStore.add<typeof DeleteAddressScreen>(
+      markRaw(DeleteAddressScreen),
+      {
+        address,
+        deleted: () => back(),
+      },
+    );
     router.push({ hash: `#${drawer.id}` });
   };
 

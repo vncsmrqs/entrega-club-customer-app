@@ -9,10 +9,20 @@
   import DefaultButton from '@/components/DefaultButton.vue';
   import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue';
   import type { Address } from '@/stores/address';
+  import { useCustomerAddressStore } from '@/stores/address';
 
   const props = defineProps<{
     address: Address;
+    deleted: Function;
   }>();
+
+  const customerAddressStore = useCustomerAddressStore();
+
+  const confirmDelete = () => {
+    customerAddressStore.deleteAddress(props.address.id);
+    props.deleted();
+    back();
+  };
 
   const router = useRouter();
 
@@ -49,7 +59,7 @@
       </div>
     </ScreenMain>
     <ScreenFooter>
-      <SecondaryButton @click="back" class="mb-4">
+      <SecondaryButton @click="confirmDelete" class="mb-4">
         <template #left>
           <DeleteOutlineIcon />
         </template>

@@ -129,10 +129,13 @@
     @hide="hide"
     :index="index"
   >
-    <component
-      :is="drawer.component"
-      v-bind="drawer.componentProps"
-    ></component>
+    <Transition name="fade">
+      <component
+        v-if="drawer.state === 'OPENED' || !drawer.destroyWhenClosed"
+        :is="drawer.component"
+        v-bind="drawer.componentProps"
+      ></component>
+    </Transition>
   </RightDrawer>
 </template>
 
