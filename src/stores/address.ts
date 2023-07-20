@@ -55,6 +55,11 @@ export const useCustomerAddressStore = defineStore('customer-address', () => {
     );
   };
 
+  const addAddress = async (address: Address): Promise<Address> => {
+    _availableAddressList.value.push(address);
+    return address;
+  };
+
   /* getters */
   const availableAddressList = computed(() => {
     return _availableAddressList.value
@@ -108,6 +113,7 @@ export const useCustomerAddressStore = defineStore('customer-address', () => {
     availableAddressList,
 
     /* actions */
+    addAddress,
     deleteAddress,
     loadCustomerAddresses,
     loadCurrentAddress,

@@ -30,7 +30,9 @@
   const drawersControlStore = useDrawersControlStore();
 
   const addAddress = () => {
-    const drawer = drawersControlStore.add(markRaw(AddAddressScreen), {});
+    const drawer = drawersControlStore.add(markRaw(AddAddressScreen), {
+      added: async () => back(),
+    });
     router.push({ hash: `#${drawer.id}` });
   };
 
@@ -45,18 +47,15 @@
     router.back();
   };
 
-  const selectedAddress = ref(customerAddressStore.selectedAddress);
-
   const isSelected = (address: Address) => {
-    return selectedAddress.value?.id === address.id;
+    return customerAddressStore.selectedAddress?.id === address.id;
   };
 
   const selectAddress = (address: Address) => {
-    selectedAddress.value = address;
     customerAddressStore.selectAddress(address);
     setTimeout(() => {
       back();
-    }, 300);
+    }, 500);
   };
 </script>
 
@@ -83,10 +82,10 @@
                 @click="() => selectAddress(address)"
               >
                 <input
+                  v-if="isSelected(address)"
                   class="text-red-600 ring-0"
-                  v-model="selectedAddress"
-                  type="radio"
-                  :value="address"
+                  type="checkbox"
+                  checked
                 />
                 <div class="flex-1">
                   <div class="text-gray-700">

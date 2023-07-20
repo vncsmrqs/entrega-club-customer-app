@@ -7,6 +7,40 @@
   import CheckIcon from 'vue-material-design-icons/Check.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import { useRouter } from 'vue-router';
+  import { useCustomerAddressStore } from '@/stores/address';
+  import type { Address } from '@/stores/address';
+  import { reactive } from 'vue';
+  import { generateId } from '@/utils';
+
+  const props = defineProps<{
+    added: Function;
+  }>();
+
+  const customerAddressStore = useCustomerAddressStore();
+
+  const form: Address = reactive({
+    id: generateId(),
+    city: 'Jaíba',
+    country: 'BR',
+    neighborhood: 'Veredas',
+    state: 'MG',
+    streetName: 'Rua Geraldo Paixão Oliveira',
+    streetNumber: '164',
+    coordinates: {
+      latitude: 0,
+      longitude: 0,
+    },
+    reference: 'Na rua do Atacadão Outro Verde',
+    complement: 'Casa',
+  });
+
+  const confirmAdd = async () => {
+    const address = await customerAddressStore.addAddress(form);
+    props.added(address);
+    back();
+    await customerAddressStore.loadCustomerAddresses();
+    await customerAddressStore.selectAddress(address);
+  };
 
   const router = useRouter();
 
@@ -23,9 +57,9 @@
       </template>
       Adicionar endereço
     </ScreenHeader>
-    <ScreenMain> Form</ScreenMain>
+    <ScreenMain></ScreenMain>
     <ScreenFooter>
-      <PrimaryButton @click="back">
+      <PrimaryButton @click="confirmAdd">
         Salvar
         <template #right>
           <CheckIcon />
