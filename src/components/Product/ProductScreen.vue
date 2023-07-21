@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { onMounted, reactive, ref } from 'vue';
+  import { onMounted, reactive } from 'vue';
   import StoreOutlineIcon from 'vue-material-design-icons/StoreOutline.vue';
   import StarIcon from 'vue-material-design-icons/Star.vue';
   import CircleSmallIcon from 'vue-material-design-icons/CircleSmall.vue';
@@ -9,7 +9,6 @@
   import CommentTextOutlineIcon from 'vue-material-design-icons/CommentTextOutline.vue';
   import { useRouter } from 'vue-router';
   import { useProductStore } from '@/stores/product';
-
   import type { Choice, GarnishItem, Product } from '@/stores/product';
   import { useMerchantStore } from '@/stores/merchant';
   import { formatToCurrency } from '@/utils';
@@ -24,11 +23,15 @@
 
   const router = useRouter();
 
+  const props = defineProps<{
+    productProp?: Product;
+    productCartProp?: ProductCart;
+  }>();
+
   const merchantStore = useMerchantStore();
   const merchant = merchantStore.merchant;
 
   const productStore = useProductStore();
-  const product = productStore.product;
 
   let productCart: ProductCart = reactive({
     selectedChoices: [],
@@ -36,8 +39,10 @@
     comment: null,
   });
 
+  const product = props.productProp || productStore.product;
+
   onMounted(async () => {
-    productCart = generateProductCart(product);
+    populateProductCart(product);
   });
 
   type ProductCart = {
@@ -57,15 +62,8 @@
     totalItems: number;
   };
 
-  const generateProductCart = (product: Product): ProductCart => {
-    const productCart: ProductCart = {
-      productDetails: product,
-      selectedChoices: [],
-      totalItems: 1,
-      comment: null,
-    };
-
-    return reactive<ProductCart>(productCart);
+  const populateProductCart = (product: Product): void => {
+    productCart.productDetails = product;
   };
 
   const findSelectedChoiceIndexById = (
@@ -322,10 +320,6 @@
   };
 
   const addProductToCart = () => {
-    closeProductDrawer();
-  };
-
-  const closeProductDrawer = () => {
     back();
   };
 

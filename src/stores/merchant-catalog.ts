@@ -10,12 +10,27 @@ export type CatalogMenu = {
   available: boolean;
   products: Product[];
 };
+export type CatalogSection = {
+  id: string;
+  available: boolean;
+  name: string;
+  products: Product[];
+};
 
 export type MerchantCatalog = {
+  sections: CatalogSection[];
   menus: CatalogMenu[];
 };
 
 const merchantCatalogFixture = {
+  sections: [
+    {
+      id: generateId(),
+      available: true,
+      name: 'Os mais pedidos',
+      products: [1, 2, 3, 4, 5].map(() => productFixture),
+    },
+  ],
   menus: [
     {
       id: generateId(),

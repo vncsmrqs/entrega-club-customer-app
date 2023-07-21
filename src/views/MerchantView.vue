@@ -8,7 +8,7 @@
   import type { MerchantCatalog } from '@/stores/merchant-catalog';
   import { useMerchantCatalogStore } from '@/stores/merchant-catalog';
   import type { Product } from '@/stores/product';
-  import ProductDrawer from '@/components/Product/ProductScreen.vue';
+  import ProductScreen from '@/components/Product/ProductScreen.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import { useRouter } from 'vue-router';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
@@ -58,7 +58,9 @@
   const drawersControlStore = useDrawersControlStore();
 
   const showProduct = (product: Product) => {
-    const drawer = drawersControlStore.add(markRaw(ProductDrawer), { product });
+    const drawer = drawersControlStore.add(markRaw(ProductScreen), {
+      productProp: product,
+    });
     router.push({ hash: `#${drawer.id}` });
   };
 
@@ -124,31 +126,42 @@
       </ScreenSide>
       <ScreenContent>
         <div class="md:border rounded-xl">
-          <div class="border-b border-t md:border-t-0">
+          <div
+            v-for="section in merchantCatalog.sections"
+            :key="section.id"
+            class="border-b border-t md:border-t-0"
+          >
             <div class="w-full text-xl font-bold p-5 border-b">
-              Os mais pedidos
+              {{ section.name }}
             </div>
             <div class="gap-4 flex flex-nowrap overflow-x-auto p-5">
-              <RouterLink
-                v-for="product in ['1', '3', '3', '4', '5']"
-                :key="product"
-                class="w-2/5 flex-shrink-0 rounded-lg border"
-                :to="`?productId=${product}`"
+              <div
+                v-for="product in section.products"
+                :key="product.id"
+                class="w-56 flex-shrink-0 rounded-lg border cursor-pointer"
+                @click="() => showProduct(product)"
               >
-                <div class="w-full aspect-photo bg-gray-100"></div>
+                <div class="w-full aspect-photo bg-gray-100">
+                  <img
+                    class="w-full h-full object-cover"
+                    :src="product.imageUrl"
+                    :alt="product.name"
+                  />
+                </div>
                 <div class="text-sm p-2 flex flex-col gap-2">
                   <div class="h-10 text-ellipsis overflow-hidden">
-                    Nome do produto
-                    {{ product === '3' ? '(Nome bem grande mesmo)' : '' }}
+                    {{ product.name }}
                   </div>
                   <div class="flex items-center mt-2">
-                    <span class="text-green-700">R$ 40,00</span>
+                    <span class="text-green-700">
+                      {{ formatToCurrency(product.unitPrice) }}
+                    </span>
                     <div class="text-gray-500 ml-2 text-sm line-through">
-                      R$ 40,00
+                      {{ formatToCurrency(product.originalUnitPrice) }}
                     </div>
                   </div>
                 </div>
-              </RouterLink>
+              </div>
             </div>
           </div>
           <div
@@ -202,9 +215,7 @@
                   </div>
                 </div>
                 <div>
-                  <div
-                    class="w-24 aspect-photo rounded-lg border bg-primary-100"
-                  >
+                  <div class="w-24 aspect-photo rounded-lg border bg-gray-100">
                     <img
                       class="w-full h-full object-cover"
                       :src="product.imageUrl"
