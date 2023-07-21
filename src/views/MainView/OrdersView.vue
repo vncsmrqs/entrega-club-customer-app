@@ -40,7 +40,7 @@
     <div class="w-full flex-1 flex flex-col justify-center items-center">
       <div class="text-center w-3/5">
         <div
-          class="my-8 inline-flex justify-center bg-red-100 p-8 rounded-full text-red-500"
+          class="my-8 inline-flex justify-center bg-primary-100 p-8 rounded-full text-primary-600"
         >
           <FoodIcon :size="96"></FoodIcon>
         </div>
@@ -48,7 +48,7 @@
         <p class="text-sm text-gray-600">
           Experimente os melhores restaurantes perto de você
         </p>
-        <button class="w-full text-red-500 px-6 py-4 font-bold mt-10">
+        <button class="w-full text-primary-600 px-6 py-4 font-bold mt-10">
           Fazer um pedido
         </button>
       </div>

@@ -16,13 +16,13 @@
 <template>
   <div class="bg-white sticky bottom-16 p-4 flex border-t gap-4">
     <button
-      class="flex-1 px-4 py-3 grid grid-cols-3 items-center rounded-lg bg-red-500 text-white font-bold"
+      class="flex-1 px-4 py-3 grid grid-cols-3 items-center rounded-lg bg-primary-600 text-white font-bold"
       @click="showBag"
     >
       <span class="inline-flex">
         <span class="relative">
           <span
-            class="absolute -top-2 -right-2 rounded-lg bg-white text-red-500 text-xs px-1"
+            class="absolute -top-2 -right-2 rounded-lg bg-white text-primary-600 text-xs px-1"
           >
             1
           </span>

@@ -37,7 +37,7 @@
   <div class="p-4">
     <div class="flex items-center justify-between mb-4">
       <span class="font-bold">Famosos no Entrega Club</span>
-      <span class="text-xs text-red-500">Ver mais</span>
+      <span class="text-xs text-primary-600">Ver mais</span>
     </div>
     <div class="grid grid-cols-3 gap-4 dark:text-white">
       <RouterLink
@@ -47,7 +47,7 @@
         class=""
       >
         <div
-          class="rounded-lg bg-red-100 dark:bg-gray-800 border aspect-photo overflow-hidden"
+          class="rounded-lg bg-primary-100 dark:bg-gray-800 border aspect-photo overflow-hidden"
         >
           <img
             class="w-full h-full object-cover"

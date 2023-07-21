@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-red-100">
+  <div class="bg-primary-100">
     <div class="flex justify-center m-5">
       <button
         id="successButton"

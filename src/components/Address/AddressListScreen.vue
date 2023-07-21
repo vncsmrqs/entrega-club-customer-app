@@ -2,6 +2,7 @@
   import { markRaw, onMounted } from 'vue';
   import ScreenHeader from '@/components/Screen/ScreenHeader.vue';
   import ChevronRightIcon from 'vue-material-design-icons/ChevronRight.vue';
+  import CheckIcon from 'vue-material-design-icons/Check.vue';
   import PlusIcon from 'vue-material-design-icons/Plus.vue';
   import { useCustomerAddressStore } from '@/stores/address';
   import type { Address } from '@/stores/address';
@@ -81,12 +82,10 @@
                 :class="{ 'border-purple-600': isSelected(address) }"
                 @click="() => selectAddress(address)"
               >
-                <input
+                <CheckIcon
+                  class="text-primary-600"
                   v-if="isSelected(address)"
-                  class="text-purple-600 ring-0"
-                  type="checkbox"
-                  checked
-                />
+                ></CheckIcon>
                 <div class="flex-1">
                   <div class="text-gray-700">
                     {{ address.streetName }}, {{ address.streetNumber }}

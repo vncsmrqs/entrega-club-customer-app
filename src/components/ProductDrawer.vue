@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { onMounted, reactive, ref, watch } from 'vue';
+  import { onMounted, reactive, ref } from 'vue';
   import MobileTopBar from '@/components/Screen/ScreenHeader.vue';
   import StoreOutlineIcon from 'vue-material-design-icons/StoreOutline.vue';
   import StarIcon from 'vue-material-design-icons/Star.vue';
@@ -8,8 +8,7 @@
   import MinusIcon from 'vue-material-design-icons/Minus.vue';
   import CheckIcon from 'vue-material-design-icons/Check.vue';
   import CommentTextOutlineIcon from 'vue-material-design-icons/CommentTextOutline.vue';
-  import { useRoute, useRouter } from 'vue-router';
-  import type { LocationQueryValue } from 'vue-router';
+  import { useRouter } from 'vue-router';
   import { useProductStore } from '@/stores/product';
 
   import type { Choice, GarnishItem, Product } from '@/stores/product';
@@ -18,7 +17,6 @@
   import ChevronLeftIcon from 'vue-material-design-icons/ChevronLeft.vue';
   import CloseIcon from 'vue-material-design-icons/Close.vue';
 
-  const route = useRoute();
   const router = useRouter();
 
   const merchantStore = useMerchantStore();
@@ -32,12 +30,6 @@
     totalItems: 1,
     comment: null,
   });
-
-  let productId = ref<string | null>('');
-
-  const show = (newProductId: string) => {
-    productId.value = newProductId;
-  };
 
   onMounted(async () => {
     productCart = generateProductCart(product);
@@ -362,7 +354,7 @@
         </div>
       </template>
     </MobileTopBar>
-    <div class="bg-red-500 w-full aspect-photo overflow-hidden">
+    <div class="bg-primary-600 w-full aspect-photo overflow-hidden">
       <img
         class="w-full h-full object-cover"
         :src="product.imageUrl"
@@ -498,7 +490,7 @@
                   choice,
                   garnishItem,
                 ) > 0
-                  ? 'text-red-500'
+                  ? 'text-primary-600'
                   : 'text-gray-300',
               ]"
               @click.stop="
@@ -529,7 +521,7 @@
               :class="[
                 getTotalOfSelectedItemsOnChoice(productCart, choice) <
                 choice.max
-                  ? 'text-red-500'
+                  ? 'text-primary-600'
                   : 'text-gray-300',
               ]"
               @click.stop="
@@ -542,7 +534,7 @@
             <div
               class="w-5 h-5 bg-gray-100 border rounded-full"
               :class="{
-                'border-red-500 border-4 bg-white':
+                'border-primary-600 border-4 bg-white':
                   !!getNumberOfGarnishItemsAddedToChoice(
                     productCart,
                     choice,
@@ -580,7 +572,7 @@
           <MinusIcon
             :size="24"
             :class="[
-              productCart.totalItems > 1 ? 'text-red-500' : 'text-gray-300',
+              productCart.totalItems > 1 ? 'text-primary-600' : 'text-gray-300',
             ]"
           ></MinusIcon>
         </button>
@@ -588,12 +580,12 @@
           {{ productCart.totalItems }}
         </span>
         <button @click="() => incrementProductCartItems(productCart)">
-          <PlusIcon :size="24" class="text-red-500"></PlusIcon>
+          <PlusIcon :size="24" class="text-primary-600"></PlusIcon>
         </button>
       </div>
       <button
         @click="addProductToCart"
-        class="flex-1 px-4 py-3 flex justify-between items-center rounded-lg bg-red-500 text-white font-bold"
+        class="flex-1 px-4 py-3 flex justify-between items-center rounded-lg bg-primary-600 text-white font-bold"
       >
         <span>Adicionar</span>
         <span>{{ formatToCurrency(totalPrice(productCart)) }}</span>

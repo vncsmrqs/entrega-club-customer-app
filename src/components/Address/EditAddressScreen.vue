@@ -8,7 +8,7 @@
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import { useRouter } from 'vue-router';
   import type { Address } from '@/stores/address';
-  import { markRaw, onMounted } from 'vue';
+  import { markRaw } from 'vue';
   import DeleteAddressScreen from '@/components/Address/DeleteAddressScreen.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import IconButton from '@/components/IconButton.vue';
@@ -46,7 +46,10 @@
         <BackButton></BackButton>
       </template>
       <template #right>
-        <IconButton class="text-red-600" @click="() => deleteAddress(address)">
+        <IconButton
+          class="text-primary-600"
+          @click="() => deleteAddress(address)"
+        >
           <DeleteOutlineIcon :size="24" />
         </IconButton>
       </template>

@@ -54,7 +54,7 @@
       >
         <button
           @click="openAddress"
-          class="flex-1 px-4 py-3 flex justify-between items-center rounded-lg bg-red-500 text-white font-bold"
+          class="flex-1 px-4 py-3 flex justify-between items-center rounded-lg bg-primary-600 text-white font-bold"
         >
           <span>Continuar</span>
         </button>

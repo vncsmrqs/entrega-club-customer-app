@@ -44,7 +44,7 @@
         class="w-full h-full flex flex-col justify-center items-center gap-4"
       >
         <div
-          class="w-24 h-24 rounded-full bg-red-100 text-red-500 flex justify-center items-center"
+          class="w-24 h-24 rounded-full bg-primary-100 text-primary-600 flex justify-center items-center"
         >
           <DeleteOutlineIcon :size="48" />
         </div>

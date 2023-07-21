@@ -61,12 +61,14 @@
   // failed.", it means you probably did not give permission for the browser to
   // locate you.
   let map: google.maps.Map;
-  let infoWindow: google.maps.InfoWindow;
+  // let infoWindow: google.maps.InfoWindow;
+
+  const defaultZoom = 17;
 
   function initMap(): void {
     map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
       center: centerCoordinates,
-      zoom: 16,
+      zoom: defaultZoom,
       zoomControl: false,
       streetViewControl: false,
       fullscreenControl: false,
@@ -133,8 +135,6 @@
     });
     infoWindow = new google.maps.InfoWindow();
 
-    const locationButton = document.createElement('button');
-
     function circleContainsLocation(point: any, circle: any) {
       var radius = circle.getRadius();
       var center = circle.getCenter();
@@ -155,6 +155,7 @@
       radius: 200,
     });
 
+    // const locationButton = document.createElement('button');
     // locationButton.textContent = 'Pan to Current Location';
     // locationButton.classList.add('custom-map-control-button');
     // map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
@@ -182,51 +183,51 @@
           distanceError.value = false;
         }, 5000);
         map.setCenter(centerCoordinates);
-        map.setZoom(16);
+        map.setZoom(defaultZoom);
       }
     });
   }
 
-  const goToCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position: GeolocationPosition) => {
-          const pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
+  // const goToCurrentLocation = () => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position: GeolocationPosition) => {
+  //         const pos = {
+  //           lat: position.coords.latitude,
+  //           lng: position.coords.longitude,
+  //         };
+  //
+  //         infoWindow.setPosition(pos);
+  //         infoWindow.setContent('Location found.');
+  //         infoWindow.open(map);
+  //         map.setCenter(pos);
+  //       },
+  //       () => {
+  //         handleLocationError(true, infoWindow, map.getCenter()!);
+  //       },
+  //       {
+  //         enableHighAccuracy: true,
+  //       },
+  //     );
+  //   } else {
+  //     // Browser doesn't support Geolocation
+  //     handleLocationError(false, infoWindow, map.getCenter()!);
+  //   }
+  // };
 
-          infoWindow.setPosition(pos);
-          infoWindow.setContent('Location found.');
-          infoWindow.open(map);
-          map.setCenter(pos);
-        },
-        () => {
-          handleLocationError(true, infoWindow, map.getCenter()!);
-        },
-        {
-          enableHighAccuracy: true,
-        },
-      );
-    } else {
-      // Browser doesn't support Geolocation
-      handleLocationError(false, infoWindow, map.getCenter()!);
-    }
-  };
-
-  function handleLocationError(
-    browserHasGeolocation: boolean,
-    infoWindow: google.maps.InfoWindow,
-    pos: google.maps.LatLng,
-  ) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(
-      browserHasGeolocation
-        ? 'Error: The Geolocation service failed.'
-        : "Error: Your browser doesn't support geolocation.",
-    );
-    infoWindow.open(map);
-  }
+  // function handleLocationError(
+  //   browserHasGeolocation: boolean,
+  //   infoWindow: google.maps.InfoWindow,
+  //   pos: google.maps.LatLng,
+  // ) {
+  //   infoWindow.setPosition(pos);
+  //   infoWindow.setContent(
+  //     browserHasGeolocation
+  //       ? 'Error: The Geolocation service failed.'
+  //       : "Error: Your browser doesn't support geolocation.",
+  //   );
+  //   infoWindow.open(map);
+  // }
 
   declare global {
     interface Window {
@@ -254,7 +255,7 @@
       <Transition name="fade">
         <div
           v-if="distanceError"
-          class="w-full z-10 bg-red-500 font-semibold text-white px-5 py-4 absolute top-0"
+          class="w-full z-10 bg-danger-600 font-semibold text-white px-5 py-4 absolute top-0"
         >
           Você informou um local muito longe do endereço selecionado.
         </div>
@@ -263,9 +264,9 @@
         <Transition name="fade">
           <div
             v-if="idle"
-            class="w-64 absolute bottom-0 mb-14 px-6 p-4 rounded-lg bg-white shadow text-center flex flex-col"
+            class="w-56 absolute bottom-0 mb-14 p-4 rounded-lg bg-white shadow text-center flex flex-col"
           >
-            <span class="text-lg font-semibold">Você está aqui?</span>
+            <span class="font-semibold">Você está aqui?</span>
             <span class="text-sm text-gray-600"
               >Ajuste para a localização exata</span
             >

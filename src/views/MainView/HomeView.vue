@@ -33,7 +33,7 @@
         <div
           class="flex border-b gap-4 bg-white dark:border-gray-950 items-center dark:bg-gray-800 dark:text-white"
         >
-          <div class="ml-5 flex items-center text-red-500">
+          <div class="ml-5 flex items-center text-primary-600">
             <MopedOutlineIcon :size="36"></MopedOutlineIcon>
             <h1 class="ml-1 text-lg font-bold">
               <span>Entrega</span>
@@ -53,28 +53,28 @@
           class="bg-white py-2 text-center flex justify-center items-center text-gray-500 text-sm font-bold"
         >
           <span>{{ customerAddressStore.selectedAddress?.streetName }}</span>
-          <ChevronDownIcon class="text-red-500"></ChevronDownIcon>
+          <ChevronDownIcon class="text-primary-600"></ChevronDownIcon>
         </div>
       </div>
       <div class="flex p-4 gap-2 text-sm">
         <RouterLink :to="{ name: 'home-default' }" v-slot="{ isActive }">
           <span
-            class="text-red-500 font-medium rounded-lg px-4 py-2 text-center"
-            :class="{ 'bg-red-100': isActive }"
+            class="text-primary-600 font-medium rounded-lg px-4 py-2 text-center"
+            :class="{ 'bg-primary-100': isActive }"
             >Início</span
           >
         </RouterLink>
         <RouterLink :to="{ name: 'restaurants' }" v-slot="{ isActive }">
           <span
-            class="text-red-500 font-medium rounded-lg px-4 py-2 text-center"
-            :class="{ 'bg-red-100': isActive }"
+            class="text-primary-600 font-medium rounded-lg px-4 py-2 text-center"
+            :class="{ 'bg-primary-100': isActive }"
             >Restaurantes</span
           >
         </RouterLink>
         <RouterLink :to="{ name: 'liquor-store' }" v-slot="{ isActive }">
           <span
-            class="text-red-500 font-medium rounded-lg px-4 py-2 text-center"
-            :class="{ 'bg-red-100': isActive }"
+            class="text-primary-600 font-medium rounded-lg px-4 py-2 text-center"
+            :class="{ 'bg-primary-100': isActive }"
             >Bebidas</span
           >
         </RouterLink>

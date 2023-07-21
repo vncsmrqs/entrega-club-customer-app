@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="w-full h-full text-red-600 flex justify-center items-center">
+  <div class="w-full h-full text-primary-600 flex justify-center items-center">
     <LoaderComponent />
   </div>
 </template>

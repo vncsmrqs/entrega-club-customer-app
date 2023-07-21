@@ -11,7 +11,6 @@
   import type { MerchantCatalog } from '@/stores/merchant-catalog';
   import { useMerchantCatalogStore } from '@/stores/merchant-catalog';
   import type { Product } from '@/stores/product';
-  import AddressSelection from '@/components/Address/AddressListScreen.vue';
   import ProductDrawer from '@/components/ProductDrawer.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import { useRouter } from 'vue-router';
@@ -66,12 +65,12 @@
       <template #right>
         <button>
           <IconRounded ghost>
-            <MagnifyIcon class="text-red-500" />
+            <MagnifyIcon class="text-primary-600" />
           </IconRounded>
         </button>
       </template>
     </MobileTopBar>
-    <div class="bg-red-500 w-full aspect-banner">
+    <div class="bg-primary-600 w-full aspect-banner">
       <img
         class="w-full h-full object-cover"
         :src="
@@ -89,7 +88,7 @@
       <div class="flex-1">
         <h2 class="font-bold">{{ merchant.name }}</h2>
         <div class="w-full flex items-center text-sm">
-          <!--          <span class="text-red-500">Ver mais</span>-->
+          <!--          <span class="text-primary-600">Ver mais</span>-->
           <span class="flex-1 text-gray-500">
             Pedido mínimo:
             {{ formatToCurrency(merchant.minimumOrderValue) }}
@@ -133,7 +132,7 @@
         v-for="menu in merchantCatalog.menus"
         :key="menu.id"
         class="whitespace-nowrap px-4 py-2 rounded-lg bg-gray-100"
-        :class="{ 'bg-red-100 text-red-500': menu.id === menuActive }"
+        :class="{ 'bg-primary-100 text-primary-600': menu.id === menuActive }"
         :id="`menu-tab-${menu.id}`"
         @click="() => selectMenuTab(menu.id)"
       >
@@ -173,7 +172,7 @@
             </div>
           </div>
           <div>
-            <div class="w-24 aspect-photo rounded-lg border bg-red-100">
+            <div class="w-24 aspect-photo rounded-lg border bg-primary-100">
               <img
                 class="w-full h-full object-cover"
                 :src="product.imageUrl"
