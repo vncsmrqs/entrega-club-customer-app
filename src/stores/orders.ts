@@ -2,7 +2,7 @@ import { ref, computed, reactive } from 'vue';
 import { defineStore } from 'pinia';
 import type { Address } from '@/stores/address';
 import type { Phone } from '@/stores/auth';
-import type { Cart } from '@/stores/cart';
+import type { Bag } from '@/stores/bag';
 
 export type OrderMerchant = {
   id: string;
@@ -90,7 +90,7 @@ export type Order = {
     | 'CONCLUDED';
   merchant: OrderMerchant;
   payments: OrderPayment;
-  cart: Cart;
+  bag: Bag;
   deliveryMethod: OrderDeliveryMethod;
 
   fees: [];

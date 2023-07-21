@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import ShoppingOutlineIcon from 'vue-material-design-icons/ShoppingOutline.vue';
-  import BagDrawer from '@/components/BagDrawer.vue';
+  import BagDrawer from '@/components/Bag/BagScreen.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import { markRaw } from 'vue';
   import { useRouter } from 'vue-router';

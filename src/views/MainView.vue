@@ -6,7 +6,7 @@
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import AddressSelection from '@/components/Address/AddressListScreen.vue';
   import { useRouter } from 'vue-router';
-  import CartMobileBar from '@/components/BagMobileBar.vue';
+  import CartMobileBar from '@/components/Bag/BagMobileBar.vue';
 
   const customerAddressStore = useCustomerAddressStore();
 

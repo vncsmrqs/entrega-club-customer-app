@@ -72,7 +72,7 @@
     <ScreenError v-else-if="customerAddressStore.error" />
     <template v-else>
       <ScreenMain>
-        <ScreenContent>
+        <ScreenContent class="md:col-span-full">
           <div class="flex flex-col gap-4 relative">
             <TransitionGroup name="list">
               <div
