@@ -29,7 +29,6 @@
 
 <template>
   <div class="main-view dark:bg-gray-900 max-w-screen-lg w-full">
-    <AnonymousDrawerWrapper></AnonymousDrawerWrapper>
     <template v-if="ready">
       <RouterView v-slot="{ Component }">
         <transition name="fade">

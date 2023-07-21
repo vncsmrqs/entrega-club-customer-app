@@ -56,6 +56,7 @@
 
   const router = useRouter();
   const drawersControlStore = useDrawersControlStore();
+
   const showProduct = (product: Product) => {
     const drawer = drawersControlStore.add(markRaw(ProductDrawer), { product });
     router.push({ hash: `#${drawer.id}` });

@@ -20,6 +20,7 @@
   import ScreenFooter from '@/components/Screen/ScreenFooter.vue';
   import PrimaryButton from '@/components/PrimaryButton.vue';
   import IconButton from '@/components/IconButton.vue';
+  import ScreenContent from '@/components/Screen/ScreenContent.vue';
 
   const router = useRouter();
 
@@ -342,237 +343,244 @@
       {{ product.name }}
     </ScreenHeader>
     <ScreenMain :with-padding="false">
-      <div class="bg-primary-600 w-full aspect-photo overflow-hidden">
-        <img
-          class="w-full h-full object-cover"
-          :src="product.imageUrl"
-          :alt="product.name"
-        />
-      </div>
-      <div class="p-4 flex gap-4">
-        <div class="flex-1">
-          <h1 class="text-xl font-medium">{{ product.name }}</h1>
-          <div v-if="product.description" class="mt-2 text-gray-500">
-            {{ product.description }}
-          </div>
-          <div class="mt-4 flex items-center">
-            <span class="text-green-700">{{
-              formatToCurrency(product.unitPrice)
-            }}</span>
-            <div
-              v-if="product.originalUnitPrice"
-              class="text-gray-500 ml-2 text-sm line-through"
-            >
-              {{ formatToCurrency(product.originalUnitPrice) }}
+      <ScreenContent class="md:col-span-full">
+        <div class="bg-primary-600 w-full aspect-photo overflow-hidden">
+          <img
+            class="w-full h-full object-cover"
+            :src="product.imageUrl"
+            :alt="product.name"
+          />
+        </div>
+        <div class="p-4 flex gap-4">
+          <div class="flex-1">
+            <h1 class="text-xl font-medium">{{ product.name }}</h1>
+            <div v-if="product.description" class="mt-2 text-gray-500">
+              {{ product.description }}
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="m-4 p-4 border rounded-lg">
-        <div class="text-gray-500 flex items-center text-sm pb-1">
-          <StoreOutlineIcon :size="16"></StoreOutlineIcon>
-          <div class="ml-1">
-            {{ merchant.name }}
-          </div>
-          <div class="flex-1"></div>
-          <div
-            class="inline-flex bg-yellow-100 px-2 py-1 rounded-lg text-yellow-500 items-center"
-          >
-            <StarIcon :size="14"></StarIcon>
-            <span>{{ merchant.userRating }}</span>
-          </div>
-        </div>
-        <div
-          class="mt-1 pt-1 text-sm text-gray-400 flex items-center border-t border-dashed"
-        >
-          <span>30-90 min</span>
-          <CircleSmallIcon></CircleSmallIcon>
-          <span>{{ formatToCurrency(merchant.deliveryFee) }}</span>
-        </div>
-      </div>
-      <div v-for="choice in product.choices" :key="choice.id">
-        <div
-          class="sticky top-0 bg-gray-100 text-gray-500 p-4 text-xl flex justify-between z-10"
-        >
-          <div class="flex flex-col">
-            <span class="font-bold">{{ choice.name }}</span>
-            <div class="text-sm text-gray-400">
-              <span v-if="choice.min">
-                <span v-if="choice.min != choice.max" class="mr-1">
-                  Escolha pelo menos {{ choice.min }}
-                  {{ choice.min == 1 ? 'opção' : 'opções' }}.
-                </span>
-                <span
-                  >{{ getTotalOfSelectedItemsOnChoice(productCart, choice) }} de
-                  {{ choice.max }}</span
-                >
-              </span>
-              <span v-if="!choice.min">
-                Escolha até {{ choice.max }}
-                {{ choice.max == 1 ? 'opção' : 'opções' }}
-              </span>
-            </div>
-          </div>
-          <div v-if="choice.min" class="w-1/4 flex justify-end items-center">
-            <span
-              v-if="
-                choice.min >
-                getTotalOfSelectedItemsOnChoice(productCart, choice)
-              "
-              class="text-xs bg-danger-100 rounded-md px-2 py-1 text-danger-600"
-            >
-              OBRIGATÓRIO
-            </span>
-            <div v-else class="w-12 flex justify-center">
-              <CheckIcon
-                :size="24"
-                class="inline-block text-green-500"
-              ></CheckIcon>
-            </div>
-          </div>
-        </div>
-        <div
-          v-for="garnishItem in choice.garnishItems"
-          :key="garnishItem.id"
-          class="garnish-item p-4 flex border-b gap-4 cursor-pointer"
-          @click="() => clickGarnishItem(productCart, choice, garnishItem)"
-        >
-          <div class="flex-1 flex items-center justify-between">
-            <div class="flex flex-col">
-              <span>{{ garnishItem.name }}</span>
-              <span
-                v-if="garnishItem.description"
-                class="text-sm text-gray-500"
+            <div class="mt-4 flex items-center">
+              <span class="text-green-700">{{
+                formatToCurrency(product.unitPrice)
+              }}</span>
+              <div
+                v-if="product.originalUnitPrice"
+                class="text-gray-500 ml-2 text-sm line-through"
               >
-                {{ garnishItem.description }}
-              </span>
-              <div v-if="garnishItem.unitPrice" class="mt-1 flex items-center">
-                <span class="text-green-700 text-sm">
-                  + {{ formatToCurrency(garnishItem.unitPrice) }}
-                </span>
+                {{ formatToCurrency(product.originalUnitPrice) }}
               </div>
             </div>
           </div>
-          <div v-if="garnishItem.imageUrl" class="flex items-center">
+        </div>
+        <div class="m-4 p-4 border rounded-lg">
+          <div class="text-gray-500 flex items-center text-sm pb-1">
+            <StoreOutlineIcon :size="16"></StoreOutlineIcon>
+            <div class="ml-1">
+              {{ merchant.name }}
+            </div>
+            <div class="flex-1"></div>
             <div
-              class="w-12 aspect-square border bg-gray-100 rounded-lg overflow-hidden"
+              class="inline-flex bg-yellow-100 px-2 py-1 rounded-lg text-yellow-500 items-center"
             >
-              <img
-                class="w-full"
-                :src="garnishItem.imageUrl"
-                :alt="garnishItem.name"
-              />
+              <StarIcon :size="14"></StarIcon>
+              <span>{{ merchant.userRating }}</span>
             </div>
           </div>
-          <div class="items-center w-6 relative flex justify-center">
-            <div
-              v-if="choice.max > 1"
-              class="bg-white flex items-center p-1 rounded-lg absolute right-0"
-              :class="{
-                border:
-                  getNumberOfGarnishItemsAddedToChoice(
-                    productCart,
-                    choice,
-                    garnishItem,
-                  ) > 0,
-              }"
-            >
-              <IconButton
+          <div
+            class="mt-1 pt-1 text-sm text-gray-400 flex items-center border-t border-dashed"
+          >
+            <span>30-90 min</span>
+            <CircleSmallIcon></CircleSmallIcon>
+            <span>{{ formatToCurrency(merchant.deliveryFee) }}</span>
+          </div>
+        </div>
+        <div v-for="choice in product.choices" :key="choice.id">
+          <div
+            class="sticky top-0 bg-gray-100 text-gray-500 p-4 text-xl flex justify-between z-10"
+          >
+            <div class="flex flex-col">
+              <span class="font-bold">{{ choice.name }}</span>
+              <div class="text-sm text-gray-400">
+                <span v-if="choice.min">
+                  <span v-if="choice.min != choice.max" class="mr-1">
+                    Escolha pelo menos {{ choice.min }}
+                    {{ choice.min == 1 ? 'opção' : 'opções' }}.
+                  </span>
+                  <span
+                    >{{
+                      getTotalOfSelectedItemsOnChoice(productCart, choice)
+                    }}
+                    de {{ choice.max }}</span
+                  >
+                </span>
+                <span v-if="!choice.min">
+                  Escolha até {{ choice.max }}
+                  {{ choice.max == 1 ? 'opção' : 'opções' }}
+                </span>
+              </div>
+            </div>
+            <div v-if="choice.min" class="w-1/4 flex justify-end items-center">
+              <span
                 v-if="
-                  getNumberOfGarnishItemsAddedToChoice(
-                    productCart,
-                    choice,
-                    garnishItem,
-                  ) > 0
+                  choice.min >
+                  getTotalOfSelectedItemsOnChoice(productCart, choice)
                 "
-                @click.stop="
-                  () => decrementGarnishItem(productCart, choice, garnishItem)
-                "
+                class="text-xs bg-danger-100 rounded-md px-2 py-1 text-danger-600"
               >
-                <MinusIcon
-                  :size="16"
-                  :class="[
+                OBRIGATÓRIO
+              </span>
+              <div v-else class="w-12 flex justify-center">
+                <CheckIcon
+                  :size="24"
+                  class="inline-block text-green-500"
+                ></CheckIcon>
+              </div>
+            </div>
+          </div>
+          <div
+            v-for="garnishItem in choice.garnishItems"
+            :key="garnishItem.id"
+            class="garnish-item p-4 flex border-b gap-4 cursor-pointer"
+            @click="() => clickGarnishItem(productCart, choice, garnishItem)"
+          >
+            <div class="flex-1 flex items-center justify-between">
+              <div class="flex flex-col">
+                <span>{{ garnishItem.name }}</span>
+                <span
+                  v-if="garnishItem.description"
+                  class="text-sm text-gray-500"
+                >
+                  {{ garnishItem.description }}
+                </span>
+                <div
+                  v-if="garnishItem.unitPrice"
+                  class="mt-1 flex items-center"
+                >
+                  <span class="text-green-700 text-sm">
+                    + {{ formatToCurrency(garnishItem.unitPrice) }}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div v-if="garnishItem.imageUrl" class="flex items-center">
+              <div
+                class="w-12 aspect-square border bg-gray-100 rounded-lg overflow-hidden"
+              >
+                <img
+                  class="w-full"
+                  :src="garnishItem.imageUrl"
+                  :alt="garnishItem.name"
+                />
+              </div>
+            </div>
+            <div class="items-center w-6 relative flex justify-center">
+              <div
+                v-if="choice.max > 1"
+                class="bg-white flex items-center p-1 rounded-lg absolute right-0"
+                :class="{
+                  border:
+                    getNumberOfGarnishItemsAddedToChoice(
+                      productCart,
+                      choice,
+                      garnishItem,
+                    ) > 0,
+                }"
+              >
+                <IconButton
+                  v-if="
                     getNumberOfGarnishItemsAddedToChoice(
                       productCart,
                       choice,
                       garnishItem,
                     ) > 0
-                      ? 'text-primary-600'
-                      : 'text-gray-300',
-                  ]"
-                ></MinusIcon>
-              </IconButton>
-              <span
-                v-if="
-                  getNumberOfGarnishItemsAddedToChoice(
-                    productCart,
-                    choice,
-                    garnishItem,
-                  ) > 0
-                "
-                class="inline-flex justify-center w-8 text-sm"
-              >
-                {{
-                  getNumberOfGarnishItemsAddedToChoice(
-                    productCart,
-                    choice,
-                    garnishItem,
-                  )
-                }}
-              </span>
-              <IconButton
-                @click.stop="
-                  () => incrementGarnishItem(productCart, choice, garnishItem)
-                "
-              >
-                <PlusIcon
-                  :size="16"
-                  :class="[
-                    getTotalOfSelectedItemsOnChoice(productCart, choice) <
-                    choice.max
-                      ? 'text-primary-600'
-                      : 'text-gray-300',
-                  ]"
-                ></PlusIcon>
-              </IconButton>
-            </div>
-            <div v-else>
-              <IconButton class="min-w-0 mr-5">
-                <CheckIcon
+                  "
+                  @click.stop="
+                    () => decrementGarnishItem(productCart, choice, garnishItem)
+                  "
+                >
+                  <MinusIcon
+                    :size="16"
+                    :class="[
+                      getNumberOfGarnishItemsAddedToChoice(
+                        productCart,
+                        choice,
+                        garnishItem,
+                      ) > 0
+                        ? 'text-primary-600'
+                        : 'text-gray-300',
+                    ]"
+                  ></MinusIcon>
+                </IconButton>
+                <span
                   v-if="
-                    !!getNumberOfGarnishItemsAddedToChoice(
+                    getNumberOfGarnishItemsAddedToChoice(
+                      productCart,
+                      choice,
+                      garnishItem,
+                    ) > 0
+                  "
+                  class="inline-flex justify-center w-8 text-sm"
+                >
+                  {{
+                    getNumberOfGarnishItemsAddedToChoice(
                       productCart,
                       choice,
                       garnishItem,
                     )
+                  }}
+                </span>
+                <IconButton
+                  @click.stop="
+                    () => incrementGarnishItem(productCart, choice, garnishItem)
                   "
-                  :size="16"
-                  class="text-primary-600"
-                ></CheckIcon>
-                <span v-else class="block w-4 h-4"></span>
-              </IconButton>
+                >
+                  <PlusIcon
+                    :size="16"
+                    :class="[
+                      getTotalOfSelectedItemsOnChoice(productCart, choice) <
+                      choice.max
+                        ? 'text-primary-600'
+                        : 'text-gray-300',
+                    ]"
+                  ></PlusIcon>
+                </IconButton>
+              </div>
+              <div v-else>
+                <IconButton class="min-w-0 mr-5">
+                  <CheckIcon
+                    v-if="
+                      !!getNumberOfGarnishItemsAddedToChoice(
+                        productCart,
+                        choice,
+                        garnishItem,
+                      )
+                    "
+                    :size="16"
+                    class="text-primary-600"
+                  ></CheckIcon>
+                  <span v-else class="block w-4 h-4"></span>
+                </IconButton>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="px-4 py-6">
-        <label
-          for="product-message"
-          class="mb-2 text-gray-600 flex items-center justify-between"
-        >
-          <span class="inline-flex items-center">
-            <CommentTextOutlineIcon :size="20" class="mr-1" />
-            <span class="font-medium">Alguma observação?</span>
-          </span>
-          <span>0/140</span>
-        </label>
-        <textarea
-          id="product-message"
-          rows="4"
-          class="block p-4 w-full text-sm text-gray-900 bg-gray-100 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Ex: Tirar a cebola, maionese à parte, ponto da carne..."
-        ></textarea>
-      </div>
+        <div class="px-4 py-6">
+          <label
+            for="product-message"
+            class="mb-2 text-gray-600 flex items-center justify-between"
+          >
+            <span class="inline-flex items-center">
+              <CommentTextOutlineIcon :size="20" class="mr-1" />
+              <span class="font-medium">Alguma observação?</span>
+            </span>
+            <span>0/140</span>
+          </label>
+          <textarea
+            id="product-message"
+            rows="4"
+            class="block p-4 w-full text-sm text-gray-900 bg-gray-100 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Ex: Tirar a cebola, maionese à parte, ponto da carne..."
+          ></textarea>
+        </div>
+      </ScreenContent>
     </ScreenMain>
     <ScreenFooter class="flex gap-4">
       <div class="border inline-flex items-center p-2 rounded-xl gap-1">
