@@ -10,14 +10,13 @@
   import PrimaryButton from '@/components/PrimaryButton.vue';
   import ScreenFooter from '@/components/Screen/ScreenFooter.vue';
   import BackButton from '@/components/BackButton.vue';
-  import { BagProduct, useBagStore } from '@/stores/bag';
+  import { useBagStore } from '@/stores/bag';
+  import type { BagProduct } from '@/stores/bag';
   import IconButton from '@/components/IconButton.vue';
   import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue';
   import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue';
   import IncrementControl from '@/components/Product/IncrementControl.vue';
   import { formatToCurrency } from '@/utils';
-  import { Address } from '@/stores/address';
-  import DeleteAddressScreen from '@/components/Address/DeleteAddressScreen.vue';
   import DeleteBagItemScreen from '@/components/Bag/DeleteBagItemScreen.vue';
 
   onMounted(() => {});
