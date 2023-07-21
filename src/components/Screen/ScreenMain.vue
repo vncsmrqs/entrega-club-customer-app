@@ -11,10 +11,14 @@
 
 <template>
   <div
-    class="w-full h-full overflow-auto"
+    class="w-full h-full overflow-auto relative"
     :class="{ 'p-5': props.withPadding }"
   >
-    <slot>ScreenMain</slot>
+    <div
+      class="w-full min-h-full md:max-w-screen-lg mx-auto grid grid-cols-1 md:grid-cols-3 gap-5"
+    >
+      <slot>ScreenMain</slot>
+    </div>
   </div>
 </template>
 

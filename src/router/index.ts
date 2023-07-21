@@ -71,17 +71,17 @@ const router = createRouter({
           name: 'notifications',
           component: () => import('../views/MainView/NotificationView.vue'),
         },
-        {
-          path: '/estabelecimento/:merchantId',
-          name: 'merchant',
-          meta: {
-            scrollBehavior: {
-              behavior: 'smooth',
-            },
-          },
-          component: () => import('../views/MainView/MerchantView.vue'),
-        },
       ],
+    },
+    {
+      path: '/estabelecimento/:merchantId',
+      name: 'merchant',
+      meta: {
+        scrollBehavior: {
+          behavior: 'smooth',
+        },
+      },
+      component: () => import('../views/MerchantView.vue'),
     },
     {
       path: '/:pathMatch(.*)*',

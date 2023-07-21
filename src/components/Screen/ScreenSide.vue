@@ -1,8 +1,10 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>
-    <slot>ScreenSide</slot>
+  <div class="col-span-1">
+    <div class="md:sticky top-0">
+      <slot>ScreenSide</slot>
+    </div>
   </div>
 </template>
 

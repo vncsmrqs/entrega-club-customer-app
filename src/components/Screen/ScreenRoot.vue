@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="w-full h-full flex flex-col">
+  <div class="w-full h-screen flex flex-col">
     <slot></slot>
   </div>
 </template>

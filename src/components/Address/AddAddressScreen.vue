@@ -12,6 +12,7 @@
   import type { Address } from '@/stores/address';
   import { onMounted, reactive, ref } from 'vue';
   import { generateId } from '@/utils';
+  import ScreenContent from '@/components/Screen/ScreenContent.vue';
 
   const props = defineProps<{
     added: Function;
@@ -61,7 +62,7 @@
   // failed.", it means you probably did not give permission for the browser to
   // locate you.
   let map: google.maps.Map;
-  // let infoWindow: google.maps.InfoWindow;
+  let infoWindow: google.maps.InfoWindow;
 
   const defaultZoom = 17;
 
@@ -133,11 +134,12 @@
         },
       ],
     });
+
     infoWindow = new google.maps.InfoWindow();
 
     function circleContainsLocation(point: any, circle: any) {
-      var radius = circle.getRadius();
-      var center = circle.getCenter();
+      const radius = circle.getRadius();
+      const center = circle.getCenter();
       return (
         google.maps.geometry.spherical.computeDistanceBetween(point, center) <=
         radius
@@ -252,37 +254,39 @@
       Adicionar endereço
     </ScreenHeader>
     <ScreenMain class="relative w-full h-full" :with-padding="false">
-      <Transition name="fade">
-        <div
-          v-if="distanceError"
-          class="w-full z-10 bg-danger-600 font-semibold text-white px-5 py-4 absolute top-0"
-        >
-          Você informou um local muito longe do endereço selecionado.
-        </div>
-      </Transition>
-      <div class="marker">
+      <ScreenContent>
         <Transition name="fade">
           <div
-            v-if="idle"
-            class="w-56 absolute bottom-0 mb-14 p-4 rounded-lg bg-white shadow text-center flex flex-col"
+            v-if="distanceError"
+            class="w-full z-10 bg-danger-600 font-semibold text-white px-5 py-4 absolute top-0"
           >
-            <span class="font-semibold">Você está aqui?</span>
-            <span class="text-sm text-gray-600"
-              >Ajuste para a localização exata</span
-            >
+            Você informou um local muito longe do endereço selecionado.
           </div>
         </Transition>
-        <MapMarkerIcon
-          class="marker-icon absolute bottom-0"
-          :class="{
-            'text-gray-800 opacity-50 bottom-2': !idle,
-            'text-purple-600': idle,
-          }"
-          :size="48"
-        ></MapMarkerIcon>
-        <div class="marker-shadow"></div>
-      </div>
-      <div id="map"></div>
+        <div class="marker">
+          <Transition name="fade">
+            <div
+              v-if="idle"
+              class="w-56 absolute bottom-0 mb-14 p-4 rounded-lg bg-white shadow text-center flex flex-col"
+            >
+              <span class="font-semibold">Você está aqui?</span>
+              <span class="text-sm text-gray-600"
+                >Ajuste para a localização exata</span
+              >
+            </div>
+          </Transition>
+          <MapMarkerIcon
+            class="marker-icon absolute bottom-0"
+            :class="{
+              'text-gray-800 opacity-50 bottom-2': !idle,
+              'text-purple-600': idle,
+            }"
+            :size="48"
+          ></MapMarkerIcon>
+          <div class="marker-shadow"></div>
+        </div>
+        <div id="map"></div>
+      </ScreenContent>
     </ScreenMain>
     <ScreenFooter>
       <PrimaryButton @click="confirmAdd">

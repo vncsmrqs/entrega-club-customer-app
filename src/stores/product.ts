@@ -31,7 +31,7 @@ export type GarnishItem = {
 
 export const productFixture: Product = {
   id: 'be77bc92-7ef5-446f-8795-149541f2d574',
-  name: '2 Sanduíches Favoritos + Batata',
+  name: '2 Sanduíches Favoritos + Batata + Batata + Batata + Batata + Batata + Batata',
   description:
     '2 sanduíches (Escolha um Sanduíche entre: Whopper, Chicken Duplo, Rodeio Duplo, Big King, Whopper de plantas, Stacker Duplo e Cheeseburger Duplo) + 1 Batata Frita + 1 Bebida.',
   available: true,
