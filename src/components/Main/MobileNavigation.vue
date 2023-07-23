@@ -2,17 +2,26 @@
   import HomeOutlineIcon from 'vue-material-design-icons/HomeOutline.vue';
   import MagnifyIcon from 'vue-material-design-icons/Magnify.vue';
   import TextBoxOutlineIcon from 'vue-material-design-icons/TextBoxOutline.vue';
-  import AccountIcon from 'vue-material-design-icons/Account.vue';
   import MobileMenuItem from '@/components/MobileMenuItem.vue';
   import TextBoxIcon from 'vue-material-design-icons/TextBox.vue';
-  import AccountOutlineIcon from 'vue-material-design-icons/AccountOutline.vue';
+  import MenuIcon from 'vue-material-design-icons/Menu.vue';
   import HomeIcon from 'vue-material-design-icons/Home.vue';
+  import { useDrawersControlStore } from '@/stores/drawers-control';
+  import { markRaw } from 'vue';
+  import MenuScreen from '@/components/Menu/MenuScreen.vue';
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter();
+  const drawersControlStore = useDrawersControlStore();
+
+  const showMenu = () => {
+    const drawer = drawersControlStore.add(markRaw(MenuScreen), {});
+    router.push({ hash: `#${drawer.id}` });
+  };
 </script>
 
 <template>
-  <nav
-    class="mobile-bottom-bar dark:border-gray-950 dark:bg-gray-800 dark:text-white"
-  >
+  <nav class="w-full bg-white flex justify-around">
     <RouterLink :to="{ name: 'home' }" v-slot="{ isActive }">
       <MobileMenuItem title="Início" :active="isActive" badge="1">
         <template #icon>
@@ -36,19 +45,12 @@
         </template>
       </MobileMenuItem>
     </RouterLink>
-    <RouterLink :to="{ name: 'profile' }" v-slot="{ isActive }">
-      <MobileMenuItem title="Perfil" :active="isActive">
-        <template #icon>
-          <AccountIcon v-if="isActive" :size="24"></AccountIcon>
-          <AccountOutlineIcon v-else :size="24"></AccountOutlineIcon>
-        </template>
-      </MobileMenuItem>
-    </RouterLink>
+    <MobileMenuItem title="Menu" :active="false" @click="showMenu">
+      <template #icon>
+        <MenuIcon />
+      </template>
+    </MobileMenuItem>
   </nav>
 </template>
 
-<style scoped>
-  .mobile-bottom-bar {
-    @apply sticky z-10 bottom-0 bg-white w-full flex justify-around border-t;
-  }
-</style>
+<style scoped></style>

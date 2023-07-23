@@ -10,6 +10,6 @@
 
 <style scoped>
   .secondary-button {
-    @apply w-full rounded-xl text-lg text-purple-600 bg-purple-100 p-3 font-semibold flex justify-center gap-2 items-center;
+    @apply rounded-xl text-lg text-primary-600 bg-primary-100 px-6 py-3 font-semibold flex justify-center gap-2 items-center;
   }
 </style>

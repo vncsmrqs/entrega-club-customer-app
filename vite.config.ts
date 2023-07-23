@@ -75,8 +75,8 @@ export default defineConfig({
             ],
           },
           {
-            name: 'Perfil',
-            url: '/perfil?utm_source=jumplist&utm_medium=shortcut',
+            name: 'Menu',
+            url: '/menu?utm_source=jumplist&utm_medium=shortcut',
             icons: [
               {
                 src: '/icon-circle-192x192.png',

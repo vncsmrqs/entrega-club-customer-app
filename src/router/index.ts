@@ -59,29 +59,30 @@ const router = createRouter({
         {
           path: '/pedidos',
           name: 'orders',
-          component: () => import('../views/MainView/OrdersView.vue'),
+          component: () => import('../components/Order/OrdersScreen.vue'),
         },
         {
-          path: '/perfil',
-          name: 'profile',
-          component: () => import('../views/MainView/ProfileView.vue'),
+          path: '/menu',
+          name: 'menu',
+          component: () => import('../components/Menu/MenuScreen.vue'),
         },
         {
           path: '/notificacoes',
           name: 'notifications',
-          component: () => import('../views/MainView/NotificationView.vue'),
+          component: () =>
+            import('../components/Notification/NotificationScreen.vue'),
+        },
+        {
+          path: '/estabelecimento/:merchantId',
+          name: 'merchant',
+          meta: {
+            scrollBehavior: {
+              behavior: 'smooth',
+            },
+          },
+          component: () => import('../views/MerchantView.vue'),
         },
       ],
-    },
-    {
-      path: '/estabelecimento/:merchantId',
-      name: 'merchant',
-      meta: {
-        scrollBehavior: {
-          behavior: 'smooth',
-        },
-      },
-      component: () => import('../views/MerchantView.vue'),
     },
     {
       path: '/:pathMatch(.*)*',

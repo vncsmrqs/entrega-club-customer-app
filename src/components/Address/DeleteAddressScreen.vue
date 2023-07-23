@@ -10,6 +10,7 @@
   import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue';
   import type { Address } from '@/stores/address';
   import { useCustomerAddressStore } from '@/stores/address';
+  import ScreenContent from '@/components/Screen/ScreenContent.vue';
 
   const props = defineProps<{
     address: Address;
@@ -40,32 +41,35 @@
       Excluir endereço
     </ScreenHeader>
     <ScreenMain>
-      <div
-        class="w-full h-full flex flex-col justify-center items-center gap-4"
-      >
+      <ScreenContent class="!col-span-full">
         <div
-          class="w-24 h-24 rounded-full bg-primary-100 text-primary-600 flex justify-center items-center"
+          class="w-full h-full flex flex-col justify-center items-center gap-4"
         >
-          <DeleteOutlineIcon :size="48" />
-        </div>
-        <div class="text-center">
-          <div class="font-semibold text-lg">
-            Deseja realmente excluir o endereço?
+          <div
+            class="w-24 h-24 rounded-full bg-primary-100 text-primary-600 flex justify-center items-center"
+          >
+            <DeleteOutlineIcon :size="48" />
           </div>
-          <div class="text-sm">
-            Todas as informações deste endereço serão excluídas permanentemente.
+          <div class="text-center">
+            <div class="font-semibold text-lg">
+              Deseja realmente excluir o endereço?
+            </div>
+            <div class="text-sm">
+              Todas as informações deste endereço serão excluídas
+              permanentemente.
+            </div>
           </div>
         </div>
-      </div>
+      </ScreenContent>
     </ScreenMain>
     <ScreenFooter>
-      <SecondaryButton @click="confirmDelete" class="mb-4">
+      <SecondaryButton @click="confirmDelete" class="mb-4 w-full">
         <template #left>
           <DeleteOutlineIcon />
         </template>
         Excluir
       </SecondaryButton>
-      <DefaultButton @click="back">Cancelar</DefaultButton>
+      <DefaultButton @click="back" class="w-full">Cancelar</DefaultButton>
     </ScreenFooter>
   </ScreenRoot>
 </template>

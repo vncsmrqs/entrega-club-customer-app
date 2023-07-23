@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { markRaw, onMounted } from 'vue';
   import { useRouter } from 'vue-router';
-  import AddressSelection from '@/components/Address/AddressListScreen.vue';
+  import AddressSelection from '@/components/Address/ListAddressScreen.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
@@ -18,6 +18,7 @@
   import IncrementControl from '@/components/Product/IncrementControl.vue';
   import { formatToCurrency } from '@/utils';
   import DeleteBagItemScreen from '@/components/Bag/DeleteBagItemScreen.vue';
+  import BagEmpty from '@/components/Bag/BagEmpty.vue';
 
   onMounted(() => {});
 
@@ -42,10 +43,6 @@
   };
 
   const bagStore = useBagStore();
-
-  const back = () => {
-    router.back();
-  };
 </script>
 
 <template>
@@ -53,80 +50,89 @@
     <ScreenHeader>
       Sacola
       <template #left>
-        <BackButton @click="back" />
+        <BackButton />
       </template>
     </ScreenHeader>
     <ScreenMain>
-      <ScreenContent class="md:col-span-full">
-        <div class="flex flex-col gap-4">
-          <TransitionGroup name="list">
-            <div
-              v-for="bagProduct in bagStore.items"
-              :key="bagProduct.id"
-              class="rounded-lg border flex flex-col gap-4"
-            >
-              <div class="flex gap-4 p-4">
-                <div class="flex-shrink-0">
-                  <div
-                    class="w-12 aspect-photo border bg-gray-100 rounded-lg overflow-hidden"
-                  >
-                    <img
-                      class="w-full"
-                      :src="bagProduct.productDetails?.imageUrl"
-                      :alt="bagProduct.productDetails?.name"
-                    />
-                  </div>
-                </div>
-                <div class="flex-1">
-                  <div class="font-medium">
-                    {{ bagProduct.productDetails?.name }}
-                  </div>
-                  <ul
-                    v-for="bagChoice in bagProduct.selectedChoices"
-                    :key="bagChoice.choiceDetails.id"
-                  >
-                    <li
-                      v-for="bagGarnishItem in bagChoice.selectedGarnishItems"
-                      :key="bagGarnishItem.garnishItemDetails.id"
-                      class="ml-4 text-gray-500"
+      <ScreenContent class="!col-span-full">
+        <template v-if="bagStore.isEmpty">
+          <BagEmpty />
+        </template>
+        <template v-else>
+          <div class="flex flex-col gap-4">
+            <TransitionGroup name="list">
+              <div
+                v-for="bagProduct in bagStore.items"
+                :key="bagProduct.id"
+                class="rounded-lg border flex flex-col gap-4"
+              >
+                <div class="flex gap-4 p-4">
+                  <div class="flex-shrink-0">
+                    <div
+                      class="w-12 aspect-photo border bg-gray-100 rounded-lg overflow-hidden"
                     >
-                      <span class="mr-2">{{ bagGarnishItem.quantity }}</span>
-                      <span>{{ bagGarnishItem.garnishItemDetails.name }}</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="flex justify-end gap-2 border-t p-2">
-                <div class="flex items-center">
-                  <span class="text-green-700">{{ formatToCurrency(10) }}</span>
-                  <div
-                    v-if="bagProduct.productDetails?.originalUnitPrice"
-                    class="text-gray-500 ml-2 text-sm line-through"
-                  >
-                    {{ formatToCurrency(15) }}
+                      <img
+                        class="w-full"
+                        :src="bagProduct.productDetails?.imageUrl"
+                        :alt="bagProduct.productDetails?.name"
+                      />
+                    </div>
+                  </div>
+                  <div class="flex-1">
+                    <div class="font-medium">
+                      {{ bagProduct.productDetails?.name }}
+                    </div>
+                    <ul
+                      v-for="bagChoice in bagProduct.selectedChoices"
+                      :key="bagChoice.choiceDetails.id"
+                    >
+                      <li
+                        v-for="bagGarnishItem in bagChoice.selectedGarnishItems"
+                        :key="bagGarnishItem.garnishItemDetails.id"
+                        class="ml-4 text-gray-500"
+                      >
+                        <span class="mr-2">{{ bagGarnishItem.quantity }}</span>
+                        <span>{{
+                          bagGarnishItem.garnishItemDetails.name
+                        }}</span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
-                <div class="flex-1"></div>
-                <IncrementControl
-                  :quantity="bagProduct.quantity"
-                ></IncrementControl>
-                <div class="flex-shrink-0 text-danger-600">
-                  <IconButton @click="() => deleteItem(bagProduct)">
-                    <DeleteOutlineIcon></DeleteOutlineIcon>
-                  </IconButton>
-                </div>
-                <div class="flex-shrink-0">
-                  <IconButton class="bg-primary-100 text-primary-600">
-                    <PencilOutlineIcon></PencilOutlineIcon>
-                  </IconButton>
+                <div class="flex justify-end gap-2 border-t p-2">
+                  <div class="flex items-center">
+                    <span class="text-green-700">{{
+                      formatToCurrency(10)
+                    }}</span>
+                    <div
+                      v-if="bagProduct.productDetails?.originalUnitPrice"
+                      class="text-gray-500 ml-2 text-sm line-through"
+                    >
+                      {{ formatToCurrency(15) }}
+                    </div>
+                  </div>
+                  <div class="flex-1"></div>
+                  <IncrementControl
+                    :quantity="bagProduct.quantity"
+                  ></IncrementControl>
+                  <div class="flex-shrink-0 text-danger-600">
+                    <IconButton @click="() => deleteItem(bagProduct)">
+                      <DeleteOutlineIcon></DeleteOutlineIcon>
+                    </IconButton>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <IconButton class="bg-primary-100 text-primary-600">
+                      <PencilOutlineIcon></PencilOutlineIcon>
+                    </IconButton>
+                  </div>
                 </div>
               </div>
-            </div>
-          </TransitionGroup>
-        </div>
+            </TransitionGroup>
+          </div>
+        </template>
       </ScreenContent>
     </ScreenMain>
-    <ScreenFooter>
+    <ScreenFooter v-if="!bagStore.isEmpty">
       <div class="w-full flex items-center justify-between mb-4">
         <div class="font-bold">Total</div>
         <div class="inline-flex items-center">
@@ -136,7 +142,9 @@
           </div>
         </div>
       </div>
-      <PrimaryButton @click="openAddress">Continuar</PrimaryButton>
+      <PrimaryButton @click="openAddress" class="w-full"
+        >Continuar
+      </PrimaryButton>
     </ScreenFooter>
   </ScreenRoot>
 </template>

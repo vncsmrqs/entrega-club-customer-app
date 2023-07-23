@@ -72,14 +72,14 @@
     <ScreenError v-else-if="customerAddressStore.error" />
     <template v-else>
       <ScreenMain>
-        <ScreenContent class="md:col-span-full">
+        <ScreenContent class="!col-span-full">
           <div class="flex flex-col gap-4 relative">
             <TransitionGroup name="list">
               <div
                 v-for="address in customerAddressStore.availableAddressList"
                 :key="address.id"
                 class="p-4 flex items-center gap-4 border rounded-xl cursor-pointer transition-colors"
-                :class="{ 'border-purple-600': isSelected(address) }"
+                :class="{ 'border-primary-600': isSelected(address) }"
                 @click="() => selectAddress(address)"
               >
                 <CheckIcon
@@ -106,7 +106,7 @@
         </ScreenContent>
       </ScreenMain>
       <ScreenFooter>
-        <SecondaryButton @click="addAddress">
+        <SecondaryButton @click="addAddress" class="w-full">
           <template #left>
             <PlusIcon />
           </template>

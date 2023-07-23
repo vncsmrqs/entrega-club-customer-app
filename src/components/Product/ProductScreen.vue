@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { markRaw, onMounted, reactive } from 'vue';
+  import { onMounted, reactive } from 'vue';
   import StoreOutlineIcon from 'vue-material-design-icons/StoreOutline.vue';
   import StarIcon from 'vue-material-design-icons/Star.vue';
   import CircleSmallIcon from 'vue-material-design-icons/CircleSmall.vue';
@@ -20,8 +20,6 @@
   import PrimaryButton from '@/components/PrimaryButton.vue';
   import IconButton from '@/components/IconButton.vue';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
-  import { useDrawersControlStore } from '@/stores/drawers-control';
-  import BagScreen from '@/components/Bag/BagScreen.vue';
   import { useBagStore } from '@/stores/bag';
   import type { BagProduct, BagChoice, BagGarnishItem } from '@/stores/bag';
   import IncrementControl from '@/components/Product/IncrementControl.vue';
@@ -323,12 +321,12 @@
   <ScreenRoot>
     <ScreenHeader>
       <template #left>
-        <BackButton @click="back"></BackButton>
+        <BackButton />
       </template>
       {{ product.name }}
     </ScreenHeader>
     <ScreenMain :with-padding="false">
-      <ScreenContent class="md:col-span-full">
+      <ScreenContent class="!col-span-full">
         <div class="bg-primary-600 w-full aspect-photo overflow-hidden">
           <img
             class="w-full h-full object-cover"
@@ -573,7 +571,7 @@
         @increment="() => incrementBagProductItems(bagProduct)"
         @decrement="() => () => decrementBagProductItems(bagProduct)"
       ></IncrementControl>
-      <PrimaryButton @click="() => addProductToBag(bagProduct)">
+      <PrimaryButton @click="() => addProductToBag(bagProduct)" class="w-full">
         <span>Adicionar</span>
         <span>{{ formatToCurrency(totalPrice(bagProduct)) }}</span>
       </PrimaryButton>

@@ -20,8 +20,8 @@
 <template>
   <div class="drawer">
     <Transition name="fade">
-      <div v-show="props.show" class="w-full h-full" @click="hide">
-        <div class="drawer-backdrop"></div>
+      <div v-show="props.show" class="drawer-backdrop" @click="hide">
+        <!--        <div class="drawer-backdrop"></div>-->
       </div>
     </Transition>
     <div class="drawer-container" :class="{ 'translate-x-full': !props.show }">
@@ -37,11 +37,13 @@
   }
 
   .drawer-backdrop {
-    @apply bg-black opacity-25 w-full h-full pointer-events-auto;
+    @apply w-full h-full pointer-events-auto;
+    backdrop-filter: blur(2px);
+    background: rgba(0, 0, 0, 0.1);
   }
 
   .drawer-container {
-    @apply fixed top-0 right-0 w-full h-full bg-white duration-300 pointer-events-auto ease-out transform-gpu;
+    @apply drop-shadow-lg fixed top-0 right-0 w-full h-full bg-white duration-300 pointer-events-auto ease-in-out transform-gpu;
     z-index: calc(1000 + v-bind('props.index') + 1);
   }
 

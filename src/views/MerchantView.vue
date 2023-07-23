@@ -46,9 +46,10 @@
 
   const selectMenuTab = debounce((menuId: string) => {
     const content = document.querySelector(`#menu-content-item-${menuId}`);
-    if (content) {
+    const container = document.querySelector('#merchant-main');
+    if (content && container) {
       const { y } = content.getBoundingClientRect();
-      window.scrollTo(0, window.scrollY + y - 17 * 8);
+      container.scrollTo(0, container.scrollTop + y - 17 * 8);
     }
   }, 10);
 
@@ -64,17 +65,13 @@
     router.push({ hash: `#${drawer.id}` });
   };
 
-  const back = () => {
-    router.back();
-  };
-
   onMounted(() => {});
 </script>
 <template>
-  <ScreenRoot>
+  <ScreenRoot class="vinicius">
     <ScreenHeader class="md:hidden">
       <template #left>
-        <BackButton @click="back"></BackButton>
+        <BackButton />
       </template>
       {{ merchant.name }}
       <template #right>
@@ -83,7 +80,11 @@
         </IconButton>
       </template>
     </ScreenHeader>
-    <ScreenMain :with-padding="false" class="md:p-5 gap-4">
+    <ScreenMain
+      id="merchant-main"
+      :with-padding="false"
+      class="md:p-5 gap-4 scroll-smooth"
+    >
       <ScreenSide>
         <div class="md:rounded-xl md:border overflow-hidden">
           <div class="bg-primary-600 w-full aspect-banner">
@@ -180,7 +181,7 @@
               {{ menu.name }}
             </button>
           </div>
-          <div class="flex flex-wrap gap-4">
+          <div class="flex flex-col">
             <IntersectionItem
               v-for="menu in merchantCatalog.menus"
               :key="menu.id"
@@ -235,9 +236,5 @@
 <style>
   html {
     scroll-behavior: smooth;
-  }
-
-  .merchant-view {
-    @apply min-h-screen flex flex-col;
   }
 </style>

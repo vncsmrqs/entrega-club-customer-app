@@ -253,8 +253,8 @@
       </template>
       Adicionar endereço
     </ScreenHeader>
-    <ScreenMain class="relative w-full h-full" :with-padding="false">
-      <ScreenContent>
+    <ScreenMain class="relative" :with-padding="false">
+      <ScreenContent class="!col-span-full">
         <Transition name="fade">
           <div
             v-if="distanceError"
@@ -279,7 +279,7 @@
             class="marker-icon absolute bottom-0"
             :class="{
               'text-gray-800 opacity-50 bottom-2': !idle,
-              'text-purple-600': idle,
+              'text-primary-600': idle,
             }"
             :size="48"
           ></MapMarkerIcon>
@@ -289,7 +289,7 @@
       </ScreenContent>
     </ScreenMain>
     <ScreenFooter>
-      <PrimaryButton @click="confirmAdd">
+      <PrimaryButton @click="confirmAdd" class="w-full">
         Salvar
         <template #right>
           <CheckIcon />

@@ -42,12 +42,12 @@
     </ScreenHeader>
     <ScreenMain>
       <ScreenContent
-        class="md:col-span-full w-full h-full flex flex-col justify-center items-center gap-4"
+        class="!col-span-full w-full h-full flex flex-col justify-center items-center gap-4"
       >
         <div
-          class="w-24 h-24 rounded-full bg-primary-100 text-primary-600 flex justify-center items-center"
+          class="w-32 h-32 rounded-full bg-gray-100 text-primary-600 flex justify-center items-center"
         >
-          <DeleteOutlineIcon :size="48" />
+          <DeleteOutlineIcon :size="64" />
         </div>
         <div class="text-center">
           <div class="font-semibold text-lg">
@@ -60,13 +60,13 @@
       </ScreenContent>
     </ScreenMain>
     <ScreenFooter>
-      <SecondaryButton @click="confirmDelete" class="mb-4">
+      <SecondaryButton @click="confirmDelete" class="w-full mb-4">
         <template #left>
           <DeleteOutlineIcon />
         </template>
         Excluir
       </SecondaryButton>
-      <DefaultButton @click="back">Cancelar</DefaultButton>
+      <DefaultButton @click="back" class="w-full">Cancelar</DefaultButton>
     </ScreenFooter>
   </ScreenRoot>
 </template>

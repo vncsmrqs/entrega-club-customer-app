@@ -14,6 +14,7 @@
   import IconButton from '@/components/IconButton.vue';
   import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue';
   import DefaultButton from '@/components/DefaultButton.vue';
+  import ScreenContent from '@/components/Screen/ScreenContent.vue';
 
   const props = defineProps<{
     // isOpened: boolean;
@@ -48,7 +49,7 @@
       <template #right>
         <IconButton
           class="text-primary-600"
-          @click="() => deleteAddress(address)"
+          @click="() => deleteAddress(props.address)"
         >
           <DeleteOutlineIcon :size="24" />
         </IconButton>
@@ -56,11 +57,49 @@
       Editar endereço
     </ScreenHeader>
     <ScreenMain>
-      {{ address.streetName }}
+      <ScreenContent class="!col-span-full flex flex-col gap-4">
+        <div>
+          <span class="mr-1 font-medium">Logradouro:</span>
+          {{ props.address.streetNumber }}
+        </div>
+        <div>
+          <span class="mr-1 font-medium">Bairro:</span>
+          {{ props.address.neighborhood }}
+        </div>
+        <div>
+          <span class="mr-1 font-medium">Cidade:</span>
+          {{ props.address.city }}
+        </div>
+        <div>
+          <span class="mr-1 font-medium">Estado:</span>
+          {{ props.address.state }}
+        </div>
+        <div>
+          <span class="mr-1 font-medium">País:</span>
+          {{ props.address.country }}
+        </div>
+        <div>
+          <span class="mr-1 font-medium">Complemento:</span>
+          {{ props.address.complement }}
+        </div>
+        <div>
+          <span class="mr-1 font-medium">Logradouro:</span>
+          {{ props.address.streetName }}
+        </div>
+        <div>
+          <span class="mr-1 font-medium">Referência:</span>
+          {{ props.address.reference }}
+        </div>
+        <div>
+          <span class="mr-1 font-medium">Coordenadas:</span>
+          {{ props.address.coordinates.latitude }},
+          {{ props.address.coordinates.longitude }}
+        </div>
+      </ScreenContent>
     </ScreenMain>
     <ScreenFooter>
-      <DefaultButton class="mb-4" @click="back"> Voltar</DefaultButton>
-      <PrimaryButton @click="back">
+      <DefaultButton class="w-full mb-4" @click="back"> Voltar</DefaultButton>
+      <PrimaryButton @click="back" class="w-full">
         Salvar
         <template #right>
           <CheckIcon />

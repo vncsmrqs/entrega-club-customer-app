@@ -1,4 +1,4 @@
-import { computed, reactive, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { generateId, timeout } from '@/utils';
 
@@ -53,6 +53,10 @@ export const useCustomerAddressStore = defineStore('customer-address', () => {
     _availableAddressList.value = _availableAddressList.value.filter(
       (address) => addressId !== address.id,
     );
+
+    if (addressId === selectedAddress.value?.id) {
+      selectAddress(_availableAddressList.value?.[0]);
+    }
   };
 
   const addAddress = async (address: Address): Promise<Address> => {

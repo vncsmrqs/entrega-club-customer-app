@@ -72,11 +72,15 @@ export const useBagStore = defineStore('bag', () => {
   /* getters */
 
   const isEmpty = computed(() => {
-    return bag.value?.items.length;
+    return !bag.value?.items.length;
   });
 
   const items = computed<BagProduct[]>(() => {
     return bag.value?.items || [];
+  });
+
+  const total = computed<number>(() => {
+    return 10;
   });
 
   /* actions */
@@ -101,6 +105,7 @@ export const useBagStore = defineStore('bag', () => {
     /* getters */
     isEmpty,
     items,
+    total,
 
     /* actions */
     addItem,

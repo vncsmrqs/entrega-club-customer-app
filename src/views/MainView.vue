@@ -1,55 +1,25 @@
 <script setup lang="ts">
-  import MobileBottomBar from '@/components/MobileBottomBar.vue';
-  import { useCustomerAddressStore } from '@/stores/address';
-  import { markRaw, onMounted, ref } from 'vue';
   import AnonymousDrawerWrapper from '@/components/AnonymousDrawerWrapper.vue';
-  import { useDrawersControlStore } from '@/stores/drawers-control';
-  import AddressSelection from '@/components/Address/AddressListScreen.vue';
-  import { useRouter } from 'vue-router';
-  import CartMobileBar from '@/components/Bag/BagMobileBar.vue';
-
-  const customerAddressStore = useCustomerAddressStore();
-
-  const ready = ref(true);
-
-  const drawersControlStore = useDrawersControlStore();
-
-  const router = useRouter();
-
-  onMounted(async () => {
-    await customerAddressStore.loadCurrentAddress();
-    if (!customerAddressStore.selectedAddress) {
-      const drawer = drawersControlStore.add(markRaw(AddressSelection), {});
-      await router.push({ hash: `#${drawer.id}` });
-      return;
-    }
-    ready.value = true;
-  });
+  import BagMobileBar from '@/components/Bag/BagMobileBar.vue';
+  import MainNavigation from '@/components/Main/MainNavigation.vue';
 </script>
 
 <template>
-  <div class="main-view dark:bg-gray-900 max-w-screen-lg w-full">
-    <template v-if="ready">
+  <div
+    class="fixed top-0 left-0 w-full h-full z-0 flex flex-col md:flex-col-reverse"
+  >
+    <div class="w-full h-full overflow-auto relative">
       <RouterView v-slot="{ Component }">
         <transition name="fade">
           <component :is="Component" />
         </transition>
       </RouterView>
-      <CartMobileBar />
-      <MobileBottomBar />
-      <!--      <ProductDrawer />-->
-    </template>
-    <template v-else>
-      <div class="w-full h-full flex justify-center items-center">
-        Carregando...
-      </div>
-    </template>
-    <div id="target"></div>
+      <BagMobileBar />
+    </div>
+    <div class="h-px w-full flex-none bg-gray-200"></div>
+    <MainNavigation />
+    <AnonymousDrawerWrapper></AnonymousDrawerWrapper>
   </div>
 </template>
 
-<style scoped>
-  .main-view {
-    @apply w-screen min-h-screen flex flex-col mx-auto;
-  }
-</style>
+<style scoped></style>
