@@ -23,13 +23,13 @@
 <template>
   <DefaultButton
     @click="showBag"
-    class="md:flex md:!p-2 shadow-sm md:shadow-none shadow-gray-500"
+    class="grid grid-cols-3 md:flex md:!p-2 shadow-sm md:shadow-none shadow-gray-500"
     :class="{
       'bg-primary-600 text-white': !bagStore.isEmpty,
       'text-gray-500': bagStore.isEmpty,
     }"
   >
-    <span class="inline-flex">
+    <span class="col-span-1 inline-flex">
       <span class="relative">
         <span
           v-show="!bagStore.isEmpty"
@@ -45,8 +45,10 @@
       </span>
     </span>
     <template v-if="!bagStore.isEmpty">
-      <span class="flex items-center md:text-sm"> Ver sacola </span>
-      <span class="flex items-center md:text-sm">
+      <span class="col-span-1 flex items-center justify-center md:text-sm">
+        Ver sacola
+      </span>
+      <span class="col-span-1 flex items-center justify-end md:text-sm">
         {{ formatToCurrency(bagStore.total) }}
       </span>
     </template>
