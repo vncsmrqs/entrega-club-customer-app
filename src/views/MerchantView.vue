@@ -46,12 +46,25 @@
 
   const selectMenuTab = debounce((menuId: string) => {
     const content = document.querySelector(`#menu-content-item-${menuId}`);
-    const container = document.querySelector('#merchant-main');
-    if (content && container) {
-      const { y } = content.getBoundingClientRect();
-      container.scrollTo(0, container.scrollTop + y - 17 * 8);
+    const tabContainer = document.querySelector('.menu-tab-container');
+    const contentContainer = document.querySelector('#merchant-main');
+    const merchantScreenHeader = document.querySelector(
+      '#merchant-screen-header',
+    );
+
+    if (content && contentContainer && tabContainer && merchantScreenHeader) {
+      const { y: contentDistanceToTop } = content.getBoundingClientRect();
+      const tabContainerHeight = tabContainer.scrollHeight;
+      const merchantScreenHeaderHeight = merchantScreenHeader.scrollHeight;
+
+      const scroll =
+        contentContainer.scrollTop +
+        contentDistanceToTop -
+        (tabContainerHeight + merchantScreenHeaderHeight);
+
+      contentContainer.scrollTo(0, scroll);
     }
-  }, 10);
+  }, 100);
 
   const menuActive = ref('');
 
@@ -68,8 +81,8 @@
   onMounted(() => {});
 </script>
 <template>
-  <ScreenRoot class="vinicius">
-    <ScreenHeader class="md:hidden">
+  <ScreenRoot>
+    <ScreenHeader id="merchant-screen-header" class="md:hidden">
       <template #left>
         <BackButton />
       </template>
