@@ -9,10 +9,117 @@
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
   import ListItem from '@/components/ListItem.vue';
   import BellOutlineIcon from 'vue-material-design-icons/BellOutline.vue';
+  import { generateId } from '@/utils';
 
   const notificationStore = useNotificationStore();
 
-  onMounted(() => {});
+  onMounted(() => {
+    Notification.requestPermission().then((permission) => {
+      console.log('permission', permission);
+
+      setTimeout(() => {
+        if (permission === 'granted') {
+          // new Notification('Example notification');
+        }
+
+        if (permission === 'granted') {
+          // new Notification('Example notification', {
+          //   body: 'This is more text',
+          // });
+        }
+
+        if (permission === 'granted') {
+          const notificationOptions: NotificationOptions = {
+            body: 'This is more text',
+            data: { hello: 'world' },
+            image: '/icon-maskable-192x192.png',
+            icon: '/icon-maskable-192x192.png',
+            requireInteraction: true,
+            renotify: true,
+            badge: 'teste-badge',
+            tag: generateId(),
+            actions: [
+              {
+                action: 'action-1',
+                icon: '/icon-maskable-192x192.png',
+                title: 'TESTE 1',
+              },
+              {
+                action: 'action-2',
+                icon: '/icon-maskable-192x192.png',
+                title: 'TESTE 2',
+              },
+            ],
+            vibrate: [100, 1000, 0, 1000],
+          };
+
+          navigator.serviceWorker
+            .getRegistration()
+            .then(async (serviceWorkerRegistration) => {
+              if (!serviceWorkerRegistration) {
+                alert('sem');
+                return;
+              }
+
+              await serviceWorkerRegistration.showNotification(
+                'Example notification',
+                notificationOptions,
+              );
+
+              // const notification = new Notification(
+              //   'Example notification',
+              //   notificationOptions,
+              // );
+
+              // notification.addEventListener('close', function (e) {
+              //   // console.log(e.target.data.hello);
+              //   console.log('notification::close', this);
+              // });
+              //
+              // notification.addEventListener('show', function (e) {
+              //   console.log('notification::show', this);
+              // });
+              //
+              // notification.addEventListener('click', function (e) {
+              //   console.log('notification::click', this);
+              // });
+              //
+              // notification.addEventListener('error', function (e) {
+              //   console.log('notification::error', this);
+              // });
+            });
+        }
+      }, 500);
+    });
+
+    self.addEventListener(
+      'notificationclick',
+      (event: any) => {
+        event.notification.close();
+
+        if (event.action === 'archive') {
+          // User selected the Archive action.
+          // archiveEmail();
+        } else {
+          // User selected (e.g., clicked in) the main body of notification.
+          // clients.openWindow('/inbox');
+        }
+
+        // event.waitUntil(
+        //   Clients.matchAll({
+        //     type: 'window',
+        //   }).then((clientList) => {
+        //     for (const client of clientList) {
+        //       if (client.url === '/' && 'focus' in client)
+        //         return client.focus();
+        //     }
+        //     if (clients.openWindow) return clients.openWindow('/');
+        //   }),
+        // );
+      },
+      false,
+    );
+  });
 </script>
 <template>
   <ScreenRoot>
