@@ -23,7 +23,7 @@
 <template>
   <DefaultButton
     @click="showBag"
-    class="md:flex !p-2"
+    class="md:flex md:!p-2 shadow-lg md:shadow-none shadow-gray-500"
     :class="{
       'bg-primary-600 text-white': !bagStore.isEmpty,
       'text-gray-500': bagStore.isEmpty,
