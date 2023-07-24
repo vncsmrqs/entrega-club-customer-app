@@ -36,18 +36,27 @@ const router = createRouter({
               name: 'home-default',
               component: () =>
                 import('../views/MainView/HomeView/DefaultView.vue'),
+              meta: {
+                showMenu: true,
+              },
             },
             {
               path: '/restaurantes',
               name: 'restaurants',
               component: () =>
                 import('../views/MainView/HomeView/RestaurantsView.vue'),
+              meta: {
+                showMenu: true,
+              },
             },
             {
               path: '/bebidas',
               name: 'liquor-store',
               component: () =>
                 import('../views/MainView/HomeView/LiquorStoreView.vue'),
+              meta: {
+                showMenu: true,
+              },
             },
           ],
         },
@@ -55,22 +64,34 @@ const router = createRouter({
           path: '/busca',
           name: 'search',
           component: () => import('../views/MainView/SearchView.vue'),
+          meta: {
+            showMenu: true,
+          },
         },
         {
           path: '/pedidos',
           name: 'orders',
           component: () => import('../components/Order/OrdersScreen.vue'),
+          meta: {
+            showMenu: true,
+          },
         },
         {
           path: '/menu',
           name: 'menu',
           component: () => import('../components/Menu/MenuScreen.vue'),
+          meta: {
+            showMenu: true,
+          },
         },
         {
           path: '/notificacoes',
           name: 'notifications',
           component: () =>
             import('../components/Notification/NotificationScreen.vue'),
+          meta: {
+            showMenu: true,
+          },
         },
         {
           path: '/estabelecimento/:merchantId',

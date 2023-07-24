@@ -53,6 +53,17 @@ body,
     transform: translateY(100%);
 }
 
+.accordion-enter-active,
+.accordion-leave-active {
+    transition: height 0.3s ease-in;
+    overflow: hidden;
+}
+
+.accordion-enter-from,
+.accordion-leave-to {
+    height: 0 !important;
+}
+
 .slide-up-enter-active,
 .slide-up-leave-active {
     transition: transform 0.5s ease;

@@ -18,16 +18,19 @@
 </script>
 
 <template>
-  <div class="drawer">
-    <Transition name="fade">
-      <div v-show="props.show" class="drawer-backdrop" @click="hide">
-        <!--        <div class="drawer-backdrop"></div>-->
+  <Teleport to="body">
+    <div class="drawer">
+      <Transition name="fade">
+        <div v-show="props.show" class="drawer-backdrop" @click="hide"></div>
+      </Transition>
+      <div
+        class="drawer-container"
+        :class="{ 'translate-x-full': !props.show }"
+      >
+        <slot></slot>
       </div>
-    </Transition>
-    <div class="drawer-container" :class="{ 'translate-x-full': !props.show }">
-      <slot></slot>
     </div>
-  </div>
+  </Teleport>
 </template>
 
 <style scoped>
@@ -43,7 +46,7 @@
   }
 
   .drawer-container {
-    @apply drop-shadow-lg fixed top-0 right-0 w-full h-full bg-white duration-300 pointer-events-auto ease-in-out transform-gpu;
+    @apply drop-shadow-lg fixed top-0 right-0 w-full h-full bg-white duration-300 pointer-events-auto transform-gpu;
     z-index: calc(1000 + v-bind('props.index') + 1);
   }
 
