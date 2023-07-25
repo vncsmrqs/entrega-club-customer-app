@@ -30,13 +30,13 @@
 
         if (permission === 'granted') {
           const notificationOptions: NotificationOptions = {
-            body: 'This is more text',
+            body: 'O seu pedido saiu para entrega. Fique atento!',
             data: { hello: 'world' },
             image: '/icon-maskable-512x512.png',
             icon: '/icon-maskable-192x192.png',
             requireInteraction: true,
             renotify: true,
-            badge: '/icon-maskable-192x192.png',
+            badge: '/icon-circle-96x96.png',
             tag: generateId(),
             actions: [
               {
@@ -50,19 +50,13 @@
                 title: 'TESTE 2',
               },
             ],
-            vibrate: [100, 1000, 0, 1000],
+            vibrate: [200, 100, 200, 100, 200, 100, 200],
           };
 
-          navigator.serviceWorker
-            .getRegistration()
-            .then(async (serviceWorkerRegistration) => {
-              if (!serviceWorkerRegistration) {
-                alert('sem');
-                return;
-              }
-
+          navigator.serviceWorker.ready.then(
+            async (serviceWorkerRegistration) => {
               await serviceWorkerRegistration.showNotification(
-                'Example notification',
+                'Pedido #2145 - Saiu para entrega!',
                 notificationOptions,
               );
 
@@ -87,38 +81,42 @@
               // notification.addEventListener('error', function (e) {
               //   console.log('notification::error', this);
               // });
-            });
+            },
+          );
+
+          self.addEventListener(
+            'notificationclick',
+            (event: any) => {
+              alert('notificationclick');
+              event.notification.close();
+
+              if (event.action === 'archive') {
+                // User selected the Archive action.
+                // archiveEmail();
+              } else {
+                // User selected (e.g., clicked in) the main body of notification.
+                // clients.openWindow('/inbox');
+              }
+
+              // event.waitUntil(
+              //   // clients
+              //   //   .matchAll({
+              //   //     type: 'window',
+              //   //   })
+              //   //   .then((clientList) => {
+              //   //     for (const client of clientList) {
+              //   //       if (client.url === '/' && 'focus' in client)
+              //   //         return client.focus();
+              //   //     }
+              //   //     if (clients.openWindow) return clients.openWindow('/');
+              //   //   }),
+              // );
+            },
+            false,
+          );
         }
       }, 500);
     });
-
-    self.addEventListener(
-      'notificationclick',
-      (event: any) => {
-        event.notification.close();
-
-        if (event.action === 'archive') {
-          // User selected the Archive action.
-          // archiveEmail();
-        } else {
-          // User selected (e.g., clicked in) the main body of notification.
-          // clients.openWindow('/inbox');
-        }
-
-        // event.waitUntil(
-        //   Clients.matchAll({
-        //     type: 'window',
-        //   }).then((clientList) => {
-        //     for (const client of clientList) {
-        //       if (client.url === '/' && 'focus' in client)
-        //         return client.focus();
-        //     }
-        //     if (clients.openWindow) return clients.openWindow('/');
-        //   }),
-        // );
-      },
-      false,
-    );
   });
 </script>
 <template>
