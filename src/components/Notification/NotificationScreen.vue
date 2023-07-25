@@ -36,7 +36,7 @@
             icon: '/icon-maskable-192x192.png',
             requireInteraction: true,
             renotify: true,
-            badge: '/icon-circle-96x96.png',
+            badge: '/transparent-white/logo-transparent-white-96x96.png',
             tag: generateId(),
             actions: [
               {
