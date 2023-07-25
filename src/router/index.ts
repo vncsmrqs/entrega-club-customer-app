@@ -101,7 +101,7 @@ const router = createRouter({
               behavior: 'smooth',
             },
           },
-          component: () => import('../views/MerchantView.vue'),
+          component: () => import('../views/MainView/MerchantView.vue'),
         },
       ],
     },

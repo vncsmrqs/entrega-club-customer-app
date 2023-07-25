@@ -2,7 +2,7 @@
 
 <template>
   <div class="col-span-full lg:col-span-2 min-h-full">
-    <slot>ScreenContent</slot>
+    <slot></slot>
   </div>
 </template>
 

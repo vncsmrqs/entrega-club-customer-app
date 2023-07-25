@@ -9,7 +9,11 @@
 </script>
 
 <template>
-  <RouterView />
+  <div
+    class="fixed top-0 left-0 w-full h-full z-0 flex flex-col md:flex-col-reverse"
+  >
+    <RouterView />
+  </div>
 </template>
 
 <style scoped></style>

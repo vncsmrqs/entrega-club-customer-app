@@ -3,7 +3,7 @@
 <template>
   <div class="col-span-full lg:col-span-1">
     <div class="md:sticky top-0">
-      <slot>ScreenSide</slot>
+      <slot></slot>
     </div>
   </div>
 </template>
