@@ -3,6 +3,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import { CompileTsServiceWorker } from './vite.config.sw-custom-compiler-plugin';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,7 +14,7 @@ export default defineConfig({
       injectRegister: 'auto',
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2}'],
-        importScripts: ['handle-notifications.sw.js'],
+        importScripts: ['./handle-notifications.sw.ts'],
       },
       manifest: {
         theme_color: '#f05252',
@@ -113,6 +114,7 @@ export default defineConfig({
         ],
       },
     }),
+    CompileTsServiceWorker(),
   ],
   resolve: {
     alias: {

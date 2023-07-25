@@ -1,6 +1,12 @@
+/// <reference no-default-lib="true"/>
+/// <reference lib="esnext" />
+/// <reference lib="webworker" />
+
 console.log('Custom service worker!');
 
-self.addEventListener(
+const sw = self as unknown as ServiceWorkerGlobalScope & typeof globalThis;
+
+sw.addEventListener(
   'notificationclick',
   (event) => {
     console.log('notificationclick');
@@ -16,7 +22,7 @@ self.addEventListener(
     }
 
     event.waitUntil(
-      self.clients
+      sw.clients
         .matchAll({
           type: 'window',
         })
@@ -28,8 +34,7 @@ self.addEventListener(
             return client.navigate('/pedidos');
           }
 
-          if (self.clients.openWindow)
-            return self.clients.openWindow('/pedidos');
+          if (sw.clients.openWindow) return sw.clients.openWindow('/pedidos');
         }),
     );
   },
