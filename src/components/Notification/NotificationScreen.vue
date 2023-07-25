@@ -19,16 +19,6 @@
 
       setTimeout(() => {
         if (permission === 'granted') {
-          // new Notification('Example notification');
-        }
-
-        if (permission === 'granted') {
-          // new Notification('Example notification', {
-          //   body: 'This is more text',
-          // });
-        }
-
-        if (permission === 'granted') {
           const notificationOptions: NotificationOptions = {
             body: 'O seu pedido saiu para entrega. Fique atento!',
             data: { hello: 'world' },
@@ -36,18 +26,17 @@
             icon: '/icon-maskable-192x192.png',
             requireInteraction: true,
             renotify: true,
-            badge: '/transparent-white/logo-transparent-white-96x96.png',
+            badge: '/logo/transparent-white/logo-transparent-white-96x96.svg',
             tag: generateId(),
             actions: [
               {
                 action: 'action-1',
                 icon: '/icon-maskable-192x192.png',
-                title: 'TESTE 1',
+                title: 'FECHAR',
               },
               {
                 action: 'action-2',
-                icon: '/icon-maskable-192x192.png',
-                title: 'TESTE 2',
+                title: 'ACOMPANHAR',
               },
             ],
             vibrate: [200, 100, 200, 100, 200, 100, 200],
@@ -59,32 +48,10 @@
                 'Pedido #2145 - Saiu para entrega!',
                 notificationOptions,
               );
-
-              // const notification = new Notification(
-              //   'Example notification',
-              //   notificationOptions,
-              // );
-
-              // notification.addEventListener('close', function (e) {
-              //   // console.log(e.target.data.hello);
-              //   console.log('notification::close', this);
-              // });
-              //
-              // notification.addEventListener('show', function (e) {
-              //   console.log('notification::show', this);
-              // });
-              //
-              // notification.addEventListener('click', function (e) {
-              //   console.log('notification::click', this);
-              // });
-              //
-              // notification.addEventListener('error', function (e) {
-              //   console.log('notification::error', this);
-              // });
             },
           );
         }
-      }, 500);
+      }, 1000);
     });
   });
 </script>
