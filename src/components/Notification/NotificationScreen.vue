@@ -32,11 +32,11 @@
           const notificationOptions: NotificationOptions = {
             body: 'This is more text',
             data: { hello: 'world' },
-            image: '/icon-maskable-192x192.png',
+            image: '/icon-maskable-512x512.png',
             icon: '/icon-maskable-192x192.png',
             requireInteraction: true,
             renotify: true,
-            badge: 'teste-badge',
+            badge: '/icon-maskable-192x192.png',
             tag: generateId(),
             actions: [
               {
