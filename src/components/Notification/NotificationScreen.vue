@@ -83,37 +83,6 @@
               // });
             },
           );
-
-          self.addEventListener(
-            'notificationclick',
-            (event: any) => {
-              alert('notificationclick');
-              event.notification.close();
-
-              if (event.action === 'archive') {
-                // User selected the Archive action.
-                // archiveEmail();
-              } else {
-                // User selected (e.g., clicked in) the main body of notification.
-                // clients.openWindow('/inbox');
-              }
-
-              // event.waitUntil(
-              //   // clients
-              //   //   .matchAll({
-              //   //     type: 'window',
-              //   //   })
-              //   //   .then((clientList) => {
-              //   //     for (const client of clientList) {
-              //   //       if (client.url === '/' && 'focus' in client)
-              //   //         return client.focus();
-              //   //     }
-              //   //     if (clients.openWindow) return clients.openWindow('/');
-              //   //   }),
-              // );
-            },
-            false,
-          );
         }
       }, 500);
     });
