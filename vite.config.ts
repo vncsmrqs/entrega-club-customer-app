@@ -48,7 +48,7 @@ export default defineConfig({
             url: '/buscar?utm_source=jumplist&utm_medium=shortcut',
             icons: [
               {
-                src: 'icon-circle-192x192.png',
+                src: 'logo/primary-white/logo-primary-white-circle-192x192.png',
                 type: 'image/png',
                 sizes: '192x192',
               },
@@ -59,7 +59,7 @@ export default defineConfig({
             url: '/pedidos?utm_source=jumplist&utm_medium=shortcut',
             icons: [
               {
-                src: 'icon-circle-192x192.png',
+                src: 'logo/primary-white/logo-primary-white-circle-192x192.png',
                 type: 'image/png',
                 sizes: '192x192',
               },
@@ -70,7 +70,7 @@ export default defineConfig({
             url: '/notificacoes?utm_source=jumplist&utm_medium=shortcut',
             icons: [
               {
-                src: 'icon-circle-192x192.png',
+                src: 'logo/primary-white/logo-primary-white-circle-192x192.png',
                 type: 'image/png',
                 sizes: '192x192',
               },
@@ -81,7 +81,7 @@ export default defineConfig({
             url: '/menu?utm_source=jumplist&utm_medium=shortcut',
             icons: [
               {
-                src: '/icon-circle-192x192.png',
+                src: '/logo/primary-white/logo-primary-white-circle-192x192.png',
                 type: 'image/png',
                 sizes: '192x192',
               },
@@ -90,24 +90,24 @@ export default defineConfig({
         ],
         icons: [
           {
-            src: '/icon-circle-192x192.png',
+            src: '/logo/primary-white/logo-primary-white-circle-192x192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/icon-circle-512x512.png',
+            src: '/logo/primary-white/logo-primary-white-circle-512x512.png',
             sizes: '512x512',
             type: 'image/png',
           },
           {
             purpose: 'maskable',
-            src: '/icon-maskable-192x192.png',
+            src: '/logo/primary-white/logo-primary-white-192x192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
             purpose: 'maskable',
-            src: '/icon-maskable-512x512.png',
+            src: '/logo/primary-white/logo-primary-white-512x512.png',
             sizes: '512x512',
             type: 'image/png',
           },

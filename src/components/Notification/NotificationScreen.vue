@@ -22,8 +22,8 @@
           const notificationOptions: NotificationOptions = {
             body: 'O seu pedido saiu para entrega. Fique atento!',
             data: { hello: 'world' },
-            image: '/icon-maskable-512x512.png',
-            icon: '/icon-maskable-192x192.png',
+            image: '/logo/primary-white/logo-primary-white-512x512.png',
+            icon: '/logo/primary-white/logo-primary-white-192x192.png',
             requireInteraction: true,
             renotify: true,
             badge: '/logo/transparent-white/logo-transparent-white-96x96.svg',
@@ -31,7 +31,7 @@
             actions: [
               {
                 action: 'action-1',
-                icon: '/icon-maskable-192x192.png',
+                icon: '/logo/primary-white/logo-primary-white-192x192.png',
                 title: 'FECHAR',
               },
               {

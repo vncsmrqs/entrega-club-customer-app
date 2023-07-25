@@ -58,7 +58,7 @@ const merchantFixture: Merchant = {
   available: true,
   preparationTime: 10,
   name: 'O rei da pizza',
-  logoUrl: '/icon-maskable-192x192.png',
+  logoUrl: '/logo/primary-white/logo-primary-white-192x192.png',
   minimumOrderValue: 40,
   userRating: 4.7,
   categories: ['Pizza'],
