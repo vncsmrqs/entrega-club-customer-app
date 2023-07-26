@@ -85,18 +85,27 @@
                     <ul
                       v-for="bagChoice in bagProduct.selectedChoices"
                       :key="bagChoice.choiceDetails.id"
+                      class="text-sm"
                     >
                       <li
-                        v-for="bagGarnishItem in bagChoice.selectedGarnishItems"
+                        v-for="bagGarnishItem in bagChoice.selectedGarnishItems.filter(
+                          (i) => i.quantity,
+                        )"
                         :key="bagGarnishItem.garnishItemDetails.id"
-                        class="ml-4 text-gray-500"
+                        class="text-gray-500"
                       >
                         <span class="mr-2">{{ bagGarnishItem.quantity }}</span>
-                        <span>{{
-                          bagGarnishItem.garnishItemDetails.name
-                        }}</span>
+                        <span>
+                          {{ bagGarnishItem.garnishItemDetails.name }}
+                        </span>
                       </li>
                     </ul>
+                    <div
+                      v-if="bagProduct.comment?.length"
+                      class="mt-2 p-2 text-sm text-gray-600 bg-gray-100 rounded-xl"
+                    >
+                      {{ bagProduct.comment }}
+                    </div>
                   </div>
                 </div>
                 <div class="flex justify-end gap-2 border-t p-2">

@@ -378,7 +378,7 @@
         </div>
         <div v-for="choice in product.choices" :key="choice.id">
           <div
-            class="sticky top-0 bg-gray-100 text-gray-500 p-4 text-xl flex justify-between z-10"
+            class="sticky top-0 bg-gray-100 text-gray-500 px-5 py-2 text-xl flex justify-between z-10"
           >
             <div class="flex flex-col">
               <span class="font-bold">{{ choice.name }}</span>
@@ -422,7 +422,7 @@
           <div
             v-for="garnishItem in choice.garnishItems"
             :key="garnishItem.id"
-            class="garnish-item p-4 flex border-b gap-4 cursor-pointer"
+            class="garnish-item px-5 py-3 flex border-b gap-4 cursor-pointer"
             @click="() => clickGarnishItem(bagProduct, choice, garnishItem)"
           >
             <div class="flex-1 flex items-center justify-between">
@@ -576,7 +576,7 @@
         @click="() => addProductToBag(bagProduct)"
         class="w-full"
         :class="{
-          '!bg-gray-300 !text-gray-500': !validateRequiredChoices(bagProduct),
+          '!bg-gray-200 !text-gray-400': !validateRequiredChoices(bagProduct),
         }"
       >
         <span>Adicionar</span>
