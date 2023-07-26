@@ -144,9 +144,12 @@ export const useBagStore = defineStore(
     };
 
     const addItem = (bagItem: BagProduct) => {
-      if (bag.value) {
-        bag.value.items.push(bagItem);
+      if (!bag.value) {
+        bag.value = {
+          items: [],
+        };
       }
+      bag.value.items.push(bagItem);
     };
 
     const deleteItem = (bagItem: BagProduct) => {

@@ -565,7 +565,7 @@
       <IncrementControl
         :quantity="bagProduct.quantity"
         @increment="() => incrementBagProductItems(bagProduct)"
-        @decrement="() => () => decrementBagProductItems(bagProduct)"
+        @decrement="() => decrementBagProductItems(bagProduct)"
       ></IncrementControl>
       <PrimaryButton @click="() => addProductToBag(bagProduct)" class="w-full">
         <span>Adicionar</span>
