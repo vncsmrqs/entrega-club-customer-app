@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { onMounted, reactive } from 'vue';
+  import { onMounted, reactive, ref } from 'vue';
   import StoreOutlineIcon from 'vue-material-design-icons/StoreOutline.vue';
-  import StarIcon from 'vue-material-design-icons/Star.vue';
   import CircleSmallIcon from 'vue-material-design-icons/CircleSmall.vue';
   import PlusIcon from 'vue-material-design-icons/Plus.vue';
   import MinusIcon from 'vue-material-design-icons/Minus.vue';
@@ -270,33 +269,6 @@
     incrementGarnishItem(bagProduct, choice, garnishItem);
   };
 
-  const totalPrice = (bagProduct: BagProduct) => {
-    if (!bagProduct.productDetails) {
-      return 0;
-    }
-    const totalChoicesPrice = bagProduct.selectedChoices.reduce(
-      (totalChoicesPrice, selectedChoice) => {
-        const totalChoicePrice = selectedChoice.selectedGarnishItems.reduce(
-          (totalChoicePrice, selectedGarnishItem) => {
-            const totalGarnishItemPrice =
-              selectedGarnishItem.quantity *
-              (selectedGarnishItem.garnishItemDetails?.unitPrice || 0);
-            return totalChoicePrice + totalGarnishItemPrice;
-          },
-          0,
-        );
-        return totalChoicesPrice + totalChoicePrice;
-      },
-      0,
-    );
-
-    const totalUniqueProduct =
-      bagProduct.productDetails.unitPrice +
-      totalChoicesPrice * bagProduct.quantity;
-
-    return totalUniqueProduct * bagProduct.quantity;
-  };
-
   const incrementBagProductItems = (bagProduct: BagProduct) => {
     bagProduct.quantity++;
   };
@@ -308,10 +280,34 @@
   };
 
   const bagStore = useBagStore();
-  const addProductToBag = async (bagProduct: BagProduct) => {
-    bagStore.addItem(bagProduct);
-    await back();
+
+  const validateRequiredChoices = (bagProduct: BagProduct): boolean => {
+    const choiceToValidateList =
+      bagProduct.productDetails?.choices?.filter((choice) => choice.min) || [];
+
+    const choice = choiceToValidateList.some((choice) => {
+      const totalAdded = getTotalOfSelectedItemsOnChoice(bagProduct, choice);
+      return totalAdded < choice.min;
+    });
+
+    return !choice;
   };
+
+  const addProductToBag = async (bagProduct: BagProduct) => {
+    if (validateRequiredChoices(bagProduct)) {
+      bagStore.addItem(bagProduct);
+      await back();
+      return;
+    }
+    requiredChoiceError.value = true;
+    clearTimeout(requiredChoiceErrorTimeoutId);
+    requiredChoiceErrorTimeoutId = setTimeout(() => {
+      requiredChoiceError.value = false;
+    }, 5000);
+  };
+
+  const requiredChoiceError = ref(false);
+  let requiredChoiceErrorTimeoutId: any = 0;
 
   const back = async () => {
     await router.back();
@@ -328,6 +324,15 @@
     </ScreenHeader>
     <ScreenMain :with-padding="false">
       <ScreenContent class="!col-span-full">
+        <Transition name="fade">
+          <div
+            v-if="requiredChoiceError"
+            class="w-full z-40 bg-danger-600 sticky top-0 font-semibold text-white px-5 py-4"
+          >
+            É preciso escolher todos os itens obrigatórios antes de adicionar o
+            produto à sacola.
+          </div>
+        </Transition>
         <div class="bg-gray-100 w-full aspect-photo overflow-hidden">
           <img
             class="w-full h-full object-cover"
@@ -567,9 +572,17 @@
         @increment="() => incrementBagProductItems(bagProduct)"
         @decrement="() => decrementBagProductItems(bagProduct)"
       ></IncrementControl>
-      <PrimaryButton @click="() => addProductToBag(bagProduct)" class="w-full">
+      <PrimaryButton
+        @click="() => addProductToBag(bagProduct)"
+        class="w-full"
+        :class="{
+          '!bg-gray-300 !text-gray-500': !validateRequiredChoices(bagProduct),
+        }"
+      >
         <span>Adicionar</span>
-        <span>{{ formatToCurrency(totalPrice(bagProduct)) }}</span>
+        <span>{{
+          formatToCurrency(bagStore.calcTotalProduct(bagProduct))
+        }}</span>
       </PrimaryButton>
     </ScreenFooter>
   </ScreenRoot>
