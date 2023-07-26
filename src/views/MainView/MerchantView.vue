@@ -100,7 +100,7 @@
     >
       <ScreenSide>
         <div class="md:rounded-xl md:border overflow-hidden">
-          <div class="bg-primary-600 w-full aspect-banner">
+          <div class="bg-gray-100 w-full aspect-banner">
             <img
               class="w-full h-full object-cover"
               :src="

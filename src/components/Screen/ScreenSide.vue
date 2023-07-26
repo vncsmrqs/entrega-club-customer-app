@@ -2,7 +2,7 @@
 
 <template>
   <div class="col-span-full lg:col-span-1">
-    <div class="md:sticky top-0">
+    <div class="md:sticky top-5">
       <slot></slot>
     </div>
   </div>

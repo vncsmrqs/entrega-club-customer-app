@@ -52,7 +52,7 @@ export const productFixture: Product = {
           name: 'Chicken Duplo',
           description:
             '2 frangos crocantes, queijo derretido, salada fresca (alface) e maionese Bk.',
-          // imageUrl: '/image-maskable-192x192.png',
+          imageUrl: '/images/product/default.png',
           unitPrice: 0,
         },
         {
@@ -68,7 +68,7 @@ export const productFixture: Product = {
           name: 'Whopper',
           description:
             'Um hambúrguer com uma carne bovina grelhada de 113g, pão com gergelim, queijo derretido, picles, salada fresca (alface, cebola, tomate), ketchup e maionese bk.',
-          // imageUrl: '/image-maskable-192x192.png',
+          imageUrl: '/images/product/default.png',
           unitPrice: 2,
         },
         {
@@ -104,7 +104,7 @@ export const productFixture: Product = {
         {
           id: generateId(),
           name: 'Batata Média',
-          // imageUrl: '/image-maskable-192x192.png',
+          imageUrl: '/images/product/default.png',
           unitPrice: 0,
         },
       ],
@@ -130,7 +130,7 @@ export const productFixture: Product = {
         {
           id: generateId(),
           name: 'Guaraná Antarctica Lata - 350 Ml',
-          // imageUrl: '/image-maskable-192x192.png',
+          imageUrl: '/images/product/default.png',
           unitPrice: 0,
         },
         {
@@ -156,7 +156,7 @@ export const productFixture: Product = {
         {
           id: generateId(),
           name: 'Rodeio',
-          // imageUrl: '/image-maskable-192x192.png',
+          imageUrl: '/images/product/default.png',
           unitPrice: 10.9,
         },
         {
@@ -194,7 +194,7 @@ export const productFixture: Product = {
         {
           id: generateId(),
           name: 'Bk Brownie Brigadeiro',
-          // imageUrl: '/image-maskable-192x192.png',
+          imageUrl: '/images/product/default.png',
           unitPrice: 9.9,
         },
         {

@@ -23,6 +23,7 @@
   import { useBagStore } from '@/stores/bag';
   import type { BagProduct, BagChoice, BagGarnishItem } from '@/stores/bag';
   import IncrementControl from '@/components/Product/IncrementControl.vue';
+  import UserRating from '@/components/Merchant/UserRating.vue';
 
   const router = useRouter();
 
@@ -327,7 +328,7 @@
     </ScreenHeader>
     <ScreenMain :with-padding="false">
       <ScreenContent class="!col-span-full">
-        <div class="bg-primary-600 w-full aspect-photo overflow-hidden">
+        <div class="bg-gray-100 w-full aspect-photo overflow-hidden">
           <img
             class="w-full h-full object-cover"
             :src="product.imageUrl"
@@ -360,12 +361,7 @@
               {{ merchant.name }}
             </div>
             <div class="flex-1"></div>
-            <div
-              class="inline-flex bg-yellow-100 px-2 py-1 rounded-lg text-yellow-500 items-center"
-            >
-              <StarIcon :size="14"></StarIcon>
-              <span>{{ merchant.userRating }}</span>
-            </div>
+            <UserRating :rating="merchant.userRating" />
           </div>
           <div
             class="mt-1 pt-1 text-sm text-gray-400 flex items-center border-t border-dashed"
@@ -443,7 +439,7 @@
                 </div>
               </div>
             </div>
-            <div v-if="garnishItem.imageUrl" class="flex items-center">
+            <div v-if="garnishItem.imageUrl" class="flex items-center mr-2">
               <div
                 class="w-12 aspect-square border bg-gray-100 rounded-lg overflow-hidden"
               >

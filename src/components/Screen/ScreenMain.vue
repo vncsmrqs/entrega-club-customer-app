@@ -1,4 +1,7 @@
 <script setup lang="ts">
+  defineOptions({
+    inheritAttrs: false,
+  });
   const props = withDefaults(
     defineProps<{
       withPadding?: boolean;
@@ -16,6 +19,7 @@
   >
     <div
       class="w-full min-h-full md:max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-5"
+      v-bind="$attrs"
     >
       <slot>ScreenMain</slot>
     </div>

@@ -1,62 +1,70 @@
 <script setup lang="ts">
   import { reactive, ref } from 'vue';
-  import { generateId } from '@/utils';
+  import { formatToCurrency, generateId } from '@/utils';
+  import { merchantFixture } from '@/stores/merchant';
+  import SecondaryButton from '@/components/SecondaryButton.vue';
+  import UserRating from '@/components/Merchant/UserRating.vue';
+  import DotSeparator from '@/components/DotSeparator.vue';
 
   const defaultMerchantLogoUrl = ref('/images/merchant/logo-default.png');
 
-  const merchants = reactive([
-    {
-      id: generateId(),
-      name: 'O Rei da Pizza',
-      logoUrl: defaultMerchantLogoUrl,
-    },
-    {
-      id: generateId(),
-      name: 'Mania Jovem',
-      logoUrl: defaultMerchantLogoUrl,
-    },
-    {
-      id: generateId(),
-      name: 'Victor Lanches',
-      logoUrl: defaultMerchantLogoUrl,
-    },
-    {
-      id: generateId(),
-      name: 'Massa do Rei',
-      logoUrl: defaultMerchantLogoUrl,
-    },
-    {
-      id: generateId(),
-      name: 'Las Portas',
-      logoUrl: defaultMerchantLogoUrl,
-    },
-  ]);
+  const merchants = reactive(
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(merchantFixture),
+  );
 </script>
 
 <template>
-  <div class="p-4">
-    <div class="flex items-center justify-between mb-4">
-      <span class="font-bold">Famosos no Entrega Club</span>
-      <span class="text-xs text-primary-600">Ver mais</span>
+  <div class="md:border md:rounded-xl">
+    <div class="flex items-center justify-between p-5 border-b">
+      <span class="font-bold text-xl">Famosos no Entrega Club</span>
+      <span class="text-sm text-primary-600">Ver mais</span>
     </div>
-    <div class="grid grid-cols-3 gap-4 dark:text-white">
+    <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4 md:p-5">
       <RouterLink
         v-for="merchant in merchants"
         :key="merchant.id"
         :to="{ name: 'merchant', params: { merchantId: merchant.id } }"
-        class=""
       >
         <div
-          class="rounded-lg bg-primary-100 dark:bg-gray-800 border aspect-photo overflow-hidden"
+          class="grid grid-cols-3 gap-4 p-5 md:p-3 md:rounded-xl border-b md:border"
         >
-          <img
-            class="w-full h-full object-cover"
-            :src="merchant.logoUrl ? merchant.logoUrl : defaultMerchantLogoUrl"
-            :alt="merchant.name"
-          />
+          <div
+            class="col-span-1 rounded-lg bg-primary-50 border aspect-photo overflow-hidden"
+            :class="{ grayscale: !merchant.available }"
+          >
+            <img
+              class="w-full h-full object-cover"
+              :src="
+                merchant.logoUrl ? merchant.logoUrl : defaultMerchantLogoUrl
+              "
+              :alt="merchant.name"
+            />
+          </div>
+          <div class="col-span-2 flex flex-col gap-1">
+            <div class="font-medium text-lg">
+              {{ merchant.name }}
+            </div>
+            <div class="flex gap-2 font-light text-gray-500 text-sm">
+              <UserRating :rating="merchant.userRating" />
+              <DotSeparator />
+              <span>{{ merchant.mainCategory }}</span>
+              <DotSeparator />
+              <div class="">{{ merchant.distance }} km</div>
+            </div>
+            <div class="flex gap-2 font-light text-gray-500 text-sm">
+              <span>{{ merchant.preparationTime }} min</span>
+              <DotSeparator />
+              <span v-if="merchant.deliveryFee">
+                {{ formatToCurrency(merchant.deliveryFee) }}
+              </span>
+              <span v-else class="text-green-700"> Entrega grátis </span>
+            </div>
+          </div>
         </div>
-        <div class="mt-1 text-sm text-gray-700">{{ merchant.name }}</div>
       </RouterLink>
+      <div class="col-span-full p-5 md:p-0">
+        <SecondaryButton class="w-full"> Ver mais</SecondaryButton>
+      </div>
     </div>
   </div>
 </template>

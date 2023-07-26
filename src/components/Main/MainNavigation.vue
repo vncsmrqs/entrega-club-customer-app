@@ -19,7 +19,6 @@
     </div>
     <AccordionItem :opened="showMenu">
       <div class="md:hidden">
-        <AddressSelectionBar />
         <MobileNavigation />
       </div>
     </AccordionItem>

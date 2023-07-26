@@ -2,6 +2,7 @@ import { reactive } from 'vue';
 import { defineStore } from 'pinia';
 import type { Address } from '@/stores/address';
 import { addressFixtureFunc } from '@/stores/address';
+import { generateId } from '@/utils';
 
 export type Merchant = {
   id: string;
@@ -26,6 +27,7 @@ export type Merchant = {
   deliveryMethods: MerchantDeliveryMethod[];
   address: Address;
   shifts: MerchantShift[];
+  mainCategory: string;
 };
 
 export type MerchantDeliveryMethod = {
@@ -50,22 +52,23 @@ export type MerchantShift = {
   start: string; // '12:00:00';
 };
 
-const merchantFixture: Merchant = {
+export const merchantFixture = (): Merchant => ({
   address: addressFixtureFunc(1),
   shifts: [],
-  id: 'd9969801-5203-4f6a-ba4b-6bc8af8d8fac',
+  id: generateId(),
   slug: 'jaiba-mg/o-rei-da-pizza',
   available: true,
   preparationTime: 10,
   name: 'O rei da pizza',
-  logoUrl: '/logo/primary-white/logo-primary-white-192x192.png',
+  logoUrl: '/logo/transparent-white/logo-transparent-white-192x192.png',
   minimumOrderValue: 40,
   userRating: 4.7,
-  categories: ['Pizza'],
+  mainCategory: 'Pizza',
+  categories: ['Pizza', 'Esfirra'],
   distance: 3,
   type: 'RESTAURANT',
   priceRange: 'VERY_CHEAP',
-  deliveryFee: 10,
+  deliveryFee: 0,
   deliveryMethods: [
     {
       deliveredBy: 'MERCHANT',
@@ -84,11 +87,11 @@ const merchantFixture: Merchant = {
       title: 'Retirada',
     },
   ],
-};
+});
 
 export const useMerchantStore = defineStore('merchant', () => {
   /* state */
-  const merchant = reactive<Merchant>(merchantFixture);
+  const merchant = reactive<Merchant>(merchantFixture());
 
   /* getters */
 
