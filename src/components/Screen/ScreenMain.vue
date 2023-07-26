@@ -14,11 +14,11 @@
 
 <template>
   <div
-    class="w-full h-full overflow-auto relative"
+    class="w-full h-full overflow-auto relative scroll-smooth"
     :class="{ 'p-5': props.withPadding }"
   >
     <div
-      class="w-full min-h-full md:max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-5"
+      class="w-full min-h-full md:max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-3 md:gap-5"
       v-bind="$attrs"
     >
       <slot>ScreenMain</slot>

@@ -4,6 +4,13 @@ import type { Address } from '@/stores/address';
 import { addressFixtureFunc } from '@/stores/address';
 import { generateId } from '@/utils';
 
+export type MerchantPriceRange =
+  | 'VERY_CHEAP'
+  | 'CHEAP'
+  | 'REGULAR'
+  | 'EXPENSIVE'
+  | 'VERY_EXPENSIVE';
+
 export type Merchant = {
   id: string;
   slug: string;
@@ -17,12 +24,7 @@ export type Merchant = {
   categories: string[];
   distance: number;
   type: 'RESTAURANT' | 'LIQUOR_STORE';
-  priceRange:
-    | 'VERY_CHEAP'
-    | 'CHEAP'
-    | 'REGULAR'
-    | 'EXPENSIVE'
-    | 'VERY_EXPENSIVE';
+  priceRange: MerchantPriceRange;
   deliveryFee: number;
   deliveryMethods: MerchantDeliveryMethod[];
   address: Address;

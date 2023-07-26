@@ -1,10 +1,10 @@
 <script setup lang="ts">
   import { reactive, ref } from 'vue';
-  import { formatToCurrency, generateId } from '@/utils';
   import { merchantFixture } from '@/stores/merchant';
   import SecondaryButton from '@/components/SecondaryButton.vue';
   import UserRating from '@/components/Merchant/UserRating.vue';
   import DotSeparator from '@/components/DotSeparator.vue';
+  import DeliveryFee from '@/components/Merchant/DeliveryFee.vue';
 
   const defaultMerchantLogoUrl = ref('/images/merchant/logo-default.png');
 
@@ -29,7 +29,7 @@
           class="grid grid-cols-3 gap-4 p-5 md:p-3 md:rounded-xl border-b md:border"
         >
           <div
-            class="col-span-1 rounded-lg bg-primary-50 border aspect-photo overflow-hidden"
+            class="col-span-1 rounded-full bg-gray-100 border aspect-square overflow-hidden"
             :class="{ grayscale: !merchant.available }"
           >
             <img
@@ -54,10 +54,7 @@
             <div class="flex gap-2 font-light text-gray-500 text-sm">
               <span>{{ merchant.preparationTime }} min</span>
               <DotSeparator />
-              <span v-if="merchant.deliveryFee">
-                {{ formatToCurrency(merchant.deliveryFee) }}
-              </span>
-              <span v-else class="text-green-700"> Entrega grátis </span>
+              <DeliveryFee :delivery-fee="merchant.deliveryFee" />
             </div>
           </div>
         </div>

@@ -18,6 +18,10 @@
   import BackButton from '@/components/BackButton.vue';
   import ScreenSide from '@/components/Screen/ScreenSide.vue';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
+  import UserRating from '@/components/Merchant/UserRating.vue';
+  import DeliveryFee from '@/components/Merchant/DeliveryFee.vue';
+  import DotSeparator from '@/components/DotSeparator.vue';
+  import PriceRange from '@/components/Merchant/PriceRange.vue';
 
   const merchantStore = useMerchantStore();
   const merchant = merchantStore.merchant;
@@ -25,9 +29,7 @@
   const merchantCatalogStore = useMerchantCatalogStore();
   const merchantCatalog: MerchantCatalog = merchantCatalogStore.merchantCatalog;
 
-  const defaultMerchantBannerImgUrl = ref(
-    '/images/merchant/banner-default.png',
-  );
+  const defaultMerchantBannerImgUrl = ref('/images/merchant/logo-default.png');
 
   const intersectMenu = (entry: IntersectionObserverEntry, menuId: string) => {
     if (entry.isIntersecting) {
@@ -47,7 +49,8 @@
   const selectMenuTab = debounce((menuId: string) => {
     const content = document.querySelector(`#menu-content-item-${menuId}`);
     const tabContainer = document.querySelector('.menu-tab-container');
-    const contentContainer = document.querySelector('#merchant-main');
+    const contentContainer =
+      document.querySelector('#merchant-main')?.parentElement;
     const merchantScreenHeader = document.querySelector(
       '#merchant-screen-header',
     );
@@ -93,11 +96,7 @@
         </IconButton>
       </template>
     </ScreenHeader>
-    <ScreenMain
-      id="merchant-main"
-      :with-padding="false"
-      class="md:p-5 gap-4 scroll-smooth"
-    >
+    <ScreenMain id="merchant-main" :with-padding="false" class="scroll-smooth">
       <ScreenSide>
         <div class="md:rounded-xl md:border overflow-hidden">
           <div class="bg-gray-100 w-full aspect-banner">
@@ -112,26 +111,38 @@
             />
           </div>
           <div class="p-4 flex gap-4">
-            <div
-              class="w-12 h-12 bg-gray-100 rounded-full overflow-hidden border-gray-200"
-            >
-              <img
-                class="w-full"
-                :src="merchant.logoUrl"
-                :alt="merchant.name"
-              />
+            <div>
+              <div
+                class="w-20 bg-gray-100 aspect-square rounded-full overflow-hidden border-gray-200"
+              >
+                <img
+                  class="w-full"
+                  :src="merchant.logoUrl"
+                  :alt="merchant.name"
+                />
+              </div>
             </div>
-            <div class="flex-1">
-              <h2 class="font-bold">{{ merchant.name }}</h2>
+            <div class="flex-1 flex flex-col gap-1">
+              <h2 class="font-bold text-lg">{{ merchant.name }}</h2>
               <div class="w-full flex items-center text-sm">
-                <!--          <span class="text-primary-600">Ver mais</span>-->
+                <div class="flex-1 flex gap-2 font-light text-gray-500 text-sm">
+                  <span>{{ merchant.mainCategory }}</span>
+                  <DotSeparator />
+                  <span>{{ merchant.distance }} km</span>
+                  <DotSeparator />
+                  <PriceRange :price-range="merchant.priceRange" />
+                </div>
+                <UserRating :rating="merchant.userRating" />
+              </div>
+              <div class="flex gap-2 font-light text-gray-500 text-sm">
                 <span class="flex-1 text-gray-500">
                   Pedido mínimo:
                   {{ formatToCurrency(merchant.minimumOrderValue) }}
                 </span>
-                <div class="inline-flex text-yellow-300 items-center">
-                  <StarIcon :size="14"></StarIcon>
-                  <span>{{ merchant.userRating }}</span>
+                <div class="flex gap-2 font-light text-gray-500 text-sm">
+                  <span>{{ merchant.preparationTime }} min</span>
+                  <DotSeparator />
+                  <DeliveryFee :delivery-fee="merchant.deliveryFee" />
                 </div>
               </div>
             </div>
