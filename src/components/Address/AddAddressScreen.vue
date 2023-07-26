@@ -8,16 +8,18 @@
   import MapMarkerIcon from 'vue-material-design-icons/MapMarker.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import { useRouter } from 'vue-router';
-  import { useCustomerAddressStore } from '@/stores/address';
-  import type { Address } from '@/stores/address';
+  import { useCustomerAddressStore } from '@/stores/customer-address-list';
+  import type { Address } from '@/stores/customer-address-list';
   import { onMounted, reactive, ref } from 'vue';
   import { generateId } from '@/utils';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
+  import { useSelectedAddressStore } from '@/stores/selected-address';
 
   const props = defineProps<{
     added: Function;
   }>();
 
+  const selectedAddressStore = useSelectedAddressStore();
   const customerAddressStore = useCustomerAddressStore();
 
   const form: Address = reactive({
@@ -40,8 +42,8 @@
     const address = await customerAddressStore.addAddress(form);
     props.added(address);
     back();
-    await customerAddressStore.loadCustomerAddresses();
-    await customerAddressStore.selectAddress(address);
+    await customerAddressStore.load();
+    await selectedAddressStore.selectAddress(address);
   };
 
   const router = useRouter();

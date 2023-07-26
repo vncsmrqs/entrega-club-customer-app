@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
 export type Phone = {
@@ -35,38 +35,46 @@ export const accountFixture: Account = {
   userType: 'CUSTOMER',
 };
 
-export const useAuthStore = defineStore('auth', () => {
-  /* state */
-  const account = ref<Account | null>();
-  const loading = ref<boolean>(false);
-  const error = ref<string | null>(null);
-
-  /* getters */
-
-  /* actions */
-  const auth = async (): Promise<void> => {
-    loading.value = true;
-    try {
-      setTimeout(() => {
-        account.value = accountFixture;
-      }, 3000);
-    } catch (e: any) {
-      error.value = e.toString();
-      account.value = null;
-    } finally {
-      loading.value = false;
-    }
-  };
-
-  return {
+export const useAuthStore = defineStore(
+  'auth',
+  () => {
     /* state */
-    account,
-    loading,
-    error,
+    const account = ref<Account | null>();
+    const loading = ref<boolean>(false);
+    const error = ref<string | null>(null);
 
     /* getters */
 
     /* actions */
-    auth,
-  };
-});
+    const auth = async (): Promise<void> => {
+      loading.value = true;
+      try {
+        setTimeout(() => {
+          account.value = accountFixture;
+        }, 3000);
+      } catch (e: any) {
+        error.value = e.toString();
+        account.value = null;
+      } finally {
+        loading.value = false;
+      }
+    };
+
+    return {
+      /* state */
+      account,
+      loading,
+      error,
+
+      /* getters */
+
+      /* actions */
+      auth,
+    };
+  },
+  {
+    persist: {
+      paths: ['account'],
+    },
+  },
+);

@@ -1,0 +1,77 @@
+[
+  {
+    "id": "7b99df13-c8c4-4b16-b429-0a97986316cd",
+    "city": "Uberlândia",
+    "country": "BR",
+    "neighborhood": "Complexo Integração",
+    "state": "MG",
+    "streetName": "0 - Av. Manuel Lúcio",
+    "streetNumber": "130",
+    "coordinates": {
+      "latitude": -18.913878,
+      "longitude": -48.213595
+    },
+    "reference": "Em Frente Ao Bar Do Zé",
+    "complement": "Portão Branco"
+  },
+  {
+    "id": "6e88994f-0c61-4548-9993-12f838bc45a6",
+    "city": "Uberlândia",
+    "country": "BR",
+    "neighborhood": "Complexo Integração",
+    "state": "MG",
+    "streetName": "1 - Av. Manuel Lúcio",
+    "streetNumber": "130",
+    "coordinates": {
+      "latitude": -18.913878,
+      "longitude": -48.213595
+    },
+    "reference": "Em Frente Ao Bar Do Zé",
+    "complement": "Portão Branco"
+  },
+  {
+    "id": "c6b4d037-b28d-4727-bbb3-17befe5100fb",
+    "city": "Uberlândia",
+    "country": "BR",
+    "neighborhood": "Complexo Integração",
+    "state": "MG",
+    "streetName": "2 - Av. Manuel Lúcio",
+    "streetNumber": "130",
+    "coordinates": {
+      "latitude": -18.913878,
+      "longitude": -48.213595
+    },
+    "reference": "Em Frente Ao Bar Do Zé",
+    "complement": "Portão Branco"
+  },
+  {
+    "id": "3f615250-cae1-41d0-a695-907ad484e228",
+    "city": "Uberlândia",
+    "country": "BR",
+    "neighborhood": "Complexo Integração",
+    "state": "MG",
+    "streetName": "3 - Av. Manuel Lúcio",
+    "streetNumber": "130",
+    "coordinates": {
+      "latitude": -18.913878,
+      "longitude": -48.213595
+    },
+    "reference": "Em Frente Ao Bar Do Zé",
+    "complement": "Portão Branco"
+  },
+  {
+    "id": "75787a53-18fa-4a42-905c-dfe21e2bd737",
+    "city": "Uberlândia",
+    "country": "BR",
+    "neighborhood": "Complexo Integração",
+    "state": "MG",
+    "streetName": "4 - Av. Manuel Lúcio",
+    "streetNumber": "130",
+    "coordinates": {
+      "latitude": -18.913878,
+      "longitude": -48.213595
+    },
+    "reference": "Em Frente Ao Bar Do Zé",
+    "complement": "Portão Branco"
+  }
+]

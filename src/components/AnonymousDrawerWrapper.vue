@@ -45,7 +45,12 @@
     defineLastPosition();
   });
 
-  router.afterEach((to, from) => {
+  router.afterEach((to, from, failure) => {
+    if (failure) {
+      console.log(failure);
+      return;
+    }
+
     defineCurrentPosition();
 
     const navigationAction = ref<NavigationAction | null>(null);
@@ -125,7 +130,7 @@
     v-for="(drawer, index) in drawersControlStore.drawers"
     :key="drawer.id"
     :show="drawer.state === 'OPENED'"
-    :before-hide="drawer.beforeHide"
+    :before-backdrop-close="drawer.beforeBackdropClose"
     @hide="hide"
     :index="index"
   >

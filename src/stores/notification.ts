@@ -35,7 +35,7 @@ export const useNotificationStore = defineStore('notification', () => {
 
     /* getters */
     isEmpty,
-    total,
+    totalPrice: total,
 
     /* actions */
   };

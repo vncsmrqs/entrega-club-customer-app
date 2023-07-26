@@ -8,8 +8,8 @@
   import SecondaryButton from '@/components/SecondaryButton.vue';
   import DefaultButton from '@/components/DefaultButton.vue';
   import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue';
-  import type { Address } from '@/stores/address';
-  import { useCustomerAddressStore } from '@/stores/address';
+  import type { Address } from '@/stores/customer-address-list';
+  import { useCustomerAddressStore } from '@/stores/customer-address-list';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
 
   const props = defineProps<{

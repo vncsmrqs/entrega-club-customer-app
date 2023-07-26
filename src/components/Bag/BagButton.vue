@@ -35,7 +35,7 @@
           v-show="!bagStore.isEmpty"
           class="absolute -top-2 -right-2 rounded-lg bg-white text-primary-600 text-xs px-1"
         >
-          {{ bagStore.items.length }}
+          {{ bagStore.totalItems }}
         </span>
         <ShoppingOutlineIcon
           :class="{
@@ -49,7 +49,7 @@
         Ver sacola
       </span>
       <span class="col-span-1 flex items-center justify-end md:text-sm">
-        {{ formatToCurrency(bagStore.total) }}
+        {{ formatToCurrency(bagStore.totalPrice) }}
       </span>
     </template>
   </DefaultButton>

@@ -7,7 +7,7 @@
   import CheckIcon from 'vue-material-design-icons/Check.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import { useRouter } from 'vue-router';
-  import type { Address } from '@/stores/address';
+  import type { Address } from '@/stores/customer-address-list';
   import { markRaw } from 'vue';
   import DeleteAddressScreen from '@/components/Address/DeleteAddressScreen.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';

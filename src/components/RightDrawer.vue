@@ -2,17 +2,17 @@
   const props = withDefaults(
     defineProps<{
       show: boolean;
-      beforeHide?: Function;
+      beforeBackdropClose?: Function;
       index: number;
     }>(),
     {
-      beforeHide: () => true,
+      beforeBackdropClose: () => true,
     },
   );
   const emit = defineEmits(['hide']);
 
   const hide = () => {
-    props?.beforeHide() ? emit('hide') : false;
+    props?.beforeBackdropClose() ? emit('hide') : false;
     return;
   };
 </script>
@@ -41,12 +41,12 @@
 
   .drawer-backdrop {
     @apply w-full h-full pointer-events-auto;
-    backdrop-filter: blur(2px);
-    background: rgba(0, 0, 0, 0.1);
+    /* backdrop-filter: blur(2px); */
+    background: rgba(0, 0, 0, 0.25);
   }
 
   .drawer-container {
-    @apply drop-shadow-lg fixed top-0 right-0 w-full h-full bg-white duration-300 pointer-events-auto transform-gpu;
+    @apply drop-shadow-lg fixed top-0 right-0 w-full h-full bg-white duration-300 pointer-events-auto transform-cpu;
     z-index: calc(1000 + v-bind('props.index') + 1);
   }
 

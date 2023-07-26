@@ -1,7 +1,7 @@
 import { reactive } from 'vue';
 import { defineStore } from 'pinia';
-import type { Address } from '@/stores/address';
-import { addressFixtureFunc } from '@/stores/address';
+import type { Address } from '@/stores/customer-address-list';
+import { addressFixtureFunc } from '@/stores/customer-address-list';
 import { generateId } from '@/utils';
 
 export type MerchantPriceRange =

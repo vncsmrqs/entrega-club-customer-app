@@ -26,7 +26,7 @@
         v-show="!notificationStore.isEmpty"
         class="absolute -top-2 -right-2 rounded-lg bg-primary-600 text-primary-600 text-xs px-1 text-white"
       >
-        {{ notificationStore.total }}
+        {{ notificationStore.totalPrice }}
       </span>
       <BellOutlineIcon />
     </span>

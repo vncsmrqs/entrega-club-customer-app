@@ -64,12 +64,12 @@
               <div
                 v-for="bagProduct in bagStore.items"
                 :key="bagProduct.id"
-                class="rounded-lg border flex flex-col gap-4"
+                class="rounded-lg border flex flex-col"
               >
                 <div class="flex gap-4 p-4">
                   <div class="flex-shrink-0">
                     <div
-                      class="w-12 aspect-photo border bg-gray-100 rounded-lg overflow-hidden"
+                      class="w-24 aspect-photo border bg-gray-100 rounded-md overflow-hidden"
                     >
                       <img
                         class="w-full"
@@ -100,19 +100,21 @@
                   </div>
                 </div>
                 <div class="flex justify-end gap-2 border-t p-2">
-                  <div class="flex items-center">
-                    <span class="text-green-700">{{
-                      formatToCurrency(10)
-                    }}</span>
+                  <div class="flex flex-col items-start">
                     <div
                       v-if="bagProduct.productDetails?.originalUnitPrice"
-                      class="text-gray-500 ml-2 text-sm line-through"
+                      class="text-gray-500 text-xs line-through"
                     >
                       {{ formatToCurrency(15) }}
                     </div>
+                    <span class="text-green-700">{{
+                      formatToCurrency(bagStore.calcTotalProduct(bagProduct))
+                    }}</span>
                   </div>
                   <div class="flex-1"></div>
                   <IncrementControl
+                    @increment="bagStore.incrementProduct(bagProduct)"
+                    @decrement="bagStore.decrementProduct(bagProduct)"
                     :quantity="bagProduct.quantity"
                   ></IncrementControl>
                   <div class="flex-shrink-0 text-danger-600">
@@ -136,7 +138,9 @@
       <div class="w-full flex items-center justify-between mb-4">
         <div class="font-bold">Total</div>
         <div class="inline-flex items-center">
-          <span class="text-green-700">{{ formatToCurrency(20) }}</span>
+          <span class="text-green-700">{{
+            formatToCurrency(bagStore.totalPrice)
+          }}</span>
           <div class="text-gray-500 ml-2 text-sm line-through">
             {{ formatToCurrency(30) }}
           </div>

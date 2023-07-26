@@ -9,7 +9,7 @@ export type Drawer<ComponentType = any, ComponentProps = any> = {
   destroyWhenClosed: boolean;
   component: ComponentType;
   componentProps: ComponentProps;
-  beforeHide?: Function;
+  beforeBackdropClose?: Function;
 };
 
 export const useDrawersControlStore = defineStore('drawers-control', () => {
@@ -28,7 +28,7 @@ export const useDrawersControlStore = defineStore('drawers-control', () => {
     component: ComponentType,
     componentProps: ComponentProps,
     destroyWhenClosed: boolean = true,
-    beforeHide?: Function,
+    beforeBackdropClose?: Function,
   ) => {
     const id = generateId(8);
     const drawer: Drawer<ComponentType, ComponentProps> = {
@@ -37,7 +37,7 @@ export const useDrawersControlStore = defineStore('drawers-control', () => {
       destroyWhenClosed,
       component,
       componentProps,
-      beforeHide,
+      beforeBackdropClose,
     };
     drawersControl.drawers.push(drawer);
     return drawer;

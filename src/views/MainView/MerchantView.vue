@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import { markRaw, onMounted, ref } from 'vue';
   import MagnifyIcon from 'vue-material-design-icons/Magnify.vue';
-  import StarIcon from 'vue-material-design-icons/Star.vue';
   import IntersectionItem from '@/components/IntersectionItem.vue';
   import { debounce, formatToCurrency } from '@/utils';
   import { useMerchantStore } from '@/stores/merchant';
@@ -96,55 +95,66 @@
         </IconButton>
       </template>
     </ScreenHeader>
-    <ScreenMain id="merchant-main" :with-padding="false" class="scroll-smooth">
+    <ScreenMain id="merchant-main" :with-padding="false" class="md:p-5">
       <ScreenSide>
-        <div class="md:rounded-xl md:border overflow-hidden">
-          <div class="bg-gray-100 w-full aspect-banner">
-            <img
-              class="w-full h-full object-cover"
-              :src="
-                merchant.bannerUrl
-                  ? merchant.bannerUrl
-                  : defaultMerchantBannerImgUrl
-              "
-              :alt="merchant.name"
-            />
-          </div>
-          <div class="p-4 flex gap-4">
-            <div>
-              <div
-                class="w-20 bg-gray-100 aspect-square rounded-full overflow-hidden border-gray-200"
-              >
-                <img
-                  class="w-full"
-                  :src="merchant.logoUrl"
-                  :alt="merchant.name"
-                />
+        <div class="flex flex-col gap-5">
+          <div class="md:rounded-xl md:border overflow-hidden">
+            <div class="bg-gray-100 w-full aspect-banner">
+              <img
+                class="w-full h-full object-cover"
+                :src="
+                  merchant.bannerUrl
+                    ? merchant.bannerUrl
+                    : defaultMerchantBannerImgUrl
+                "
+                :alt="merchant.name"
+              />
+            </div>
+            <div class="p-4 flex gap-4">
+              <div>
+                <div
+                  class="w-20 bg-gray-100 aspect-square rounded-full overflow-hidden border-gray-200"
+                >
+                  <img
+                    class="w-full"
+                    :src="merchant.logoUrl"
+                    :alt="merchant.name"
+                  />
+                </div>
+              </div>
+              <div class="flex-1 flex flex-col gap-1">
+                <h2 class="font-bold text-lg">{{ merchant.name }}</h2>
+                <div class="w-full flex items-center text-sm">
+                  <div
+                    class="flex-1 flex gap-2 font-light text-gray-500 text-sm"
+                  >
+                    <span>{{ merchant.mainCategory }}</span>
+                    <DotSeparator />
+                    <span>{{ merchant.distance }} km</span>
+                    <DotSeparator />
+                    <PriceRange :price-range="merchant.priceRange" />
+                  </div>
+                </div>
+                <div class="flex gap-2 font-light text-gray-500 text-sm">
+                  <div class="flex gap-2 font-light text-gray-500 text-sm">
+                    <span>{{ merchant.preparationTime }} min</span>
+                    <DotSeparator />
+                    <DeliveryFee :delivery-fee="merchant.deliveryFee" />
+                  </div>
+                </div>
+                <div class="flex gap-2 font-light text-gray-500 text-sm">
+                  <span class="flex-1 text-gray-500">
+                    Pedido mínimo:
+                    {{ formatToCurrency(merchant.minimumOrderValue) }}
+                  </span>
+                </div>
               </div>
             </div>
-            <div class="flex-1 flex flex-col gap-1">
-              <h2 class="font-bold text-lg">{{ merchant.name }}</h2>
-              <div class="w-full flex items-center text-sm">
-                <div class="flex-1 flex gap-2 font-light text-gray-500 text-sm">
-                  <span>{{ merchant.mainCategory }}</span>
-                  <DotSeparator />
-                  <span>{{ merchant.distance }} km</span>
-                  <DotSeparator />
-                  <PriceRange :price-range="merchant.priceRange" />
-                </div>
-                <UserRating :rating="merchant.userRating" />
-              </div>
-              <div class="flex gap-2 font-light text-gray-500 text-sm">
-                <span class="flex-1 text-gray-500">
-                  Pedido mínimo:
-                  {{ formatToCurrency(merchant.minimumOrderValue) }}
-                </span>
-                <div class="flex gap-2 font-light text-gray-500 text-sm">
-                  <span>{{ merchant.preparationTime }} min</span>
-                  <DotSeparator />
-                  <DeliveryFee :delivery-fee="merchant.deliveryFee" />
-                </div>
-              </div>
+          </div>
+          <div class="md:rounded-xl md:border overflow-hidden">
+            <div class="flex-1 flex gap-1 items-center p-5 justify-between">
+              <h2 class="font-bold text-lg">Avaliações (23)</h2>
+              <UserRating :rating="merchant.userRating" />
             </div>
           </div>
         </div>

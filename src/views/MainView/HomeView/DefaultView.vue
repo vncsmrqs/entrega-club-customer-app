@@ -26,7 +26,7 @@
         :to="{ name: 'merchant', params: { merchantId: merchant.id } }"
       >
         <div
-          class="grid grid-cols-3 gap-4 p-5 md:p-3 md:rounded-xl border-b md:border"
+          class="grid grid-cols-4 gap-4 px-5 py-2 md:px-3 md:py-3 md:rounded-xl border-b md:border"
         >
           <div
             class="col-span-1 rounded-full bg-gray-100 border aspect-square overflow-hidden"
@@ -40,7 +40,7 @@
               :alt="merchant.name"
             />
           </div>
-          <div class="col-span-2 flex flex-col gap-1">
+          <div class="col-span-3 flex flex-col gap-1">
             <div class="font-medium text-lg">
               {{ merchant.name }}
             </div>
