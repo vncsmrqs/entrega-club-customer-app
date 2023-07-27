@@ -19,6 +19,8 @@
   import { formatToCurrency } from '@/utils';
   import DeleteBagItemScreen from '@/components/Bag/DeleteBagItemScreen.vue';
   import BagEmpty from '@/components/Bag/BagEmpty.vue';
+  import ProductScreen from '@/components/Product/ProductScreen.vue';
+  import type { ProductScreenProps } from '@/components/Product/ProductScreen.vue';
 
   onMounted(() => {});
 
@@ -28,6 +30,16 @@
 
   const openAddress = () => {
     const drawer = drawersControlStore.add(markRaw(AddressSelection), {});
+    router.push({ hash: `#${drawer.id}` });
+  };
+
+  const editItem = (bagProduct: BagProduct) => {
+    const drawer = drawersControlStore.add<
+      typeof ProductScreen,
+      ProductScreenProps
+    >(markRaw(ProductScreen), {
+      bagProductProp: bagProduct,
+    });
     router.push({ hash: `#${drawer.id}` });
   };
 
@@ -132,7 +144,10 @@
                     </IconButton>
                   </div>
                   <div class="flex-shrink-0">
-                    <IconButton class="bg-primary-100 text-primary-600">
+                    <IconButton
+                      @click="() => editItem(bagProduct)"
+                      class="bg-primary-100 text-primary-600"
+                    >
                       <PencilOutlineIcon></PencilOutlineIcon>
                     </IconButton>
                   </div>

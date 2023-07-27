@@ -1,6 +1,16 @@
-import { reactive } from 'vue';
+import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { generateId } from '@/utils';
+
+export const generateEmptyProduct = (): Product => ({
+  id: generateId(),
+  name: '',
+  available: false,
+  description: '',
+  preparationTime: 0,
+  originalUnitPrice: 0,
+  unitPrice: 0,
+});
 
 export type Product = {
   id: string;
@@ -210,7 +220,7 @@ export const productFixture: Product = {
 
 export const useProductStore = defineStore('product', () => {
   /* state */
-  const product = reactive(productFixture);
+  const product = ref(generateEmptyProduct());
 
   /* getters */
 

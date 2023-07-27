@@ -2,13 +2,14 @@ import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import type { Choice, GarnishItem, Product } from '@/stores/product';
 import { generateId } from '@/utils';
+import _ from 'lodash';
 
 export type BagProduct = {
   id: string;
-  productDetails?: Product;
+  productDetails: Product;
   selectedChoices: BagChoice[];
   quantity: number;
-  comment: string | null;
+  comment: string;
 };
 
 export type BagChoice = {
@@ -149,7 +150,17 @@ export const useBagStore = defineStore(
           items: [],
         };
       }
-      bag.value.items.push(bagItem);
+
+      const itemIndex = bag.value.items.findIndex(
+        (item) => item.id === bagItem.id,
+      );
+
+      if (itemIndex >= 0) {
+        bag.value.items.splice(itemIndex, 1, bagItem);
+        return;
+      }
+
+      bag.value.items.push(_.cloneDeep(bagItem));
     };
 
     const deleteItem = (bagItem: BagProduct) => {

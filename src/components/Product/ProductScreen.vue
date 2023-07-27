@@ -1,13 +1,15 @@
 <script setup lang="ts">
-  import { onMounted, reactive, ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import StoreOutlineIcon from 'vue-material-design-icons/StoreOutline.vue';
   import CircleSmallIcon from 'vue-material-design-icons/CircleSmall.vue';
   import PlusIcon from 'vue-material-design-icons/Plus.vue';
   import MinusIcon from 'vue-material-design-icons/Minus.vue';
   import CheckIcon from 'vue-material-design-icons/Check.vue';
+  import CheckBoldIcon from 'vue-material-design-icons/CheckBold.vue';
+  import AlertIcon from 'vue-material-design-icons/Alert.vue';
   import CommentTextOutlineIcon from 'vue-material-design-icons/CommentTextOutline.vue';
   import { useRouter } from 'vue-router';
-  import { useProductStore } from '@/stores/product';
+  import { generateEmptyProduct, useProductStore } from '@/stores/product';
   import type { Choice, GarnishItem, Product } from '@/stores/product';
   import { useMerchantStore } from '@/stores/merchant';
   import { formatToCurrency, generateId } from '@/utils';
@@ -23,34 +25,40 @@
   import type { BagProduct, BagChoice, BagGarnishItem } from '@/stores/bag';
   import IncrementControl from '@/components/Product/IncrementControl.vue';
   import UserRating from '@/components/Merchant/UserRating.vue';
+  import _ from 'lodash';
 
   const router = useRouter();
 
-  const props = defineProps<{
+  export type ProductScreenProps = {
     productProp?: Product;
     bagProductProp?: BagProduct;
-  }>();
+  };
+
+  const props = defineProps<ProductScreenProps>();
 
   const merchantStore = useMerchantStore();
   const merchant = merchantStore.merchant;
 
   const productStore = useProductStore();
 
-  let bagProduct: BagProduct = reactive({
+  let bagProduct = ref<BagProduct>({
     id: generateId(),
+    productDetails: generateEmptyProduct(),
     selectedChoices: [],
     quantity: 1,
-    comment: null,
+    comment: '',
   });
 
-  const product = props.productProp || productStore.product;
-
-  onMounted(async () => {
-    populateBagProduct(product);
+  onMounted(() => {
+    if (props.bagProductProp) {
+      bagProduct.value = _.cloneDeep(props.bagProductProp);
+      return;
+    }
+    populateBagProduct(props.productProp || productStore.product);
   });
 
   const populateBagProduct = (product: Product): void => {
-    bagProduct.productDetails = product;
+    bagProduct.value.productDetails = _.cloneDeep(product);
   };
 
   const findSelectedChoiceIndexById = (
@@ -281,29 +289,43 @@
 
   const bagStore = useBagStore();
 
-  const validateRequiredChoices = (bagProduct: BagProduct): boolean => {
+  const findRequiredChoices = (bagProduct: BagProduct): Choice | undefined => {
     const choiceToValidateList =
       bagProduct.productDetails?.choices?.filter((choice) => choice.min) || [];
 
-    const choice = choiceToValidateList.some((choice) => {
+    return choiceToValidateList.find((choice) => {
       const totalAdded = getTotalOfSelectedItemsOnChoice(bagProduct, choice);
       return totalAdded < choice.min;
     });
-
-    return !choice;
   };
 
   const addProductToBag = async (bagProduct: BagProduct) => {
-    if (validateRequiredChoices(bagProduct)) {
-      bagStore.addItem(bagProduct);
-      await back();
+    const choice = findRequiredChoices(bagProduct);
+
+    if (choice) {
+      scrollToChoice(choice.id);
+      requiredChoiceError.value = true;
+      clearTimeout(requiredChoiceErrorTimeoutId);
+      requiredChoiceErrorTimeoutId = setTimeout(() => {
+        requiredChoiceError.value = false;
+      }, 3000);
       return;
     }
-    requiredChoiceError.value = true;
-    clearTimeout(requiredChoiceErrorTimeoutId);
-    requiredChoiceErrorTimeoutId = setTimeout(() => {
-      requiredChoiceError.value = false;
-    }, 5000);
+
+    bagStore.addItem(bagProduct);
+    await back();
+  };
+
+  const scrollToChoice = (choiceId: string) => {
+    const elementToShow = document.querySelector(
+      `#choice-${choiceId}`,
+    ) as HTMLElement;
+    const scrollableContainer =
+      document.querySelector(`#main-product-view`)?.parentElement;
+
+    if (elementToShow && scrollableContainer) {
+      scrollableContainer.scrollTo(0, elementToShow.offsetTop);
+    }
   };
 
   const requiredChoiceError = ref(false);
@@ -320,41 +342,51 @@
       <template #left>
         <BackButton />
       </template>
-      {{ product.name }}
+      {{ bagProduct.productDetails.name }}
     </ScreenHeader>
-    <ScreenMain :with-padding="false">
+    <ScreenMain :with-padding="false" id="main-product-view">
       <ScreenContent class="!col-span-full">
-        <Transition name="fade">
+        <Transition name="slide-up">
           <div
             v-if="requiredChoiceError"
-            class="w-full z-40 bg-danger-600 sticky top-0 font-semibold text-white px-5 py-4"
+            class="w-full gap-4 flex z-40 bg-danger-600 fixed top-0 font-semibold text-white px-5 py-4"
           >
-            É preciso escolher todos os itens obrigatórios antes de adicionar o
-            produto à sacola.
+            <AlertIcon :size="48" />
+            <div>
+              É preciso escolher todos os itens obrigatórios antes de adicionar
+              o produto à sacola.
+            </div>
           </div>
         </Transition>
         <div class="bg-gray-100 w-full aspect-photo overflow-hidden">
           <img
             class="w-full h-full object-cover"
-            :src="product.imageUrl"
-            :alt="product.name"
+            :src="bagProduct.productDetails.imageUrl"
+            :alt="bagProduct.productDetails.name"
           />
         </div>
         <div class="p-4 flex gap-4">
           <div class="flex-1">
-            <h1 class="text-xl font-medium">{{ product.name }}</h1>
-            <div v-if="product.description" class="mt-2 text-gray-500">
-              {{ product.description }}
+            <h1 class="text-xl font-medium">
+              {{ bagProduct.productDetails.name }}
+            </h1>
+            <div
+              v-if="bagProduct.productDetails.description"
+              class="mt-2 text-gray-500"
+            >
+              {{ bagProduct.productDetails.description }}
             </div>
             <div class="mt-4 flex items-center">
               <span class="text-green-700">{{
-                formatToCurrency(product.unitPrice)
+                formatToCurrency(bagProduct.productDetails.unitPrice)
               }}</span>
               <div
-                v-if="product.originalUnitPrice"
+                v-if="bagProduct.productDetails.originalUnitPrice"
                 class="text-gray-500 ml-2 text-sm line-through"
               >
-                {{ formatToCurrency(product.originalUnitPrice) }}
+                {{
+                  formatToCurrency(bagProduct.productDetails.originalUnitPrice)
+                }}
               </div>
             </div>
           </div>
@@ -376,7 +408,11 @@
             <span>{{ formatToCurrency(merchant.deliveryFee) }}</span>
           </div>
         </div>
-        <div v-for="choice in product.choices" :key="choice.id">
+        <div
+          v-for="choice in bagProduct.productDetails.choices"
+          :key="choice.id"
+          :id="`choice-${choice.id}`"
+        >
           <div
             class="sticky top-0 bg-gray-100 text-gray-500 px-5 py-2 text-xl flex justify-between z-10"
           >
@@ -528,8 +564,10 @@
                 </IconButton>
               </div>
               <div v-else>
-                <IconButton class="min-w-0 mr-5">
-                  <CheckIcon
+                <IconButton
+                  class="min-w-0 mr-5 inline-flex justify-center items-center p-0 w-8 h-8"
+                >
+                  <CheckBoldIcon
                     v-if="
                       !!getNumberOfGarnishItemsAddedToChoice(
                         bagProduct,
@@ -537,9 +575,9 @@
                         garnishItem,
                       )
                     "
-                    :size="16"
+                    :size="20"
                     class="text-primary-600"
-                  ></CheckIcon>
+                  ></CheckBoldIcon>
                   <span v-else class="block w-4 h-4"></span>
                 </IconButton>
               </div>
@@ -555,13 +593,14 @@
               <CommentTextOutlineIcon :size="20" class="mr-1" />
               <span class="font-medium">Alguma observação?</span>
             </span>
-            <span>0/140</span>
+            <span>{{ bagProduct.comment?.length || 0 }}/140</span>
           </label>
           <textarea
             id="product-message"
             rows="4"
-            class="block p-4 w-full text-sm text-gray-900 bg-gray-100 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+            class="block p-4 w-full text-gray-900 outline-0 bg-gray-100 rounded-xl ring-primary-500 border-0 focus:ring-2"
             placeholder="Ex: Tirar a cebola, maionese à parte, ponto da carne..."
+            v-model="bagProduct.comment"
           ></textarea>
         </div>
       </ScreenContent>
@@ -576,7 +615,7 @@
         @click="() => addProductToBag(bagProduct)"
         class="w-full"
         :class="{
-          '!bg-gray-200 !text-gray-400': !validateRequiredChoices(bagProduct),
+          '!bg-gray-200 !text-gray-400': findRequiredChoices(bagProduct),
         }"
       >
         <span>Adicionar</span>
