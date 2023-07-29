@@ -20,6 +20,7 @@
   import IconButton from '@/components/IconButton.vue';
   import EditAddressScreen from '@/components/Address/EditAddressScreen.vue';
   import { useSelectedAddressStore } from '@/stores/selected-address';
+  import ListAddressEmpty from '@/components/Address/ListAddressEmpty.vue';
 
   const customerAddressStore = useCustomerAddressStore();
   const selectedAddressStore = useSelectedAddressStore();
@@ -28,6 +29,7 @@
   const props = withDefaults(
     defineProps<{
       showBackButton?: boolean;
+      selected?: Function;
     }>(),
     {
       showBackButton: true,
@@ -35,13 +37,17 @@
   );
 
   const router = useRouter();
+
   onMounted(async () => {
     await customerAddressStore.load();
+    if (!customerAddressStore.customerAddressList.length) {
+      addAddress();
+    }
   });
 
   const addAddress = () => {
     const drawer = drawersControlStore.add(markRaw(AddAddressScreen), {
-      added: async () => back(),
+      added: () => onSelected(),
     });
     router.push({ hash: `#${drawer.id}` });
   };
@@ -61,11 +67,19 @@
     return selectedAddressStore.selectedAddress?.id === address.id;
   };
 
-  const selectAddress = (address: Address) => {
-    selectedAddressStore.selectAddress(address);
+  const onSelected = () => {
     setTimeout(() => {
+      if (props.selected) {
+        props.selected();
+        return;
+      }
       back();
     }, 500);
+  };
+
+  const selectAddress = (address: Address) => {
+    selectedAddressStore.selectAddress(address);
+    onSelected();
   };
 </script>
 
@@ -75,43 +89,50 @@
       <template v-if="props.showBackButton" #left>
         <BackButton></BackButton>
       </template>
-      Selecionar Endereço
+      Endereço de entrega
     </ScreenHeader>
     <ScreenLoader v-if="customerAddressStore.loading" />
     <ScreenError v-else-if="customerAddressStore.error" />
     <template v-else>
       <ScreenMain>
         <ScreenContent class="!col-span-full">
-          <div class="flex flex-col gap-4 relative">
-            <TransitionGroup name="list">
-              <div
-                v-for="address in customerAddressStore.sortedCustomerAddressList"
-                :key="address.id"
-                class="p-4 flex items-center gap-4 border rounded-xl cursor-pointer transition-colors"
-                :class="{ 'border-primary-600': isSelected(address) }"
-                @click="() => selectAddress(address)"
-              >
-                <CheckIcon
-                  class="text-primary-600"
-                  v-if="isSelected(address)"
-                ></CheckIcon>
-                <div class="flex-1">
-                  <div class="text-gray-700">
-                    {{ address.streetName }}, {{ address.streetNumber }}
+          <template
+            v-if="!customerAddressStore.sortedCustomerAddressList.length"
+          >
+            <ListAddressEmpty />
+          </template>
+          <template v-else>
+            <div class="flex flex-col gap-4 relative">
+              <TransitionGroup name="list">
+                <div
+                  v-for="address in customerAddressStore.sortedCustomerAddressList"
+                  :key="address.id"
+                  class="p-4 flex items-center gap-4 border rounded-xl cursor-pointer transition-colors"
+                  :class="{ 'border-primary-600': isSelected(address) }"
+                  @click="() => selectAddress(address)"
+                >
+                  <CheckIcon
+                    class="text-primary-600"
+                    v-if="isSelected(address)"
+                  ></CheckIcon>
+                  <div class="flex-1">
+                    <div class="text-gray-700">
+                      {{ address.streetName }}, {{ address.streetNumber }}
+                    </div>
+                    <div class="text-sm text-gray-500">
+                      {{ address.neighborhood }}, {{ address.city }} -
+                      {{ address.state }}
+                    </div>
                   </div>
-                  <div class="text-sm text-gray-500">
-                    {{ address.neighborhood }}, {{ address.city }} -
-                    {{ address.state }}
+                  <div class="inline-flex flex-col gap-2">
+                    <IconButton @click.stop="() => editAddress(address)">
+                      <ChevronRightIcon />
+                    </IconButton>
                   </div>
                 </div>
-                <div class="inline-flex flex-col gap-2">
-                  <IconButton @click.stop="() => editAddress(address)">
-                    <ChevronRightIcon />
-                  </IconButton>
-                </div>
-              </div>
-            </TransitionGroup>
-          </div>
+              </TransitionGroup>
+            </div>
+          </template>
         </ScreenContent>
       </ScreenMain>
       <ScreenFooter>

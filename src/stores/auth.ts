@@ -1,5 +1,6 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
+import { timeout } from '@/utils';
 
 export type Phone = {
   countryCode: number; // 55
@@ -49,9 +50,8 @@ export const useAuthStore = defineStore(
     const auth = async (): Promise<void> => {
       loading.value = true;
       try {
-        setTimeout(() => {
-          account.value = accountFixture;
-        }, 3000);
+        await timeout(3000);
+        account.value = accountFixture;
       } catch (e: any) {
         error.value = e.toString();
         account.value = null;

@@ -2,7 +2,7 @@ import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { generateId, timeout } from '@/utils';
 import { useSelectedAddressStore } from '@/stores/selected-address';
-import customerAddressFixture from '@/fixtures/address/customer-address-list.json';
+// import customerAddressFixture from '@/fixtures/address/customer-address-list.json';
 
 export type Coordinates = {
   latitude: number; // -18.913878;
@@ -84,7 +84,7 @@ export const useCustomerAddressStore = defineStore(
       loading.value = true;
       try {
         await timeout(1000);
-        customerAddressList.value = customerAddressFixture;
+        // customerAddressList.value = customerAddressFixture;
         error.value = null;
       } catch (e: any) {
         customerAddressList.value = [];

@@ -192,6 +192,7 @@ export const useBagStore = defineStore(
   },
   {
     persist: {
+      storage: sessionStorage,
       paths: ['bag', 'accountId'],
       debug: true,
     },

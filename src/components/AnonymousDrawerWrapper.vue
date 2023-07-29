@@ -47,7 +47,7 @@
 
   router.afterEach((to, from, failure) => {
     if (failure) {
-      console.log(failure);
+      console.log('NAVIGATION_ERROR::', failure);
       return;
     }
 

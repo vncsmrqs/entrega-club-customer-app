@@ -5,46 +5,24 @@
   import { onMounted, ref } from 'vue';
   import { useSelectedAddressStore } from '@/stores/selected-address';
   import LoaderComponent from '@/components/LoaderComponent.vue';
-  import { markRaw } from 'vue';
-  import AddressSelection from '@/components/Address/ListAddressScreen.vue';
-  import { useDrawersControlStore } from '@/stores/drawers-control';
-  import { useRouter } from 'vue-router';
+  import ValidateAddressSelection from '@/components/Address/ValidateAddressSelection.vue';
+  import { useAuthStore } from '@/stores/auth';
 
   const loading = ref(true);
+  const showAddressSelectionScreen = ref(false);
 
   const selectedAddressStore = useSelectedAddressStore();
-  const drawersControlStore = useDrawersControlStore();
-
-  const router = useRouter();
+  const authStore = useAuthStore();
 
   onMounted(async () => {
+    await authStore.auth();
     await selectedAddressStore.loadCurrentAddress();
 
     if (!selectedAddressStore.selectedAddress) {
-      showFixedAddressDrawer();
+      showAddressSelectionScreen.value = true;
     }
 
     loading.value = false;
-  });
-
-  const addressSelectionDrawerId = ref<string | null>(null);
-
-  const showFixedAddressDrawer = () => {
-    const drawer = drawersControlStore.add(
-      markRaw(AddressSelection),
-      { showBackButton: false },
-      true,
-      () => false,
-    );
-    addressSelectionDrawerId.value = drawer.id;
-    router.push({ hash: `#${drawer.id}` });
-  };
-
-  router.beforeEach(({ hash }) => {
-    if (!selectedAddressStore.selectedAddress) {
-      return `#${addressSelectionDrawerId.value}` === hash;
-    }
-    return true;
   });
 </script>
 
@@ -70,6 +48,7 @@
     </div>
     <div class="h-px w-full flex-none bg-gray-200"></div>
     <MainNavigation />
+    <ValidateAddressSelection v-model:show="showAddressSelectionScreen" />
   </template>
   <AnonymousDrawerWrapper></AnonymousDrawerWrapper>
 </template>

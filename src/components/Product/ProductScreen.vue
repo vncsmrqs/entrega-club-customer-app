@@ -26,6 +26,7 @@
   import IncrementControl from '@/components/Product/IncrementControl.vue';
   import UserRating from '@/components/Merchant/UserRating.vue';
   import _ from 'lodash';
+  import FloatingAlert from '@/components/FloatingAlert.vue';
 
   const router = useRouter();
 
@@ -346,18 +347,10 @@
     </ScreenHeader>
     <ScreenMain :with-padding="false" id="main-product-view">
       <ScreenContent class="!col-span-full">
-        <Transition name="slide-up">
-          <div
-            v-if="requiredChoiceError"
-            class="w-full gap-4 flex z-40 bg-danger-600 fixed top-0 font-semibold text-white px-5 py-4"
-          >
-            <AlertIcon :size="48" />
-            <div>
-              É preciso escolher todos os itens obrigatórios antes de adicionar
-              o produto à sacola.
-            </div>
-          </div>
-        </Transition>
+        <FloatingAlert :show="requiredChoiceError">
+          É preciso escolher todos os itens obrigatórios antes de adicionar o
+          produto à sacola.
+        </FloatingAlert>
         <div class="bg-gray-100 w-full aspect-photo overflow-hidden">
           <img
             class="w-full h-full object-cover"

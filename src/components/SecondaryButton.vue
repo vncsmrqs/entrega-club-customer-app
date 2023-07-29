@@ -1,10 +1,21 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import LoaderComponent from '@/components/LoaderComponent.vue';
+
+  const props = withDefaults(defineProps<{ loading?: boolean }>(), {
+    loading: false,
+  });
+</script>
 
 <template>
   <button class="secondary-button">
-    <slot name="left"></slot>
-    <slot></slot>
-    <slot name="right"></slot>
+    <template v-if="props.loading">
+      <LoaderComponent />
+    </template>
+    <template v-else>
+      <slot name="left"></slot>
+      <slot></slot>
+      <slot name="right"></slot>
+    </template>
   </button>
 </template>
 

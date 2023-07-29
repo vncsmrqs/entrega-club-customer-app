@@ -31,15 +31,17 @@
               <span
                 class="text-primary-600 font-medium rounded-lg px-4 py-2 text-center"
                 :class="{ 'bg-primary-100': isActive }"
-                >Início</span
               >
+                Início
+              </span>
             </RouterLink>
             <RouterLink :to="{ name: 'restaurants' }" v-slot="{ isActive }">
               <span
                 class="text-primary-600 font-medium rounded-lg px-4 py-2 text-center"
                 :class="{ 'bg-primary-100': isActive }"
-                >Restaurantes</span
               >
+                Restaurantes
+              </span>
             </RouterLink>
             <RouterLink :to="{ name: 'liquor-store' }" v-slot="{ isActive }">
               <span

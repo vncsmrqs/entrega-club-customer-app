@@ -8,23 +8,46 @@
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import { useRouter } from 'vue-router';
   import type { Address } from '@/stores/customer-address-list';
-  import { markRaw } from 'vue';
+  import { computed, markRaw, ref } from 'vue';
   import DeleteAddressScreen from '@/components/Address/DeleteAddressScreen.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import IconButton from '@/components/IconButton.vue';
   import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue';
   import DefaultButton from '@/components/DefaultButton.vue';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
+  import { useSelectedAddressStore } from '@/stores/selected-address';
+  import FloatingAlert from '@/components/FloatingAlert.vue';
 
   const props = defineProps<{
     // isOpened: boolean;
     address: Address;
   }>();
 
+  const selectedAddressStore = useSelectedAddressStore();
+
+  const isCurrentAddress = computed(() => {
+    return selectedAddressStore.selectedAddress?.id === props.address.id;
+  });
+
   const router = useRouter();
   const drawersControlStore = useDrawersControlStore();
 
+  const currentAddressError = ref(false);
+  let currentAddressErrorTimeout: any = 0;
+
+  const showCurrentAddressError = () => {
+    currentAddressError.value = true;
+    clearTimeout(currentAddressErrorTimeout);
+    currentAddressErrorTimeout = setTimeout(() => {
+      currentAddressError.value = false;
+    }, 2000);
+  };
+
   const deleteAddress = (address: Address) => {
+    if (isCurrentAddress.value) {
+      showCurrentAddressError();
+      return;
+    }
     const drawer = drawersControlStore.add<typeof DeleteAddressScreen>(
       markRaw(DeleteAddressScreen),
       {
@@ -48,7 +71,10 @@
       </template>
       <template #right>
         <IconButton
-          class="text-primary-600"
+          :class="{
+            'text-primary-600': !isCurrentAddress,
+            'text-gray-300 cursor-not-allowed': isCurrentAddress,
+          }"
           @click="() => deleteAddress(props.address)"
         >
           <DeleteOutlineIcon :size="24" />
@@ -57,6 +83,9 @@
       Editar endereço
     </ScreenHeader>
     <ScreenMain>
+      <FloatingAlert :show="currentAddressError">
+        Você não pode excluir o endereço que está usando no momento.
+      </FloatingAlert>
       <ScreenContent class="!col-span-full flex flex-col gap-4">
         <div>
           <span class="mr-1 font-medium">Logradouro:</span>
