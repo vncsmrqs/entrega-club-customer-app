@@ -3,7 +3,7 @@
   import ScreenRoot from '@/components/Screen/ScreenRoot.vue';
   import BackButton from '@/components/BackButton.vue';
   import ScreenFooter from '@/components/Screen/ScreenFooter.vue';
-  import PrimaryButton from '@/components/PrimaryButton.vue';
+  import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
   import CheckIcon from 'vue-material-design-icons/Check.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import { useRouter } from 'vue-router';
@@ -13,7 +13,7 @@
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import IconButton from '@/components/IconButton.vue';
   import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue';
-  import DefaultButton from '@/components/DefaultButton.vue';
+  import DefaultButton from '@/components/Buttons/DefaultButton.vue';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
   import { useSelectedAddressStore } from '@/stores/selected-address';
   import FloatingAlert from '@/components/FloatingAlert.vue';

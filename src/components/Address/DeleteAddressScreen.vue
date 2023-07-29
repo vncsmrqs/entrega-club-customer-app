@@ -5,8 +5,8 @@
   import ScreenFooter from '@/components/Screen/ScreenFooter.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import { useRouter } from 'vue-router';
-  import SecondaryButton from '@/components/SecondaryButton.vue';
-  import DefaultButton from '@/components/DefaultButton.vue';
+  import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
+  import DefaultButton from '@/components/Buttons/DefaultButton.vue';
   import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue';
   import type { Address } from '@/stores/customer-address-list';
   import { useCustomerAddressStore } from '@/stores/customer-address-list';

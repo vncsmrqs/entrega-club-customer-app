@@ -50,7 +50,7 @@ export const useAuthStore = defineStore(
     const auth = async (): Promise<void> => {
       loading.value = true;
       try {
-        await timeout(3000);
+        await timeout(300);
         account.value = accountFixture;
       } catch (e: any) {
         error.value = e.toString();

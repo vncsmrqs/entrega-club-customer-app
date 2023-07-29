@@ -8,6 +8,8 @@
   import AppLogo from '@/components/AppLogo.vue';
   import AddressSelectionBar from '@/components/Main/AddressSelectionBar.vue';
   import ScreenSide from '@/components/Screen/ScreenSide.vue';
+  import NotificationButton from '@/components/Notification/NotificationButton.vue';
+  import LoginButton from '@/components/Login/LoginButton.vue';
 
   onMounted(async () => {
     initDropdowns();
@@ -17,10 +19,13 @@
 <template>
   <ScreenRoot>
     <ScreenHeader class="md:hidden flex justify-between">
-      <template #left>
-        <AppLogo />
+      <AppLogo />
+      <template #right>
+        <div class="flex gap-2">
+          <NotificationButton />
+          <LoginButton />
+        </div>
       </template>
-      <template #right></template>
     </ScreenHeader>
     <ScreenMain :with-padding="false" class="md:p-5">
       <ScreenSide>
@@ -53,7 +58,7 @@
           </div>
         </div>
       </ScreenSide>
-      <ScreenContent>
+      <ScreenContent :full-height="false">
         <RouterView></RouterView>
       </ScreenContent>
     </ScreenMain>

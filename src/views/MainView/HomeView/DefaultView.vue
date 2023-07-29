@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { reactive, ref } from 'vue';
   import { merchantFixture } from '@/stores/merchant';
-  import SecondaryButton from '@/components/SecondaryButton.vue';
+  import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
   import UserRating from '@/components/Merchant/UserRating.vue';
   import DotSeparator from '@/components/DotSeparator.vue';
   import DeliveryFee from '@/components/Merchant/DeliveryFee.vue';
@@ -26,7 +26,7 @@
         :to="{ name: 'merchant', params: { merchantId: merchant.id } }"
       >
         <div
-          class="grid grid-cols-4 gap-4 px-5 py-2 md:px-3 md:py-3 md:rounded-xl border-b md:border"
+          class="grid grid-cols-5 gap-5 md:gap-3 p-5 md:px-3 md:py-3 md:rounded-xl border-b md:border items-center"
         >
           <div
             class="col-span-1 rounded-full bg-gray-100 border aspect-square overflow-hidden"
@@ -40,8 +40,8 @@
               :alt="merchant.name"
             />
           </div>
-          <div class="col-span-3 flex flex-col gap-1">
-            <div class="font-medium text-lg">
+          <div class="col-span-4 flex flex-col justify-center gap-1">
+            <div class="font-medium text-lg mb-1 leading-5">
               {{ merchant.name }}
             </div>
             <div class="flex gap-2 font-light text-gray-500 text-sm">

@@ -18,7 +18,7 @@
   import ScreenHeader from '@/components/Screen/ScreenHeader.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import ScreenFooter from '@/components/Screen/ScreenFooter.vue';
-  import PrimaryButton from '@/components/PrimaryButton.vue';
+  import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
   import IconButton from '@/components/IconButton.vue';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
   import { useBagStore } from '@/stores/bag';

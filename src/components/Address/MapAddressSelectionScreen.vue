@@ -3,7 +3,7 @@
   import ScreenRoot from '@/components/Screen/ScreenRoot.vue';
   import BackButton from '@/components/BackButton.vue';
   import ScreenFooter from '@/components/Screen/ScreenFooter.vue';
-  import PrimaryButton from '@/components/PrimaryButton.vue';
+  import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
   import CheckIcon from 'vue-material-design-icons/Check.vue';
   import MapMarkerIcon from 'vue-material-design-icons/MapMarker.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';

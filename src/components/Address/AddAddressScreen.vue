@@ -9,7 +9,7 @@
   import { markRaw, onMounted, ref } from 'vue';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
   import FloatingAlert from '@/components/FloatingAlert.vue';
-  import SecondaryButton from '@/components/SecondaryButton.vue';
+  import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import MapAddressSelectionScreen from '@/components/Address/MapAddressSelectionScreen.vue';
 
@@ -133,7 +133,7 @@
       <SecondaryButton
         @click="loadCurrentPosition"
         :loading="loadingLocation"
-        class="w-full mb-2"
+        class="w-full"
       >
         Usar localização atual
         <template #left>

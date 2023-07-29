@@ -6,7 +6,7 @@
   import { useRouter } from 'vue-router';
   import { useBagStore } from '@/stores/bag';
   import { formatToCurrency } from '@/utils';
-  import DefaultButton from '@/components/DefaultButton.vue';
+  import DefaultButton from '@/components/Buttons/DefaultButton.vue';
 
   const router = useRouter();
 

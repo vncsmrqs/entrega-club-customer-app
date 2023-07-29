@@ -7,7 +7,7 @@
   import CancelIcon from 'vue-material-design-icons/Cancel.vue';
   import HomeOutlineIcon from 'vue-material-design-icons/HomeOutline.vue';
   import AppLogo from '@/components/AppLogo.vue';
-  import PrimaryButton from '@/components/PrimaryButton.vue';
+  import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 </script>
 
 <template>

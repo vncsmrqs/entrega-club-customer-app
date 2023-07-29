@@ -46,8 +46,8 @@
 
 <style scoped>
   svg {
-    width: 50px;
-    height: 25px;
+    max-width: 50px;
+    max-height: 25px;
     display: inline-block;
   }
 </style>

@@ -7,7 +7,7 @@
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import ScreenHeader from '@/components/Screen/ScreenHeader.vue';
   import ScreenRoot from '@/components/Screen/ScreenRoot.vue';
-  import PrimaryButton from '@/components/PrimaryButton.vue';
+  import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
   import ScreenFooter from '@/components/Screen/ScreenFooter.vue';
   import BackButton from '@/components/BackButton.vue';
   import { useBagStore } from '@/stores/bag';

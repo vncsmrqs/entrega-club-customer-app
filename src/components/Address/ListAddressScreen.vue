@@ -14,7 +14,7 @@
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
   import ScreenLoader from '@/components/Screen/ScreenLoader.vue';
   import ScreenError from '@/components/Screen/ScreenError.vue';
-  import SecondaryButton from '@/components/SecondaryButton.vue';
+  import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import AddAddressScreen from '@/components/Address/AddAddressScreen.vue';
   import IconButton from '@/components/IconButton.vue';

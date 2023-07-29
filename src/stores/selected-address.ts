@@ -15,7 +15,7 @@ export const useSelectedAddressStore = defineStore(
     const loadCurrentAddress = async (): Promise<void> => {
       loading.value = true;
       try {
-        await timeout(1000);
+        await timeout(300);
         // selectAddress(null);
         error.value = null;
       } catch (e: any) {
