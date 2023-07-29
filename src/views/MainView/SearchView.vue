@@ -49,6 +49,10 @@
       name: 'Lanches',
     },
   ];
+
+  import { ref } from 'vue';
+
+  const searchValue = ref('');
 </script>
 
 <template>
@@ -67,7 +71,7 @@
             class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
             >Search</label
           >
-          <SearchInput />
+          <SearchInput v-model="searchValue" />
         </form>
         <div class="mt-4">
           <h2 class="px-5 font-bold dark:text-gray-100 text-lg">Categorias</h2>

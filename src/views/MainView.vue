@@ -7,6 +7,9 @@
   import LoaderComponent from '@/components/LoaderComponent.vue';
   import ValidateAddressSelection from '@/components/Address/ValidateAddressSelection.vue';
   import { useAuthStore } from '@/stores/auth';
+  import AppLogo from '@/components/AppLogo.vue';
+  import AccordionItem from '@/components/AccordionItem.vue';
+  import { timeout } from '@/utils';
 
   const loading = ref(true);
   const showAddressSelectionScreen = ref(false);
@@ -15,6 +18,7 @@
   const authStore = useAuthStore();
 
   onMounted(async () => {
+    await timeout(3000);
     await authStore.auth();
     await selectedAddressStore.loadCurrentAddress();
 

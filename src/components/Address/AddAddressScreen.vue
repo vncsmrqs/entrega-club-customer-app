@@ -12,6 +12,13 @@
   import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import MapAddressSelectionScreen from '@/components/Address/MapAddressSelectionScreen.vue';
+  import AccordionItem from '@/components/AccordionItem.vue';
+  import MapMarkerOutlineIcon from 'vue-material-design-icons/MapMarkerOutline.vue';
+  import SearchInput from '@/components/SearchInput.vue';
+  import ChevronRightIcon from 'vue-material-design-icons/ChevronRight.vue';
+  import IconButton from '@/components/IconButton.vue';
+  import type { Address } from '@/stores/customer-address-list';
+  import { addressFixtureFunc } from '@/stores/customer-address-list';
 
   export type LocalizationPermissionType = 'denied' | 'granted' | 'prompt';
 
@@ -113,7 +120,43 @@
   const error = ref(false);
   let errorTimeout: any = 0;
 
+  const showIcon = ref(true);
+
+  const addressList = ref<Address[]>([]);
+
+  const selectAddress = (address: Address) => {
+    showMapAddressSelection({
+      lat: address.coordinates.latitude,
+      lng: address.coordinates.longitude,
+    });
+  };
+
   onMounted(() => {});
+
+  const searchValue = ref('');
+
+  const inputSearch = (value: string) => {
+    searchValue.value = value;
+
+    if (!searchValue.value.length) {
+      addressList.value = [];
+      return;
+    }
+
+    addressList.value.push(addressFixtureFunc(searchValue.value.length));
+  };
+
+  const toggleFocus = (value: boolean) => {
+    if (searchValue.value.length) {
+      showIcon.value = false;
+      return;
+    }
+    showIcon.value = value;
+  };
+
+  const submitSearch = (event: Event) => {
+    console.log('SubmitEvent', event);
+  };
 </script>
 
 <template>
@@ -127,6 +170,72 @@
     <ScreenMain class="relative" :with-padding="false">
       <ScreenContent class="!col-span-full">
         <FloatingAlert :show="error"> Algum erro encontrado.</FloatingAlert>
+        <AccordionItem :opened="showIcon">
+          <div class="w-full flex flex-col my-5 items-center">
+            <div
+              class="w-32 h-32 rounded-full bg-gray-100 text-primary-600 flex justify-center items-center"
+            >
+              <MapMarkerOutlineIcon :size="64" />
+            </div>
+            <div class="text-center">
+              <div class="font-medium text-xl">
+                Onde você quer receber seu pedido?
+              </div>
+              <div class="text-gray-500 text-sm mt-2">
+                Informe seu endereço para validar a disponibilidade e cobertura
+                na sua região.
+              </div>
+            </div>
+          </div>
+        </AccordionItem>
+        <form
+          class="sticky top-0 left-0 bg-white px-5 py-4 z-10"
+          :class="{ shadow: !showIcon }"
+          @submit.prevent.stop="submitSearch"
+        >
+          <label
+            for="default-search"
+            class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+            >Search</label
+          >
+          <SearchInput
+            :model-value="searchValue"
+            @update:model-value="inputSearch"
+            @focus="() => toggleFocus(false)"
+            @blur="() => toggleFocus(true)"
+            placeholder="ex: Avenida Paulista, 156"
+          />
+        </form>
+        <div class="w-full flex flex-col p-5 gap-4 relative">
+          <TransitionGroup name="list">
+            <div
+              v-for="address in addressList"
+              :key="address.id"
+              class="p-4 flex items-center gap-4 border rounded-xl cursor-pointer transition-colors"
+              :class="{ 'border-primary-600': false }"
+              @click="() => selectAddress(address)"
+            >
+              <!--                  <CheckIcon-->
+              <!--                      class="text-primary-600"-->
+              <!--                      v-if="isSelected(address)"-->
+              <!--                  ></CheckIcon>-->
+              <div class="flex-1">
+                <div class="text-gray-700">
+                  {{ address.streetName }}, {{ address.streetNumber }}
+                </div>
+                <div class="text-sm text-gray-500">
+                  {{ address.neighborhood }}, {{ address.city }} -
+                  {{ address.state }}
+                </div>
+              </div>
+              <div class="inline-flex flex-col gap-2">
+                <IconButton @click.stop="() => selectAddress(address)">
+                  <ChevronRightIcon />
+                </IconButton>
+              </div>
+            </div>
+          </TransitionGroup>
+        </div>
       </ScreenContent>
     </ScreenMain>
     <ScreenFooter>

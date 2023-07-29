@@ -4,6 +4,9 @@
   import BagButton from '@/components/Bag/BagButton.vue';
   import SearchInput from '@/components/SearchInput.vue';
   import AppLogo from '@/components/AppLogo.vue';
+  import { ref } from 'vue';
+
+  const searchValue = ref('');
 </script>
 
 <template>
@@ -13,7 +16,7 @@
     >
       <AppLogo />
       <div class="flex-1"></div>
-      <SearchInput class="flex-1" />
+      <SearchInput class="flex-1" v-model="searchValue" />
       <NotificationButton />
       <BagButton />
       <MenuButton />
