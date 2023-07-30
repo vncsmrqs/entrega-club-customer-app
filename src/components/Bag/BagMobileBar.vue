@@ -11,7 +11,7 @@
       v-if="!bagStore.isEmpty"
       class="md:hidden absolute w-full bottom-0 p-4 flex gap-4 z-50"
     >
-      <BagButton class="w-full" />
+      <BagButton full />
     </div>
   </Transition>
 </template>

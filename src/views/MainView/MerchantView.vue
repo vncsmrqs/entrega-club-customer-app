@@ -7,7 +7,7 @@
   import type { MerchantCatalog } from '@/stores/merchant-catalog';
   import { useMerchantCatalogStore } from '@/stores/merchant-catalog';
   import type { Product } from '@/stores/product';
-  import ProductScreen from '@/components/Product/ProductScreen.vue';
+  import AddOrEditProductBagScreen from '@/components/Product/AddOrEditProductBagScreen.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import { useRouter } from 'vue-router';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
@@ -74,7 +74,7 @@
   const drawersControlStore = useDrawersControlStore();
 
   const showProduct = (product: Product) => {
-    const drawer = drawersControlStore.add(markRaw(ProductScreen), {
+    const drawer = drawersControlStore.add(markRaw(AddOrEditProductBagScreen), {
       productProp: product,
     });
     router.push({ hash: `#${drawer.id}` });

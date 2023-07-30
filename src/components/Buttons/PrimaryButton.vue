@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <BaseButton color="primary" v-bind="$attrs">
+  <BaseButton color="primary">
     <slot name="left"></slot>
     <slot></slot>
     <slot name="right"></slot>

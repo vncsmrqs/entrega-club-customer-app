@@ -7,11 +7,15 @@
       small?: boolean;
       loading?: boolean;
       color?: 'primary' | 'secondary' | 'default';
+      full?: boolean;
+      center?: boolean;
     }>(),
     {
       color: 'default',
       small: false,
       loading: false,
+      full: false,
+      center: true,
     },
   );
 
@@ -30,9 +34,12 @@
   <button
     class="base-button"
     :class="{
-      'px-6 py-3 text-lg h-13': !props.small,
+      'px-6 py-4 text-lg h-14': !props.small,
       'px-3 py-1.5 h-10': props.small,
       [buttonColors]: true,
+      'w-full': props.full,
+      'flex justify-center': props.center,
+      'flex justify-between': !props.center,
     }"
   >
     <template v-if="props.loading">
@@ -52,6 +59,6 @@
 
 <style scoped>
   .base-button {
-    @apply rounded-xl font-semibold flex justify-center gap-2 items-center;
+    @apply rounded-xl font-semibold gap-2 items-center;
   }
 </style>

@@ -606,12 +606,13 @@
       ></IncrementControl>
       <PrimaryButton
         @click="() => addProductToBag(bagProduct)"
-        class="w-full"
         :class="{
           '!bg-gray-200 !text-gray-400': findRequiredChoices(bagProduct),
         }"
+        full
+        :center="false"
       >
-        <span>Adicionar</span>
+        <span>{{ !!props.bagProductProp ? 'Atualizar' : 'Adicionar' }}</span>
         <span>{{
           formatToCurrency(bagStore.calcTotalProduct(bagProduct))
         }}</span>

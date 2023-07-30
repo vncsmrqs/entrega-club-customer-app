@@ -19,8 +19,8 @@
   import { formatToCurrency } from '@/utils';
   import DeleteBagItemScreen from '@/components/Bag/DeleteBagItemScreen.vue';
   import BagEmpty from '@/components/Bag/BagEmpty.vue';
-  import ProductScreen from '@/components/Product/ProductScreen.vue';
-  import type { ProductScreenProps } from '@/components/Product/ProductScreen.vue';
+  import AddOrEditProductBagScreen from '@/components/Product/AddOrEditProductBagScreen.vue';
+  import type { ProductScreenProps } from '@/components/Product/AddOrEditProductBagScreen.vue';
 
   onMounted(() => {});
 
@@ -35,9 +35,9 @@
 
   const editItem = (bagProduct: BagProduct) => {
     const drawer = drawersControlStore.add<
-      typeof ProductScreen,
+      typeof AddOrEditProductBagScreen,
       ProductScreenProps
-    >(markRaw(ProductScreen), {
+    >(markRaw(AddOrEditProductBagScreen), {
       bagProductProp: bagProduct,
     });
     router.push({ hash: `#${drawer.id}` });
@@ -128,9 +128,11 @@
                     >
                       {{ formatToCurrency(15) }}
                     </div>
-                    <span class="text-green-700">{{
-                      formatToCurrency(bagStore.calcTotalProduct(bagProduct))
-                    }}</span>
+                    <span class="text-green-700">
+                      {{
+                        formatToCurrency(bagStore.calcTotalProduct(bagProduct))
+                      }}
+                    </span>
                   </div>
                   <div class="flex-1"></div>
                   <IncrementControl
@@ -146,7 +148,7 @@
                   <div class="flex-shrink-0">
                     <IconButton
                       @click="() => editItem(bagProduct)"
-                      class="bg-primary-100 text-primary-600"
+                      class="text-primary-600"
                     >
                       <PencilOutlineIcon></PencilOutlineIcon>
                     </IconButton>

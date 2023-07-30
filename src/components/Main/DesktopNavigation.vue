@@ -18,7 +18,7 @@
       <div class="flex-1"></div>
       <SearchInput class="flex-1" v-model="searchValue" />
       <NotificationButton />
-      <BagButton />
+      <BagButton small />
       <MenuButton />
     </div>
   </div>

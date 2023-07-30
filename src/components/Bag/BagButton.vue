@@ -8,6 +8,8 @@
   import { formatToCurrency } from '@/utils';
   import DefaultButton from '@/components/Buttons/DefaultButton.vue';
 
+  const props = defineProps<{ small?: boolean }>();
+
   const router = useRouter();
 
   const drawersControlStore = useDrawersControlStore();
@@ -22,6 +24,8 @@
 
 <template>
   <DefaultButton
+    v-bind="$attrs"
+    :small="props.small"
     @click="showBag"
     class="grid grid-cols-3 md:flex md:!p-2 shadow-sm md:shadow-none shadow-gray-500"
     :class="{

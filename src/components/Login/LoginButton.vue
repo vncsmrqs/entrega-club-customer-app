@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <PrimaryButton small loading> Entrar</PrimaryButton>
+  <PrimaryButton v-show="false" small> Entrar</PrimaryButton>
 </template>
 
 <style scoped></style>

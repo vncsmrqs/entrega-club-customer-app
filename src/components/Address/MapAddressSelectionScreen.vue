@@ -46,10 +46,10 @@
 
   const confirmAdd = async () => {
     const address = await customerAddressStore.addAddress(form);
-    props.added(address);
-    back();
     await customerAddressStore.load();
     await selectedAddressStore.selectAddress(address);
+    props.added(address);
+    back();
   };
 
   const router = useRouter();
@@ -212,7 +212,7 @@
       <template #left>
         <BackButton></BackButton>
       </template>
-      Localização exata
+      Selecionar localização
     </ScreenHeader>
     <ScreenMain class="relative" :with-padding="false">
       <ScreenContent class="!col-span-full">
@@ -246,7 +246,7 @@
     </ScreenMain>
     <ScreenFooter>
       <PrimaryButton @click="confirmAdd" class="w-full">
-        Salvar
+        Confirmar localização
         <template #right>
           <CheckIcon />
         </template>

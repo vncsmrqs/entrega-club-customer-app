@@ -3,6 +3,7 @@
   import ScreenRoot from '@/components/Screen/ScreenRoot.vue';
   import BackButton from '@/components/BackButton.vue';
   import ScreenFooter from '@/components/Screen/ScreenFooter.vue';
+  import CheckIcon from 'vue-material-design-icons/Check.vue';
   import CrosshairsGpsIcon from 'vue-material-design-icons/CrosshairsGps.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import { useRouter } from 'vue-router';
@@ -19,6 +20,7 @@
   import IconButton from '@/components/IconButton.vue';
   import type { Address } from '@/stores/customer-address-list';
   import { addressFixtureFunc } from '@/stores/customer-address-list';
+  import { timeout } from '@/utils';
 
   export type LocalizationPermissionType = 'denied' | 'granted' | 'prompt';
 
@@ -34,7 +36,7 @@
 
   const drawersControlStore = useDrawersControlStore();
 
-  const showMapAddressSelection = (coordinates: {
+  const showMapAddressSelection = async (coordinates: {
     lat: number;
     lng: number;
   }) => {
@@ -45,6 +47,7 @@
       },
       coordinates,
     });
+    await timeout(300);
     router.push({ hash: `#${drawer.id}` });
   };
 
@@ -124,7 +127,8 @@
 
   const addressList = ref<Address[]>([]);
 
-  const selectAddress = (address: Address) => {
+  const selectAddress = async (address: Address) => {
+    selectedAddress.value = address;
     showMapAddressSelection({
       lat: address.coordinates.latitude,
       lng: address.coordinates.longitude,
@@ -143,6 +147,11 @@
       return;
     }
 
+    if (addressList.value?.[searchValue.value.length]) {
+      addressList.value.splice(searchValue.value.length, 1);
+      return;
+    }
+
     addressList.value.push(addressFixtureFunc(searchValue.value.length));
   };
 
@@ -152,6 +161,12 @@
       return;
     }
     showIcon.value = value;
+  };
+
+  const selectedAddress = ref<Address | null>(null);
+
+  const isSelected = (address: Address) => {
+    return address.id === selectedAddress.value?.id;
   };
 
   const submitSearch = (event: Event) => {
@@ -171,7 +186,7 @@
       <ScreenContent class="!col-span-full">
         <FloatingAlert :show="error"> Algum erro encontrado.</FloatingAlert>
         <AccordionItem :opened="showIcon">
-          <div class="w-full flex flex-col my-5 items-center">
+          <div class="w-full flex flex-col gap-5 p-5 items-center">
             <div
               class="w-32 h-32 rounded-full bg-gray-100 text-primary-600 flex justify-center items-center"
             >
@@ -190,7 +205,7 @@
         </AccordionItem>
         <form
           class="sticky top-0 left-0 bg-white px-5 py-4 z-10"
-          :class="{ shadow: !showIcon }"
+          :class="{ 'border-b': !showIcon }"
           @submit.prevent.stop="submitSearch"
         >
           <label
@@ -205,20 +220,24 @@
             @blur="() => toggleFocus(true)"
             placeholder="ex: Avenida Paulista, 156"
           />
+          <div v-show="!showIcon" class="flex justify-end mt-4">
+            <img src="/powered-by-google.svg" alt="Powered by Google Image" />
+          </div>
         </form>
         <div class="w-full flex flex-col p-5 gap-4 relative">
           <TransitionGroup name="list">
             <div
               v-for="address in addressList"
               :key="address.id"
-              class="p-4 flex items-center gap-4 border rounded-xl cursor-pointer transition-colors"
-              :class="{ 'border-primary-600': false }"
+              class="w-full p-4 flex items-center gap-4 border rounded-xl cursor-pointer transition-colors"
+              :class="{ 'border-primary-600': isSelected(address) }"
               @click="() => selectAddress(address)"
             >
-              <!--                  <CheckIcon-->
-              <!--                      class="text-primary-600"-->
-              <!--                      v-if="isSelected(address)"-->
-              <!--                  ></CheckIcon>-->
+              <CheckIcon
+                class="text-primary-600"
+                v-show="isSelected(address)"
+              />
+              <MapMarkerOutlineIcon v-show="!isSelected(address)" />
               <div class="flex-1">
                 <div class="text-gray-700">
                   {{ address.streetName }}, {{ address.streetNumber }}
@@ -229,7 +248,7 @@
                 </div>
               </div>
               <div class="inline-flex flex-col gap-2">
-                <IconButton @click.stop="() => selectAddress(address)">
+                <IconButton>
                   <ChevronRightIcon />
                 </IconButton>
               </div>
@@ -242,7 +261,7 @@
       <SecondaryButton
         @click="loadCurrentPosition"
         :loading="loadingLocation"
-        class="w-full"
+        full
       >
         Usar localização atual
         <template #left>

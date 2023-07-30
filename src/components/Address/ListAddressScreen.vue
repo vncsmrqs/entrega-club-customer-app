@@ -21,6 +21,7 @@
   import EditAddressScreen from '@/components/Address/EditAddressScreen.vue';
   import { useSelectedAddressStore } from '@/stores/selected-address';
   import ListAddressEmpty from '@/components/Address/ListAddressEmpty.vue';
+  import MapMarkerOutlineIcon from 'vue-material-design-icons/MapMarkerOutline.vue';
 
   const customerAddressStore = useCustomerAddressStore();
   const selectedAddressStore = useSelectedAddressStore();
@@ -113,8 +114,12 @@
                 >
                   <CheckIcon
                     class="text-primary-600"
-                    v-if="isSelected(address)"
+                    v-show="isSelected(address)"
                   ></CheckIcon>
+                  <MapMarkerOutlineIcon
+                    class="text-gray-500"
+                    v-show="!isSelected(address)"
+                  />
                   <div class="flex-1">
                     <div class="text-gray-700">
                       {{ address.streetName }}, {{ address.streetNumber }}
@@ -136,11 +141,11 @@
         </ScreenContent>
       </ScreenMain>
       <ScreenFooter>
-        <SecondaryButton @click="addAddress" class="w-full">
+        <SecondaryButton @click="addAddress" full>
+          Adicionar endereço
           <template #left>
             <PlusIcon />
           </template>
-          Adicionar endereço
         </SecondaryButton>
       </ScreenFooter>
     </template>

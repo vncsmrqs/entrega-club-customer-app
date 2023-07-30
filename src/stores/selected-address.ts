@@ -2,6 +2,7 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { generateId, timeout } from '@/utils';
 import type { Address } from '@/stores/customer-address-list';
+import _, { cloneDeep } from 'lodash';
 
 export const useSelectedAddressStore = defineStore(
   'selected-address',
@@ -27,7 +28,7 @@ export const useSelectedAddressStore = defineStore(
     };
 
     const selectAddress = (address: Address | null) => {
-      selectedAddress.value = address;
+      selectedAddress.value = _.cloneDeep(address);
     };
 
     return {

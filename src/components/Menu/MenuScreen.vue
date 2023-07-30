@@ -37,7 +37,7 @@
   };
 
   const navigateToOrderScreen = async () => {
-    await router.push({ name: `orders` });
+    await router.push({ name: `orders`, replace: true });
   };
 
   const appVersion = ref(version);
