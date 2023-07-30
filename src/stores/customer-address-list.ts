@@ -40,7 +40,7 @@ export const addressFixtureFunc = (index: number) => ({
   complement: 'Portão Branco',
 });
 
-export const generateEmptyAddressFunc = () => ({
+export const generateEmptyAddress = () => ({
   id: generateId(),
   city: '',
   country: '',

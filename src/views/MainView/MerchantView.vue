@@ -1,15 +1,16 @@
 <script setup lang="ts">
-  import { markRaw, onMounted, ref } from 'vue';
+  import { computed, markRaw, onMounted, ref } from 'vue';
   import MagnifyIcon from 'vue-material-design-icons/Magnify.vue';
   import IntersectionItem from '@/components/IntersectionItem.vue';
   import { debounce, formatToCurrency } from '@/utils';
   import { useMerchantStore } from '@/stores/merchant';
+  import type { Merchant } from '@/stores/merchant';
   import type { MerchantCatalog } from '@/stores/merchant-catalog';
   import { useMerchantCatalogStore } from '@/stores/merchant-catalog';
   import type { Product } from '@/stores/product';
   import AddOrEditProductBagScreen from '@/components/Product/AddOrEditProductBagScreen.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
-  import { useRouter } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import ScreenHeader from '@/components/Screen/ScreenHeader.vue';
   import ScreenRoot from '@/components/Screen/ScreenRoot.vue';
@@ -19,12 +20,16 @@
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
   import UserRating from '@/components/Merchant/UserRating.vue';
   import MerchantHeader from '@/components/Merchant/MerchantHeader.vue';
+  import ScreenLoader from '@/components/Screen/ScreenLoader.vue';
+  import ScreenError from '@/components/Screen/ScreenError.vue';
 
   const merchantStore = useMerchantStore();
-  const merchant = merchantStore.merchant;
-
   const merchantCatalogStore = useMerchantCatalogStore();
-  const merchantCatalog: MerchantCatalog = merchantCatalogStore.merchantCatalog;
+
+  const merchant = computed<Merchant>(() => merchantStore.merchant);
+  const catalog = computed<MerchantCatalog>(
+    () => merchantCatalogStore.merchantCatalog,
+  );
 
   const defaultMerchantBannerImgUrl = ref('/images/merchant/logo-default.png');
 
@@ -78,7 +83,15 @@
     router.push({ hash: `#${drawer.id}` });
   };
 
-  onMounted(() => {});
+  const route = useRoute();
+
+  onMounted(async () => {
+    const merchantId = route.params.merchantId as string;
+    await merchantStore.fetch(merchantId);
+    if (!merchantStore.error) {
+      await merchantCatalogStore.fetch(merchantId);
+    }
+  });
 </script>
 <template>
   <ScreenRoot>
@@ -93,7 +106,9 @@
         </IconButton>
       </template>
     </ScreenHeader>
-    <ScreenMain id="merchant-main" :with-padding="false" class="md:p-5">
+    <ScreenLoader v-if="merchantStore.loading" />
+    <ScreenError v-else-if="merchantStore.error" />
+    <ScreenMain v-else id="merchant-main" :with-padding="false" class="md:p-5">
       <ScreenSide>
         <div class="flex flex-col gap-5">
           <div class="md:rounded-xl md:border border-b overflow-hidden">
@@ -121,7 +136,7 @@
       <ScreenContent>
         <div class="md:border rounded-xl">
           <div
-            v-for="section in merchantCatalog.sections"
+            v-for="section in catalog.sections"
             :key="section.id"
             class="border-b border-t md:border-t-0"
           >
@@ -164,7 +179,7 @@
             class="md:hidden menu-tab-container sticky top-0 bg-white px-4 py-2 flex flex-nowrap overflow-x-auto gap-4 border-y scroll-smooth"
           >
             <button
-              v-for="menu in merchantCatalog.menus"
+              v-for="menu in catalog.menus"
               :key="menu.id"
               class="whitespace-nowrap px-4 py-2 rounded-lg bg-gray-100"
               :class="{
@@ -178,7 +193,7 @@
           </div>
           <div class="flex flex-col">
             <IntersectionItem
-              v-for="menu in merchantCatalog.menus"
+              v-for="menu in catalog.menus"
               :key="menu.id"
               :id="`menu-content-item-${menu.id}`"
               class="menu w-full"

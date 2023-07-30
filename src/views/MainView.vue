@@ -7,26 +7,28 @@
   import LoaderComponent from '@/components/LoaderComponent.vue';
   import ValidateAddressSelection from '@/components/Address/ValidateAddressSelection.vue';
   import { useAuthStore } from '@/stores/auth';
-  import AppLogo from '@/components/AppLogo.vue';
-  import AccordionItem from '@/components/AccordionItem.vue';
-  import { timeout } from '@/utils';
 
-  const loading = ref(true);
+  const loading = ref(false);
+  const error = ref<string | null>(null);
   const showAddressSelectionScreen = ref(false);
 
   const selectedAddressStore = useSelectedAddressStore();
   const authStore = useAuthStore();
 
   onMounted(async () => {
-    await timeout(3000);
-    await authStore.auth();
-    await selectedAddressStore.loadCurrentAddress();
-
-    if (!selectedAddressStore.selectedAddress) {
-      showAddressSelectionScreen.value = true;
+    loading.value = true;
+    try {
+      await authStore.auth();
+      await selectedAddressStore.loadCurrentAddress();
+      if (!selectedAddressStore.selectedAddress) {
+        showAddressSelectionScreen.value = true;
+      }
+      error.value = null;
+    } catch (error: any) {
+      error.value = error.toString();
+    } finally {
+      loading.value = false;
     }
-
-    loading.value = false;
   });
 </script>
 

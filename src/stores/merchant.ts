@@ -1,8 +1,11 @@
-import { reactive } from 'vue';
 import { defineStore } from 'pinia';
 import type { Address } from '@/stores/customer-address-list';
-import { addressFixtureFunc } from '@/stores/customer-address-list';
-import { generateId } from '@/utils';
+import {
+  addressFixtureFunc,
+  generateEmptyAddress,
+} from '@/stores/customer-address-list';
+import { generateId, timeout } from '@/utils';
+import { ref } from 'vue';
 
 export type MerchantPriceRange =
   | 'VERY_CHEAP'
@@ -92,20 +95,60 @@ export const merchantFixture = (): Merchant => ({
   ],
 });
 
+const generateEmptyMerchant = (): Merchant => ({
+  id: generateId(),
+  address: generateEmptyAddress(),
+  shifts: [],
+  slug: '',
+  available: false,
+  preparationTime: 0,
+  name: '',
+  logoUrl: '/images/merchant/default-logo.png',
+  bannerUrl: '/images/merchant/default-banner.png',
+  minimumOrderValue: 0,
+  userRating: 0,
+  mainCategory: '',
+  categories: [],
+  distance: 0,
+  type: 'RESTAURANT',
+  priceRange: 'VERY_CHEAP',
+  deliveryFee: 0,
+  deliveryMethods: [],
+});
+
 export const useMerchantStore = defineStore('merchant', () => {
   /* state */
-  const merchant = reactive<Merchant>(merchantFixture());
+  const merchant = ref<Merchant>(merchantFixture());
+  const loading = ref(false);
+  const error = ref<string | null>(null);
 
   /* getters */
+  const fetch = async (merchantId: string) => {
+    loading.value = true;
+    try {
+      await timeout(3000);
+      console.log({ merchantId });
+      merchant.value = merchantFixture();
+      error.value = null;
+    } catch (e: any) {
+      error.value = e.toString();
+      merchant.value = generateEmptyMerchant();
+    } finally {
+      loading.value = false;
+    }
+  };
 
   /* actions */
 
   return {
     /* state */
     merchant,
+    loading,
+    error,
 
     /* getters */
 
     /* actions */
+    fetch,
   };
 });

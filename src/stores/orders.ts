@@ -3,6 +3,8 @@ import { defineStore } from 'pinia';
 import type { Address } from '@/stores/customer-address-list';
 import type { Phone } from '@/stores/auth';
 import type { Bag } from '@/stores/bag';
+import { useAuthStore } from '@/stores/auth';
+import { timeout } from '@/utils';
 
 export type OrderMerchant = {
   id: string;
@@ -101,16 +103,15 @@ export const useOrdersStore = defineStore('orders', () => {
   const orders = ref<Order[]>([]);
   const loading = ref<boolean>(false);
   const error = ref<string | null>(null);
-
   /* getters */
 
   /* actions */
-  const list = async (): Promise<void> => {
+  const fetch = async (): Promise<void> => {
     loading.value = true;
     try {
-      setTimeout(() => {
-        orders.value = [];
-      }, 3000);
+      //todo: Pegar pedidos a partir do ID do usuário
+      await timeout(500);
+      orders.value = [];
     } catch (e: any) {
       error.value = e.toString();
       orders.value = [];
@@ -128,6 +129,6 @@ export const useOrdersStore = defineStore('orders', () => {
     /* getters */
 
     /* actions */
-    list,
+    fetch,
   };
 });

@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { timeout } from '@/utils';
 
@@ -20,7 +20,7 @@ export type Account = {
   userType: string; // 'CUSTOMER'
 };
 
-export const accountFixture: Account = {
+export const generateAccountFixture = (): Account => ({
   id: 'dacebc31-30b7-4fe1-ad4b-8936899db9a5',
   name: 'Vinicius Marques',
   phone: {
@@ -34,7 +34,7 @@ export const accountFixture: Account = {
   tenantId: 'ENTREGA_CLUB',
   active: true,
   userType: 'CUSTOMER',
-};
+});
 
 export const useAuthStore = defineStore(
   'auth',
@@ -45,13 +45,14 @@ export const useAuthStore = defineStore(
     const error = ref<string | null>(null);
 
     /* getters */
+    const isLogged = computed(() => !!account.value);
 
     /* actions */
     const auth = async (): Promise<void> => {
       loading.value = true;
       try {
         await timeout(300);
-        account.value = accountFixture;
+        account.value = generateAccountFixture();
       } catch (e: any) {
         error.value = e.toString();
         account.value = null;
@@ -67,6 +68,7 @@ export const useAuthStore = defineStore(
       error,
 
       /* getters */
+      isLogged,
 
       /* actions */
       auth,

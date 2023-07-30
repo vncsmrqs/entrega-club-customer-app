@@ -1,6 +1,6 @@
-import { reactive } from 'vue';
+import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { generateId } from '@/utils';
+import { generateId, timeout } from '@/utils';
 import type { Product } from '@/stores/product';
 import { productFixture } from '@/stores/product';
 
@@ -22,7 +22,7 @@ export type MerchantCatalog = {
   menus: CatalogMenu[];
 };
 
-const merchantCatalogFixture = {
+const merchantCatalogFixture = () => ({
   sections: [
     {
       id: generateId(),
@@ -69,15 +69,37 @@ const merchantCatalogFixture = {
       products: [1, 2, 3].map(() => productFixture()),
     },
   ],
-};
+});
+
+const generateMerchantCatalogEmpty = (): MerchantCatalog => ({
+  sections: [],
+  menus: [],
+});
 
 export const useMerchantCatalogStore = defineStore('merchant-catalog', () => {
   /* state */
-  const merchantCatalog = reactive<MerchantCatalog>(merchantCatalogFixture);
+  const merchantCatalog = ref<MerchantCatalog>(generateMerchantCatalogEmpty());
+  const loading = ref(false);
+  const error = ref<string | null>(null);
 
   /* getters */
 
   /* actions */
+  const fetch = async (merchantId: string): Promise<void> => {
+    loading.value = true;
+    try {
+      await timeout(300);
+      console.log({ merchantId });
+      merchantCatalog.value = merchantCatalogFixture();
+      error.value = null;
+    } catch (e: any) {
+      console.log('merchant-catalog::fetch::error', e);
+      error.value = e.toString();
+      merchantCatalog.value = generateMerchantCatalogEmpty();
+    } finally {
+      loading.value = false;
+    }
+  };
 
   return {
     /* state */
@@ -86,5 +108,6 @@ export const useMerchantCatalogStore = defineStore('merchant-catalog', () => {
     /* getters */
 
     /* actions */
+    fetch,
   };
 });

@@ -21,7 +21,7 @@
   import type { Address } from '@/stores/customer-address-list';
   import {
     addressFixtureFunc,
-    generateEmptyAddressFunc,
+    generateEmptyAddress,
   } from '@/stores/customer-address-list';
   import { timeout } from '@/utils';
 
@@ -84,7 +84,7 @@
       loadingLocation.value = false;
 
       showMapAddressSelection({
-        ...generateEmptyAddressFunc(),
+        ...generateEmptyAddress(),
         coordinates: {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,

@@ -9,50 +9,14 @@
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
   import ListItem from '@/components/ListItem.vue';
   import BellOutlineIcon from 'vue-material-design-icons/BellOutline.vue';
-  import { generateId } from '@/utils';
+  import ScreenLoader from '@/components/Screen/ScreenLoader.vue';
+  import ScreenError from '@/components/Screen/ScreenError.vue';
 
   const notificationStore = useNotificationStore();
 
-  onMounted(() => {
-    Notification.requestPermission().then((permission) => {
-      console.log('permission', permission);
-
-      setTimeout(() => {
-        if (permission === 'granted') {
-          const notificationOptions: NotificationOptions = {
-            body: 'O seu pedido saiu para entrega. Fique atento!',
-            data: { hello: 'world' },
-            image: '/logo/primary-white/logo-primary-white-512x512.png',
-            icon: '/logo/primary-white/logo-primary-white-192x192.png',
-            requireInteraction: true,
-            renotify: true,
-            badge: '/logo/transparent-white/logo-transparent-white-96x96.svg',
-            tag: generateId(),
-            actions: [
-              {
-                action: 'action-1',
-                icon: '/logo/primary-white/logo-primary-white-192x192.png',
-                title: 'FECHAR',
-              },
-              {
-                action: 'action-2',
-                title: 'ACOMPANHAR',
-              },
-            ],
-            vibrate: [200, 100, 200, 100, 200, 100, 200],
-          };
-
-          navigator.serviceWorker.ready.then(
-            async (serviceWorkerRegistration) => {
-              await serviceWorkerRegistration.showNotification(
-                'Pedido #2145 - Saiu para entrega!',
-                notificationOptions,
-              );
-            },
-          );
-        }
-      }, 1000);
-    });
+  onMounted(async () => {
+    await notificationStore.fetch();
+    await notificationStore.dispatch();
   });
 </script>
 <template>
@@ -63,14 +27,16 @@
         <BackButton />
       </template>
     </ScreenHeader>
-    <ScreenMain :with-padding="false">
+    <ScreenLoader v-if="notificationStore.loading" />
+    <ScreenError v-else-if="notificationStore.error" />
+    <ScreenMain v-else :with-padding="false">
       <ScreenContent class="!col-span-full">
         <template v-if="notificationStore.isEmpty">
           <NotificationEmpty />
         </template>
         <template v-else>
           <ListItem
-            v-for="notification in notificationStore.items"
+            v-for="notification in notificationStore.notifications"
             :key="notification.id"
           >
             <template #default>{{ notification.title }}</template>
