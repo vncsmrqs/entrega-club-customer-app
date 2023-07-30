@@ -33,7 +33,7 @@
 <template>
   <template v-if="loading">
     <div
-      class="w-full h-full flex justify-center items-center text-primary-600"
+      class="w-full h-full flex justify-center items-center bg-primary-600 text-white"
     >
       <LoaderComponent />
     </div>

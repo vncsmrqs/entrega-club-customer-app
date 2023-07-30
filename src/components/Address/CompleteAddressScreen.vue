@@ -15,6 +15,7 @@
   import { useCustomerAddressStore } from '@/stores/customer-address-list';
   import { reactive, ref, watch } from 'vue';
   import { generateHashId } from '@/utils';
+  import ScreenFooter from '@/components/Screen/ScreenFooter.vue';
 
   const props = defineProps<{
     address: Address;
@@ -38,7 +39,7 @@
   };
 
   const saveAddress = async () => {
-    if (findRequiredFields()) {
+    if (hasInvalidFields()) {
       showRequiredFieldError();
       return;
     }
@@ -49,15 +50,15 @@
     back();
   };
 
-  const findRequiredFields = () => {
-    let validForm = false;
+  const hasInvalidFields = () => {
+    let hasInvalidFields = false;
     Object.keys(requiredFields).forEach((fieldName) => {
       const valid = validateField(fieldName as keyof Address);
       if (!valid) {
-        validForm = true;
+        hasInvalidFields = true;
       }
     });
-    return validForm;
+    return hasInvalidFields;
   };
 
   const validateField = (fieldName: keyof Address) => {
@@ -73,6 +74,7 @@
       return false;
     }
     errorFields[fieldName] = '';
+    return true;
   };
 
   const clonedAddress = _.cloneDeep(props.address);
@@ -243,16 +245,20 @@
             :error="errorFields['reference']"
           />
         </div>
-        <div class="col-span-full mt-5">
-          <PrimaryButton @click="saveAddress" class="w-full">
-            Salvar endereço
-            <template #right>
-              <CheckIcon />
-            </template>
-          </PrimaryButton>
-        </div>
       </ScreenContent>
     </ScreenMain>
+    <ScreenFooter>
+      <PrimaryButton
+        @click="saveAddress"
+        class="w-full"
+        :blocked="hasInvalidFields()"
+      >
+        Salvar endereço
+        <template #right>
+          <CheckIcon />
+        </template>
+      </PrimaryButton>
+    </ScreenFooter>
   </ScreenRoot>
 </template>
 

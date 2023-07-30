@@ -9,6 +9,7 @@
       color?: 'primary' | 'secondary' | 'default';
       full?: boolean;
       center?: boolean;
+      blocked?: boolean;
     }>(),
     {
       color: 'default',
@@ -25,9 +26,12 @@
     default: 'text-gray-600 bg-gray-100',
   };
 
-  const buttonColors = computed(() =>
-    colors[props.color] ? colors[props.color] : colors['default'],
-  );
+  const buttonColors = computed(() => {
+    if (props.blocked) {
+      return 'text-gray-600 bg-gray-200';
+    }
+    return colors[props.color] ? colors[props.color] : colors['default'];
+  });
 </script>
 
 <template>
