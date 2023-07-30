@@ -313,7 +313,7 @@
       return;
     }
 
-    bagStore.addItem(bagProduct);
+    bagStore.addItem(bagProduct, merchant);
     await back();
   };
 

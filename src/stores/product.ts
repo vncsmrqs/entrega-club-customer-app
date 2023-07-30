@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { generateId } from '@/utils';
+import { generateHashId, generateId } from '@/utils';
 
 export const generateEmptyProduct = (): Product => ({
   id: generateId(),
@@ -40,7 +40,7 @@ export type GarnishItem = {
   imageUrl?: string;
 };
 
-export const productFixture: Product = {
+export const productFixture = (): Product => ({
   id: generateId(),
   name: '2 Sanduíches Favoritos + Batata',
   description:
@@ -49,7 +49,7 @@ export const productFixture: Product = {
   preparationTime: 10,
   unitPrice: 48.9,
   originalUnitPrice: 63.9,
-  imageUrl: '/images/product/default.png',
+  imageUrl: 'https://loremflickr.com/400/300/pizza?hash=' + generateHashId(6),
   choices: [
     {
       id: generateId(),
@@ -216,7 +216,7 @@ export const productFixture: Product = {
       ],
     },
   ],
-};
+});
 
 export const useProductStore = defineStore('product', () => {
   /* state */

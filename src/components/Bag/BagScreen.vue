@@ -21,12 +21,13 @@
   import BagEmpty from '@/components/Bag/BagEmpty.vue';
   import AddOrEditProductBagScreen from '@/components/Product/AddOrEditProductBagScreen.vue';
   import type { ProductScreenProps } from '@/components/Product/AddOrEditProductBagScreen.vue';
+  import MerchantHeader from '@/components/Merchant/MerchantHeader.vue';
 
   onMounted(() => {});
 
   const router = useRouter();
-
   const drawersControlStore = useDrawersControlStore();
+  const bagStore = useBagStore();
 
   const openAddress = () => {
     const drawer = drawersControlStore.add(markRaw(AddressSelection), {});
@@ -53,8 +54,6 @@
     );
     router.push({ hash: `#${drawer.id}` });
   };
-
-  const bagStore = useBagStore();
 </script>
 
 <template>
@@ -71,6 +70,14 @@
           <BagEmpty />
         </template>
         <template v-else>
+          <div v-if="bagStore.currentMerchant">
+            <div class="text-lg font-medium mb-2">Você está pedindo em:</div>
+            <MerchantHeader
+              :merchant="bagStore.currentMerchant"
+              class="border rounded-xl"
+            />
+          </div>
+          <div class="text-lg font-medium mt-8 mb-2">Itens selecionados:</div>
           <div class="flex flex-col gap-4">
             <TransitionGroup name="list">
               <div

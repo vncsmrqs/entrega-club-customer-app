@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 import type { Choice, GarnishItem, Product } from '@/stores/product';
 import { generateId } from '@/utils';
 import _ from 'lodash';
+import type { Merchant } from '@/stores/merchant';
 
 export type BagProduct = {
   id: string;
@@ -62,6 +63,7 @@ export type BagGarnishItem = {
 // };
 
 export type Bag = {
+  merchant: Merchant;
   items: BagProduct[];
 };
 
@@ -77,6 +79,10 @@ export const useBagStore = defineStore(
 
     const isEmpty = computed(() => {
       return !bag.value?.items.length;
+    });
+
+    const currentMerchant = computed<Merchant | null>(() => {
+      return bag.value?.merchant || null;
     });
 
     const items = computed<BagProduct[]>(() => {
@@ -144,9 +150,10 @@ export const useBagStore = defineStore(
       }
     };
 
-    const addItem = (bagItem: BagProduct) => {
-      if (!bag.value) {
+    const addItem = (bagItem: BagProduct, merchant: Merchant) => {
+      if (!bag.value || merchant.id !== bag.value?.merchant.id) {
         bag.value = {
+          merchant: _.cloneDeep(merchant),
           items: [],
         };
       }
@@ -179,6 +186,7 @@ export const useBagStore = defineStore(
       /* getters */
       isEmpty,
       items,
+      currentMerchant,
       totalPrice,
       totalItems,
 
