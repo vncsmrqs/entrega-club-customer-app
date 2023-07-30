@@ -18,8 +18,8 @@ export type Address = {
   streetName: string; // 'Av. Manuel Lúcio';
   streetNumber: string; // '130';
   coordinates: Coordinates;
-  reference: string; // 'Em Frente Ao Bar Do Zé';
-  complement: string; // 'Portão Branco';
+  reference?: string; // 'Em Frente Ao Bar Do Zé';
+  complement?: string; // 'Portão Branco';
 };
 
 const selectedAddressStore = useSelectedAddressStore();
@@ -38,6 +38,22 @@ export const addressFixtureFunc = (index: number) => ({
   },
   reference: 'Em Frente Ao Bar Do Zé',
   complement: 'Portão Branco',
+});
+
+export const generateEmptyAddressFunc = () => ({
+  id: generateId(),
+  city: '',
+  country: '',
+  neighborhood: '',
+  state: '',
+  streetName: '',
+  streetNumber: 's/n',
+  coordinates: {
+    latitude: 0,
+    longitude: 0,
+  },
+  reference: '',
+  complement: '',
 });
 
 export const useCustomerAddressStore = defineStore(

@@ -19,7 +19,10 @@
   import ChevronRightIcon from 'vue-material-design-icons/ChevronRight.vue';
   import IconButton from '@/components/IconButton.vue';
   import type { Address } from '@/stores/customer-address-list';
-  import { addressFixtureFunc } from '@/stores/customer-address-list';
+  import {
+    addressFixtureFunc,
+    generateEmptyAddressFunc,
+  } from '@/stores/customer-address-list';
   import { timeout } from '@/utils';
 
   export type LocalizationPermissionType = 'denied' | 'granted' | 'prompt';
@@ -36,17 +39,15 @@
 
   const drawersControlStore = useDrawersControlStore();
 
-  const showMapAddressSelection = async (coordinates: {
-    lat: number;
-    lng: number;
-  }) => {
+  const showMapAddressSelection = async (address: Address) => {
     const drawer = drawersControlStore.add(markRaw(MapAddressSelectionScreen), {
-      added: () => {
+      saved: () => {
         back();
         props.added();
       },
-      coordinates,
+      address,
     });
+
     await timeout(300);
     router.push({ hash: `#${drawer.id}` });
   };
@@ -81,11 +82,15 @@
 
     const locationSuccess = (position: GeolocationPosition) => {
       loadingLocation.value = false;
-      console.log({ position });
+
       showMapAddressSelection({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
+        ...generateEmptyAddressFunc(),
+        coordinates: {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        },
       });
+
       alert('Sucesso ao pegar localização!');
     };
 
@@ -129,10 +134,7 @@
 
   const selectAddress = async (address: Address) => {
     selectedAddress.value = address;
-    showMapAddressSelection({
-      lat: address.coordinates.latitude,
-      lng: address.coordinates.longitude,
-    });
+    showMapAddressSelection(address);
   };
 
   onMounted(() => {});

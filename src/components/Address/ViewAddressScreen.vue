@@ -3,8 +3,7 @@
   import ScreenRoot from '@/components/Screen/ScreenRoot.vue';
   import BackButton from '@/components/BackButton.vue';
   import ScreenFooter from '@/components/Screen/ScreenFooter.vue';
-  import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
-  import CheckIcon from 'vue-material-design-icons/Check.vue';
+  import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import { useRouter } from 'vue-router';
   import type { Address } from '@/stores/customer-address-list';
@@ -17,10 +16,16 @@
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
   import { useSelectedAddressStore } from '@/stores/selected-address';
   import FloatingAlert from '@/components/FloatingAlert.vue';
+  import MapAddressSelectionScreen from '@/components/Address/MapAddressSelectionScreen.vue';
+  import { timeout } from '@/utils';
+  import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
+  import _ from 'lodash';
 
   const props = defineProps<{
     // isOpened: boolean;
     address: Address;
+    edited?: Function;
+    deleted?: Function;
   }>();
 
   const selectedAddressStore = useSelectedAddressStore();
@@ -43,6 +48,20 @@
     }, 2000);
   };
 
+  const editAddress = async () => {
+    const drawer = drawersControlStore.add(markRaw(MapAddressSelectionScreen), {
+      saved: () => {
+        back();
+        if (props.edited) {
+          props.edited();
+        }
+      },
+      address: _.cloneDeep(props.address),
+    });
+    await timeout(300);
+    router.push({ hash: `#${drawer.id}` });
+  };
+
   const deleteAddress = (address: Address) => {
     if (isCurrentAddress.value) {
       showCurrentAddressError();
@@ -52,7 +71,12 @@
       markRaw(DeleteAddressScreen),
       {
         address,
-        deleted: () => back(),
+        deleted: () => {
+          back();
+          if (props.deleted) {
+            props.deleted();
+          }
+        },
       },
     );
     router.push({ hash: `#${drawer.id}` });
@@ -80,13 +104,17 @@
           <DeleteOutlineIcon :size="24" />
         </IconButton>
       </template>
-      Editar endereço
+      Opções do endereço
     </ScreenHeader>
     <ScreenMain>
       <FloatingAlert :show="currentAddressError">
         Você não pode excluir o endereço que está usando no momento.
       </FloatingAlert>
       <ScreenContent class="!col-span-full flex flex-col gap-4">
+        <div>
+          <span class="mr-1 font-medium">Endereço:</span>
+          {{ props.address.streetName }}
+        </div>
         <div>
           <span class="mr-1 font-medium">Logradouro:</span>
           {{ props.address.streetNumber }}
@@ -112,12 +140,8 @@
           {{ props.address.complement }}
         </div>
         <div>
-          <span class="mr-1 font-medium">Logradouro:</span>
-          {{ props.address.streetName }}
-        </div>
-        <div>
           <span class="mr-1 font-medium">Referência:</span>
-          {{ props.address.reference }}
+          {{ props.address.reference || 'Não preenchido' }}
         </div>
         <div>
           <span class="mr-1 font-medium">Coordenadas:</span>
@@ -127,13 +151,13 @@
       </ScreenContent>
     </ScreenMain>
     <ScreenFooter>
-      <DefaultButton class="w-full mb-4" @click="back"> Voltar</DefaultButton>
-      <PrimaryButton @click="back" class="w-full">
-        Salvar
-        <template #right>
-          <CheckIcon />
+      <SecondaryButton class="w-full mb-4" @click="editAddress" full>
+        <template #left>
+          <PencilOutlineIcon />
         </template>
-      </PrimaryButton>
+        Editar
+      </SecondaryButton>
+      <DefaultButton class="w-full" @click="back"> Voltar</DefaultButton>
     </ScreenFooter>
   </ScreenRoot>
 </template>

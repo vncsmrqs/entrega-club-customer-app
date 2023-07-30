@@ -18,7 +18,7 @@
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import AddAddressScreen from '@/components/Address/AddAddressScreen.vue';
   import IconButton from '@/components/IconButton.vue';
-  import EditAddressScreen from '@/components/Address/EditAddressScreen.vue';
+  import EditAddressScreen from '@/components/Address/ViewAddressScreen.vue';
   import { useSelectedAddressStore } from '@/stores/selected-address';
   import ListAddressEmpty from '@/components/Address/ListAddressEmpty.vue';
   import MapMarkerOutlineIcon from 'vue-material-design-icons/MapMarkerOutline.vue';
@@ -56,6 +56,7 @@
   const editAddress = (address: Address) => {
     const drawer = drawersControlStore.add(markRaw(EditAddressScreen), {
       address,
+      saved: () => {},
     });
     router.push({ hash: `#${drawer.id}` });
   };

@@ -8,48 +8,35 @@
   import MapMarkerIcon from 'vue-material-design-icons/MapMarker.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import { useRouter } from 'vue-router';
-  import { useCustomerAddressStore } from '@/stores/customer-address-list';
   import type { Address } from '@/stores/customer-address-list';
   import { onMounted, reactive, ref } from 'vue';
-  import { generateId } from '@/utils';
+  import { generateId, timeout } from '@/utils';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
-  import { useSelectedAddressStore } from '@/stores/selected-address';
   import FloatingAlert from '@/components/FloatingAlert.vue';
   import _ from 'lodash';
+  import { markRaw } from 'vue';
+  import { useDrawersControlStore } from '@/stores/drawers-control';
+  import CompleteAddressScreen from '@/components/Address/CompleteAddressScreen.vue';
 
   const props = defineProps<{
-    added: Function;
-    coordinates: {
-      lat: number;
-      lng: number;
-    };
+    saved: Function;
+    address: Address;
   }>();
 
-  const selectedAddressStore = useSelectedAddressStore();
-  const customerAddressStore = useCustomerAddressStore();
+  const drawersControlStore = useDrawersControlStore();
 
-  const form: Address = reactive({
-    id: generateId(),
-    city: 'Jaíba',
-    country: 'BR',
-    neighborhood: 'Veredas',
-    state: 'MG',
-    streetName: 'Rua Geraldo Paixão Oliveira',
-    streetNumber: '164',
-    coordinates: {
-      latitude: 0,
-      longitude: 0,
-    },
-    reference: 'Na rua do Atacadão Outro Verde',
-    complement: 'Casa',
-  });
+  const form: Address = reactive(_.cloneDeep(props.address));
 
-  const confirmAdd = async () => {
-    const address = await customerAddressStore.addAddress(form);
-    await customerAddressStore.load();
-    await selectedAddressStore.selectAddress(address);
-    props.added(address);
-    back();
+  const confirmLocation = async () => {
+    const drawer = drawersControlStore.add(markRaw(CompleteAddressScreen), {
+      saved: () => {
+        back();
+        props.saved();
+      },
+      address: form,
+    });
+    await timeout(300);
+    router.push({ hash: `#${drawer.id}` });
   };
 
   const router = useRouter();
@@ -60,7 +47,10 @@
 
   const idle = ref(true);
 
-  const centerCoordinates = _.cloneDeep(props.coordinates);
+  const centerCoordinates = _.cloneDeep({
+    lat: props.address.coordinates.latitude,
+    lng: props.address.coordinates.longitude,
+  });
 
   // Note: This example requires that you consent to location sharing when
   // prompted by your browser. If you see the error "The Geolocation service
@@ -245,7 +235,7 @@
       </ScreenContent>
     </ScreenMain>
     <ScreenFooter>
-      <PrimaryButton @click="confirmAdd" class="w-full">
+      <PrimaryButton @click="confirmLocation" class="w-full">
         Confirmar localização
         <template #right>
           <CheckIcon />
