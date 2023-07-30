@@ -1,9 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  const props = withDefaults(defineProps<{ tag?: string }>(), { tag: 'div' });
+</script>
 
 <template>
-  <div class="col-span-full lg:col-span-5 min-h-full">
+  <component :is="props.tag" class="col-span-full lg:col-span-5 min-h-full">
     <slot></slot>
-  </div>
+  </component>
 </template>
 
 <style scoped></style>

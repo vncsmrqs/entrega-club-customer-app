@@ -33,7 +33,7 @@ export const generateId = (length?: number): string => {
   return uuid();
 };
 
-export const generateHashId = (length: number) => {
+export const generateHashId = (length: number = 8) => {
   let result = '';
   const characters =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
