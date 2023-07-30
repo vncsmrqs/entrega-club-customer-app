@@ -50,10 +50,10 @@
     back();
   };
 
-  const hasInvalidFields = () => {
+  const hasInvalidFields = (showErrors = true) => {
     let hasInvalidFields = false;
     Object.keys(requiredFields).forEach((fieldName) => {
-      const valid = validateField(fieldName as keyof Address);
+      const valid = validateField(fieldName as keyof Address, showErrors);
       if (!valid) {
         hasInvalidFields = true;
       }
@@ -61,7 +61,7 @@
     return hasInvalidFields;
   };
 
-  const validateField = (fieldName: keyof Address) => {
+  const validateField = (fieldName: keyof Address, showErrors = true) => {
     const required = requiredFields[fieldName];
     const blocked = blockedFields[fieldName];
     const value = form.value.address[fieldName];
@@ -70,7 +70,9 @@
       !blocked &&
       (!value || (typeof value === 'string' && !value.length))
     ) {
-      errorFields[fieldName] = 'Obrigatório';
+      if (showErrors) {
+        errorFields[fieldName] = 'Obrigatório';
+      }
       return false;
     }
     errorFields[fieldName] = '';
@@ -251,7 +253,7 @@
       <PrimaryButton
         @click="saveAddress"
         class="w-full"
-        :blocked="hasInvalidFields()"
+        :blocked="hasInvalidFields(false)"
       >
         Salvar endereço
         <template #right>
