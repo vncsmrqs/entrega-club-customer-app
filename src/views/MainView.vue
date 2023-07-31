@@ -3,7 +3,7 @@
   import BagMobileBar from '@/components/Bag/BagMobileBar.vue';
   import MainNavigation from '@/components/Main/MainNavigation.vue';
   import { onMounted, ref } from 'vue';
-  import { useSelectedAddressStore } from '@/stores/selected-address';
+  import { useSelectedAddressStore } from '@/stores/address/selected-address';
   import LoaderComponent from '@/components/LoaderComponent.vue';
   import ValidateAddressSelection from '@/components/Address/ValidateAddressSelection.vue';
   import { useAuthStore } from '@/stores/auth';

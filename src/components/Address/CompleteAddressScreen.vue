@@ -6,13 +6,13 @@
   import CheckIcon from 'vue-material-design-icons/Check.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import { useRouter } from 'vue-router';
-  import type { Address } from '@/stores/customer-address-list';
+  import type { Address } from '@/stores/address/customer-address-list';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
-  import { useSelectedAddressStore } from '@/stores/selected-address';
+  import { useSelectedAddressStore } from '@/stores/address/selected-address';
   import FloatingAlert from '@/components/FloatingAlert.vue';
   import TextInput from '@/components/TextInput.vue';
   import _ from 'lodash';
-  import { useCustomerAddressStore } from '@/stores/customer-address-list';
+  import { useCustomerAddressStore } from '@/stores/address/customer-address-list';
   import { reactive, ref, watch } from 'vue';
   import { generateHashId } from '@/utils';
   import ScreenFooter from '@/components/Screen/ScreenFooter.vue';

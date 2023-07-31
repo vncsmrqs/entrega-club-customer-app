@@ -4,8 +4,8 @@
   import ChevronRightIcon from 'vue-material-design-icons/ChevronRight.vue';
   import CheckIcon from 'vue-material-design-icons/Check.vue';
   import PlusIcon from 'vue-material-design-icons/Plus.vue';
-  import { useCustomerAddressStore } from '@/stores/customer-address-list';
-  import type { Address } from '@/stores/customer-address-list';
+  import { useCustomerAddressStore } from '@/stores/address/customer-address-list';
+  import type { Address } from '@/stores/address/customer-address-list';
   import { useRouter } from 'vue-router';
   import BackButton from '@/components/BackButton.vue';
   import ScreenRoot from '@/components/Screen/ScreenRoot.vue';
@@ -19,7 +19,7 @@
   import AddAddressScreen from '@/components/Address/AddAddressScreen.vue';
   import IconButton from '@/components/IconButton.vue';
   import EditAddressScreen from '@/components/Address/ViewAddressScreen.vue';
-  import { useSelectedAddressStore } from '@/stores/selected-address';
+  import { useSelectedAddressStore } from '@/stores/address/selected-address';
   import ListAddressEmpty from '@/components/Address/ListAddressEmpty.vue';
   import MapMarkerOutlineIcon from 'vue-material-design-icons/MapMarkerOutline.vue';
 

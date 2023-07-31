@@ -1,9 +1,9 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
-import type { Choice, GarnishItem, Product } from '@/stores/product';
+import type { Choice, GarnishItem, Product } from '@/stores/merchant/product';
 import { generateId } from '@/utils';
 import _ from 'lodash';
-import type { Merchant } from '@/stores/merchant';
+import type { Merchant } from '@/stores/merchant/merchant';
 
 export type BagProduct = {
   id: string;

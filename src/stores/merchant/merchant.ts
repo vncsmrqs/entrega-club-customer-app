@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
-import type { Address } from '@/stores/customer-address-list';
+import type { Address } from '@/stores/address/customer-address-list';
 import {
   addressFixtureFunc,
   generateEmptyAddress,
-} from '@/stores/customer-address-list';
-import { generateId, timeout } from '@/utils';
+} from '@/stores/address/customer-address-list';
+import { generateHashId, generateId, timeout } from '@/utils';
 import { ref } from 'vue';
 
 export type MerchantPriceRange =
@@ -13,6 +13,14 @@ export type MerchantPriceRange =
   | 'REGULAR'
   | 'EXPENSIVE'
   | 'VERY_EXPENSIVE';
+
+export type MerchantType = 'RESTAURANT' | 'LIQUOR_STORE';
+
+export type CategoryType = {
+  id: string;
+  name: string;
+  description?: string;
+};
 
 export type Merchant = {
   id: string;
@@ -24,20 +32,22 @@ export type Merchant = {
   bannerUrl?: string;
   minimumOrderValue: number;
   userRating: number;
-  categories: string[];
+  categories: CategoryType[];
   distance: number;
-  type: 'RESTAURANT' | 'LIQUOR_STORE';
+  type: MerchantType;
   priceRange: MerchantPriceRange;
   deliveryFee: number;
   deliveryMethods: MerchantDeliveryMethod[];
   address: Address;
   shifts: MerchantShift[];
-  mainCategory: string;
+  mainCategory: CategoryType;
 };
+
+export type DeliveryMode = 'DELIVERY' | 'TAKEOUT';
 
 export type MerchantDeliveryMethod = {
   deliveredBy: 'MERCHANT' | null;
-  mode: 'DELIVERY' | 'TAKEOUT';
+  mode: DeliveryMode;
   subtitle: string;
   title: string;
   maxTime: number;
@@ -69,8 +79,20 @@ export const merchantFixture = (): Merchant => ({
   bannerUrl: '/images/merchant/rei-da-pizza-banner.png',
   minimumOrderValue: 40,
   userRating: 4.7,
-  mainCategory: 'Pizza',
-  categories: ['Pizza', 'Esfirra'],
+  mainCategory: {
+    id: generateHashId(),
+    name: 'Pizza',
+  },
+  categories: [
+    {
+      id: generateHashId(),
+      name: 'Pizza',
+    },
+    {
+      id: generateHashId(),
+      name: 'Esfirra',
+    },
+  ],
   distance: 3,
   type: 'RESTAURANT',
   priceRange: 'VERY_CHEAP',
@@ -107,7 +129,10 @@ const generateEmptyMerchant = (): Merchant => ({
   bannerUrl: '/images/merchant/default-banner.png',
   minimumOrderValue: 0,
   userRating: 0,
-  mainCategory: '',
+  mainCategory: {
+    id: '',
+    name: '',
+  },
   categories: [],
   distance: 0,
   type: 'RESTAURANT',
@@ -118,11 +143,13 @@ const generateEmptyMerchant = (): Merchant => ({
 
 export const useMerchantStore = defineStore('merchant', () => {
   /* state */
-  const merchant = ref<Merchant>(merchantFixture());
+  const merchant = ref<Merchant>(generateEmptyMerchant());
   const loading = ref(false);
   const error = ref<string | null>(null);
 
   /* getters */
+
+  /* actions */
   const fetch = async (merchantId: string) => {
     loading.value = true;
     try {
@@ -137,8 +164,6 @@ export const useMerchantStore = defineStore('merchant', () => {
       loading.value = false;
     }
   };
-
-  /* actions */
 
   return {
     /* state */

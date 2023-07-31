@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { formatToCurrency } from '@/utils';
-  import type { Merchant } from '@/stores/merchant';
+  import type { Merchant } from '@/stores/merchant/merchant';
   import DotSeparator from '@/components/DotSeparator.vue';
   import PriceRange from '@/components/Merchant/PriceRange.vue';
   import DeliveryFee from '@/components/Merchant/DeliveryFee.vue';
@@ -21,7 +21,7 @@
       <h2 class="font-bold text-lg">{{ props.merchant.name }}</h2>
       <div class="w-full flex items-center text-sm">
         <div class="flex-1 flex gap-2 font-light text-gray-500 text-sm">
-          <span>{{ props.merchant.mainCategory }}</span>
+          <span>{{ props.merchant.mainCategory.name }}</span>
           <DotSeparator />
           <span>{{ props.merchant.distance }} km</span>
           <DotSeparator />

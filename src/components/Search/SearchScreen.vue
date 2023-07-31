@@ -51,6 +51,7 @@
   ];
 
   import { ref } from 'vue';
+  import SearchFilterButton from '@/components/Search/SearchFilterButton.vue';
 
   const searchValue = ref('');
 </script>
@@ -58,9 +59,12 @@
 <template>
   <ScreenRoot>
     <ScreenHeader class="lg:hidden">
-      Busca
       <template #left>
         <BackButton />
+      </template>
+      Busca
+      <template #right>
+        <SearchFilterButton />
       </template>
     </ScreenHeader>
     <ScreenMain :with-padding="false" class="relative">

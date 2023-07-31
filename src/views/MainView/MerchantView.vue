@@ -3,11 +3,11 @@
   import MagnifyIcon from 'vue-material-design-icons/Magnify.vue';
   import IntersectionItem from '@/components/IntersectionItem.vue';
   import { debounce, formatToCurrency } from '@/utils';
-  import { useMerchantStore } from '@/stores/merchant';
-  import type { Merchant } from '@/stores/merchant';
-  import type { MerchantCatalog } from '@/stores/merchant-catalog';
-  import { useMerchantCatalogStore } from '@/stores/merchant-catalog';
-  import type { Product } from '@/stores/product';
+  import { useMerchantStore } from '@/stores/merchant/merchant';
+  import type { Merchant } from '@/stores/merchant/merchant';
+  import type { MerchantCatalog } from '@/stores/merchant/merchant-catalog';
+  import { useMerchantCatalogStore } from '@/stores/merchant/merchant-catalog';
+  import type { Product } from '@/stores/merchant/product';
   import AddOrEditProductBagScreen from '@/components/Product/AddOrEditProductBagScreen.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import { useRoute, useRouter } from 'vue-router';

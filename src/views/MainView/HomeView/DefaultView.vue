@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { reactive, ref } from 'vue';
-  import { merchantFixture } from '@/stores/merchant';
+  import { merchantFixture } from '@/stores/merchant/merchant';
   import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
   import UserRating from '@/components/Merchant/UserRating.vue';
   import DotSeparator from '@/components/DotSeparator.vue';
@@ -47,7 +47,7 @@
             <div class="flex gap-2 font-light text-gray-500 text-sm">
               <UserRating :rating="merchant.userRating" />
               <DotSeparator />
-              <span>{{ merchant.mainCategory }}</span>
+              <span>{{ merchant.mainCategory.name }}</span>
               <DotSeparator />
               <div class="">{{ merchant.distance }} km</div>
             </div>

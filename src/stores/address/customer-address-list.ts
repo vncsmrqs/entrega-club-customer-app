@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { generateId, timeout } from '@/utils';
-import { useSelectedAddressStore } from '@/stores/selected-address';
+import { useSelectedAddressStore } from '@/stores/address/selected-address';
 // import customerAddressFixture from '@/fixtures/address/customer-address-list.json';
 
 export type Coordinates = {

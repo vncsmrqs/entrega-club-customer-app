@@ -6,7 +6,7 @@
   import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import { useRouter } from 'vue-router';
-  import type { Address } from '@/stores/customer-address-list';
+  import type { Address } from '@/stores/address/customer-address-list';
   import { computed, markRaw, ref } from 'vue';
   import DeleteAddressScreen from '@/components/Address/DeleteAddressScreen.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
@@ -14,7 +14,7 @@
   import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue';
   import DefaultButton from '@/components/Buttons/DefaultButton.vue';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
-  import { useSelectedAddressStore } from '@/stores/selected-address';
+  import { useSelectedAddressStore } from '@/stores/address/selected-address';
   import FloatingAlert from '@/components/FloatingAlert.vue';
   import MapAddressSelectionScreen from '@/components/Address/MapAddressSelectionScreen.vue';
   import { timeout } from '@/utils';

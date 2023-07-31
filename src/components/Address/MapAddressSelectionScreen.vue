@@ -8,7 +8,7 @@
   import MapMarkerIcon from 'vue-material-design-icons/MapMarker.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import { useRouter } from 'vue-router';
-  import type { Address } from '@/stores/customer-address-list';
+  import type { Address } from '@/stores/address/customer-address-list';
   import { onMounted, reactive, ref } from 'vue';
   import { generateId, timeout } from '@/utils';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';

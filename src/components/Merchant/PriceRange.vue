@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { formatToCurrency } from '@/utils';
-  import type { MerchantPriceRange } from '@/stores/merchant';
+  import type { MerchantPriceRange } from '@/stores/merchant/merchant';
   import CurrencyUsdIcon from 'vue-material-design-icons/CurrencyUsd.vue';
 
   const props = defineProps<{

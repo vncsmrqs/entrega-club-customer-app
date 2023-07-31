@@ -63,7 +63,7 @@ const router = createRouter({
         {
           path: '/busca',
           name: 'search',
-          component: () => import('../views/MainView/SearchView.vue'),
+          component: () => import('../components/Search/SearchScreen.vue'),
           meta: {
             showMenu: true,
           },

@@ -5,7 +5,7 @@
   import { useRouter } from 'vue-router';
   import { markRaw, onMounted } from 'vue';
   import AddressSelection from '@/components/Address/ListAddressScreen.vue';
-  import { useSelectedAddressStore } from '@/stores/selected-address';
+  import { useSelectedAddressStore } from '@/stores/address/selected-address';
 
   const drawersControlStore = useDrawersControlStore();
   const selectedAddressStore = useSelectedAddressStore();

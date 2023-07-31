@@ -9,9 +9,12 @@
   import AlertIcon from 'vue-material-design-icons/Alert.vue';
   import CommentTextOutlineIcon from 'vue-material-design-icons/CommentTextOutline.vue';
   import { useRouter } from 'vue-router';
-  import { generateEmptyProduct, useProductStore } from '@/stores/product';
-  import type { Choice, GarnishItem, Product } from '@/stores/product';
-  import { useMerchantStore } from '@/stores/merchant';
+  import {
+    generateEmptyProduct,
+    useProductStore,
+  } from '@/stores/merchant/product';
+  import type { Choice, GarnishItem, Product } from '@/stores/merchant/product';
+  import { useMerchantStore } from '@/stores/merchant/merchant';
   import { formatToCurrency, generateId } from '@/utils';
   import BackButton from '@/components/BackButton.vue';
   import ScreenRoot from '@/components/Screen/ScreenRoot.vue';

@@ -18,11 +18,11 @@
   import SearchInput from '@/components/SearchInput.vue';
   import ChevronRightIcon from 'vue-material-design-icons/ChevronRight.vue';
   import IconButton from '@/components/IconButton.vue';
-  import type { Address } from '@/stores/customer-address-list';
+  import type { Address } from '@/stores/address/customer-address-list';
   import {
     addressFixtureFunc,
     generateEmptyAddress,
-  } from '@/stores/customer-address-list';
+  } from '@/stores/address/customer-address-list';
   import { timeout } from '@/utils';
 
   export type LocalizationPermissionType = 'denied' | 'granted' | 'prompt';

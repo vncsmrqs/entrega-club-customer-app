@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import type { Address } from '@/stores/customer-address-list';
+import type { Address } from '@/stores/address/customer-address-list';
 import type { Phone } from '@/stores/auth';
 import type { Bag } from '@/stores/bag';
 import { useAuthStore } from '@/stores/auth';

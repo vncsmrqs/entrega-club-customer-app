@@ -2,7 +2,7 @@
   import RightDrawer from '@/components/RightDrawer.vue';
   import { computed, onMounted, ref } from 'vue';
   import ListAddressScreen from '@/components/Address/ListAddressScreen.vue';
-  import { useSelectedAddressStore } from '@/stores/selected-address';
+  import { useSelectedAddressStore } from '@/stores/address/selected-address';
   import { useRouter } from 'vue-router';
 
   const props = defineProps<{ show: boolean }>();

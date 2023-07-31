@@ -1,8 +1,8 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { generateId, timeout } from '@/utils';
-import type { Product } from '@/stores/product';
-import { productFixture } from '@/stores/product';
+import type { Product } from '@/stores/merchant/product';
+import { productFixture } from '@/stores/merchant/product';
 
 export type CatalogMenu = {
   id: string;
