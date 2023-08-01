@@ -23,7 +23,7 @@
 <template>
   <nav class="w-full bg-white flex justify-around">
     <RouterLink :to="{ name: 'home' }" v-slot="{ isActive }">
-      <MobileMenuItem title="Início" :active="isActive" badge="1">
+      <MobileMenuItem title="Início" :active="isActive">
         <template #icon>
           <HomeIcon v-if="isActive" :size="24"></HomeIcon>
           <HomeOutlineIcon v-else :size="24"></HomeOutlineIcon>
