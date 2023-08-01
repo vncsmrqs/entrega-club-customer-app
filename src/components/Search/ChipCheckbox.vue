@@ -25,6 +25,12 @@
         emit('update:model-value', props.modelValue.concat([newValue]));
         return;
       }
+
+      if (props.modelValue === newValue) {
+        emit('update:model-value', null);
+        return;
+      }
+
       emit('update:model-value', newValue);
     },
   });

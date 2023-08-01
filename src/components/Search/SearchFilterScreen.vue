@@ -35,7 +35,6 @@
   import CircleRadio from '@/components/Search/CircleRadio.vue';
   import ChipCheckbox from '@/components/Search/ChipCheckbox.vue';
   import SearchPriceRange from '@/components/Search/SearchPriceRange.vue';
-  import DefaultButton from '@/components/Buttons/DefaultButton.vue';
   import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
   import { useRouter } from 'vue-router';
 
