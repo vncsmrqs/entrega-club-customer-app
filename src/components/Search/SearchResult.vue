@@ -8,6 +8,7 @@
   import { productFixture } from '@/stores/merchant/product';
   import type { Product } from '@/stores/merchant/product';
   import ProductListItem from '@/components/Product/ProductListItem.vue';
+  import SearchFilterButton from '@/components/Search/SearchFilterButton.vue';
 
   const selectedTab = ref(1);
 
@@ -18,12 +19,26 @@
   const products: Product[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(
     productFixture,
   );
+
+  const term = ref('burguer');
 </script>
 
 <template>
   <div class="w-full">
-    <div class="text-xl font-bold p-5">
-      Buscando por <span class="text-primary-600">burguer</span>
+    <div
+      class="text-xl font-bold px-5 py-4 grid grid-cols-4 auto-cols-min justify-between border-b gap-4"
+    >
+      <div class="col-span-3">
+        Buscando por
+        <div
+          class="text-primary-600 text-ellipsis whitespace-nowrap overflow-hidden"
+        >
+          "{{ term }}"
+        </div>
+      </div>
+      <div class="col-span-1 text-right">
+        <SearchFilterButton v-show="true" />
+      </div>
     </div>
     <div class="grid grid-cols-2 bg-white sticky top-0 z-10">
       <TabButton :active="selectedTab === 1" @click="selectedTab = 1">

@@ -27,7 +27,6 @@
           class="lg:hidden w-full sticky top-0 left-0 bg-white px-5 py-4 border-b flex gap-4 z-40"
         >
           <SearchInput class="w-full" v-model="searchValue" />
-          <SearchFilterButton v-show="false" />
         </div>
         <SearchResult />
         <SearchHome v-show="false" />
