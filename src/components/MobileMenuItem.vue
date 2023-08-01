@@ -13,12 +13,12 @@
     class="flex items-center flex-col p-2 text-gray-500"
     @click="$emit('click')"
     :class="{
-      'text-black font-bold': props.active,
+      'text-primary-600 font-bold': props.active,
     }"
   >
     <span
       :class="{
-        'bg-gray-100 dark:bg-primary-600 dark:text-black': props.active,
+        'bg-primary-100 dark:bg-primary-600 dark:text-black': props.active,
       }"
       class="p-1 rounded-lg px-4 relative"
     >
