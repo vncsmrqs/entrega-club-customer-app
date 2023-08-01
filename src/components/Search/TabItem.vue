@@ -4,7 +4,7 @@
 
 <template>
   <Transition name="fade">
-    <div v-show="props.show" class="w-full absolute">
+    <div v-show="props.show" class="w-full">
       <slot></slot>
     </div>
   </Transition>
