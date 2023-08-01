@@ -11,41 +11,45 @@
 </script>
 
 <template>
-  <div
-    class="grid grid-cols-5 gap-5 md:gap-3 p-5 md:px-3 md:py-3 md:rounded-xl border-b md:border items-center"
+  <RouterLink
+    :to="{ name: 'merchant', params: { merchantId: props.merchant.id } }"
   >
     <div
-      class="col-span-1 rounded-full bg-gray-100 border aspect-square overflow-hidden"
-      :class="{ grayscale: !props.merchant.available }"
+      class="grid grid-cols-5 gap-5 md:gap-3 p-5 md:px-3 md:py-3 md:rounded-xl border-b md:border items-center"
     >
-      <img
-        class="w-full h-full object-cover"
-        :src="
-          props.merchant.logoUrl
-            ? props.merchant.logoUrl
-            : props.defaultMerchantLogoUrl
-        "
-        :alt="props.merchant.name"
-      />
+      <div
+        class="col-span-1 rounded-full bg-gray-100 border aspect-square overflow-hidden"
+        :class="{ grayscale: !props.merchant.available }"
+      >
+        <img
+          class="w-full h-full object-cover"
+          :src="
+            props.merchant.logoUrl
+              ? props.merchant.logoUrl
+              : props.defaultMerchantLogoUrl
+          "
+          :alt="props.merchant.name"
+        />
+      </div>
+      <div class="col-span-4 flex flex-col justify-center gap-1">
+        <div class="font-medium text-lg mb-1 leading-5">
+          {{ props.merchant.name }}
+        </div>
+        <div class="flex gap-2 font-light text-gray-500 text-sm">
+          <UserRating :rating="merchant.userRating" />
+          <DotSeparator />
+          <span>{{ props.merchant.mainCategory.name }}</span>
+          <DotSeparator />
+          <div class="">{{ props.merchant.distance }} km</div>
+        </div>
+        <div class="flex gap-2 font-light text-gray-500 text-sm">
+          <span>{{ props.merchant.preparationTime }} min</span>
+          <DotSeparator />
+          <DeliveryFee :delivery-fee="props.merchant.deliveryFee" />
+        </div>
+      </div>
     </div>
-    <div class="col-span-4 flex flex-col justify-center gap-1">
-      <div class="font-medium text-lg mb-1 leading-5">
-        {{ props.merchant.name }}
-      </div>
-      <div class="flex gap-2 font-light text-gray-500 text-sm">
-        <UserRating :rating="merchant.userRating" />
-        <DotSeparator />
-        <span>{{ props.merchant.mainCategory.name }}</span>
-        <DotSeparator />
-        <div class="">{{ props.merchant.distance }} km</div>
-      </div>
-      <div class="flex gap-2 font-light text-gray-500 text-sm">
-        <span>{{ props.merchant.preparationTime }} min</span>
-        <DotSeparator />
-        <DeliveryFee :delivery-fee="props.merchant.deliveryFee" />
-      </div>
-    </div>
-  </div>
+  </RouterLink>
 </template>
 
 <style scoped></style>

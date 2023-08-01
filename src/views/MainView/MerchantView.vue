@@ -75,16 +75,6 @@
 
   const menuActive = ref('');
 
-  const router = useRouter();
-  const drawersControlStore = useDrawersControlStore();
-
-  const showProduct = (product: Product) => {
-    const drawer = drawersControlStore.add(markRaw(AddOrEditProductBagScreen), {
-      productProp: product,
-    });
-    router.push({ hash: `#${drawer.id}` });
-  };
-
   const route = useRoute();
 
   onMounted(async () => {
@@ -150,7 +140,6 @@
                 v-for="product in section.products"
                 :key="product.id"
                 :product="product"
-                @click="() => showProduct(product)"
               />
             </div>
           </div>
@@ -184,7 +173,6 @@
                 v-for="product in menu.products"
                 :key="product.id"
                 :product="product"
-                @click="() => showProduct(product)"
               />
             </IntersectionItem>
           </div>

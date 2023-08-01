@@ -1,12 +1,29 @@
 <script setup lang="ts">
   import { formatToCurrency } from '@/utils';
   import type { Product } from '@/stores/merchant/product';
+  import { useDrawersControlStore } from '@/stores/drawers-control';
+  import { markRaw } from 'vue';
+  import AddOrEditProductBagScreen from '@/components/Product/AddOrEditProductBagScreen.vue';
+  import { useRouter } from 'vue-router';
 
   const props = defineProps<{ product: Product }>();
+
+  const router = useRouter();
+  const drawersControlStore = useDrawersControlStore();
+
+  const showProduct = () => {
+    const drawer = drawersControlStore.add(markRaw(AddOrEditProductBagScreen), {
+      productProp: props.product,
+    });
+    router.push({ hash: `#${drawer.id}` });
+  };
 </script>
 
 <template>
-  <div class="w-full border-y flex justify-between cursor-pointer gap-4 p-5">
+  <div
+    class="w-full border-y flex justify-between cursor-pointer gap-4 p-5"
+    @click="showProduct"
+  >
     <div>
       <div>{{ props.product.name }}</div>
       <div class="text-gray-500 text-sm">
