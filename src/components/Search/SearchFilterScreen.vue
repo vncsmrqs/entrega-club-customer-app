@@ -17,8 +17,9 @@
   import StoreIcon from 'vue-material-design-icons/Store.vue';
   import GlassMugVariantIcon from 'vue-material-design-icons/GlassMugVariant.vue';
   import SilverwareIcon from 'vue-material-design-icons/Silverware.vue';
+  import EraserVariantIcon from 'vue-material-design-icons/Eraser.vue';
+  import CheckIcon from 'vue-material-design-icons/Check.vue';
   import { useSearchFilterStore } from '@/stores/search/search-filter';
-  import type { OnlinePaymentMethod } from '@/stores/search/search-filter';
   import type { SortType } from '@/stores/search/search-filter';
   import { formatToCurrency } from '@/utils';
   import ScreenFooter from '@/components/Screen/ScreenFooter.vue';
@@ -34,20 +35,14 @@
   import CircleRadio from '@/components/Search/CircleRadio.vue';
   import ChipCheckbox from '@/components/Search/ChipCheckbox.vue';
   import SearchPriceRange from '@/components/Search/SearchPriceRange.vue';
+  import DefaultButton from '@/components/Buttons/DefaultButton.vue';
+  import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
+  import { useRouter } from 'vue-router';
 
+  const router = useRouter();
   const searchFilterStore = useSearchFilterStore();
 
-  const form = ref<{
-    deliveryMode: DeliveryMode | null;
-    sortBy: SortType | null;
-    distance: number;
-    categories: string[];
-    merchantType: MerchantType | null;
-    deliveryFee: number | null;
-    priceRange: MerchantPriceRange | null;
-    onlinePayment: string[];
-    paymentOnDelivery: string[];
-  }>({
+  const generateEmptyFilter = () => ({
     deliveryMode: null,
     sortBy: null,
     distance: searchFilterStore.availableFilters.distance.max,
@@ -59,11 +54,25 @@
     priceRange: null,
   });
 
+  const form = ref<{
+    deliveryMode: DeliveryMode | null;
+    sortBy: SortType | null;
+    distance: number;
+    categories: string[];
+    merchantType: MerchantType | null;
+    deliveryFee: number | null;
+    priceRange: MerchantPriceRange | null;
+    onlinePayment: string[];
+    paymentOnDelivery: string[];
+  }>(generateEmptyFilter());
+
   const selectedTab = ref(1);
 
   onMounted(async () => {
     await searchFilterStore.fetch();
   });
+
+  const reset = () => (form.value = generateEmptyFilter());
 
   const sortByLabelMap: Record<SortType, { icon: Component; label: string }> = {
     PRICE: {
@@ -142,6 +151,10 @@
       form.value.paymentOnDelivery.length
     );
   });
+
+  const apply = () => {
+    router.back();
+  };
 </script>
 <template>
   <ScreenRoot>
@@ -389,7 +402,18 @@
       </ScreenContent>
     </ScreenMain>
     <ScreenFooter>
-      <PrimaryButton full> Ver resultados</PrimaryButton>
+      <SecondaryButton @click="reset" full class="mb-4">
+        <template #left>
+          <EraserVariantIcon />
+        </template>
+        Limpar
+      </SecondaryButton>
+      <PrimaryButton @click="apply" full>
+        Ver resultados
+        <template #right>
+          <CheckIcon />
+        </template>
+      </PrimaryButton>
     </ScreenFooter>
   </ScreenRoot>
 </template>
