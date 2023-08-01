@@ -5,6 +5,7 @@
   import UserRating from '@/components/Merchant/UserRating.vue';
   import DotSeparator from '@/components/DotSeparator.vue';
   import DeliveryFee from '@/components/Merchant/DeliveryFee.vue';
+  import MerchantItem from '@/components/Home/MerchantItem.vue';
 
   const defaultMerchantLogoUrl = ref('/images/merchant/logo-default.png');
 
@@ -25,39 +26,10 @@
         :key="merchant.id"
         :to="{ name: 'merchant', params: { merchantId: merchant.id } }"
       >
-        <div
-          class="grid grid-cols-5 gap-5 md:gap-3 p-5 md:px-3 md:py-3 md:rounded-xl border-b md:border items-center"
-        >
-          <div
-            class="col-span-1 rounded-full bg-gray-100 border aspect-square overflow-hidden"
-            :class="{ grayscale: !merchant.available }"
-          >
-            <img
-              class="w-full h-full object-cover"
-              :src="
-                merchant.logoUrl ? merchant.logoUrl : defaultMerchantLogoUrl
-              "
-              :alt="merchant.name"
-            />
-          </div>
-          <div class="col-span-4 flex flex-col justify-center gap-1">
-            <div class="font-medium text-lg mb-1 leading-5">
-              {{ merchant.name }}
-            </div>
-            <div class="flex gap-2 font-light text-gray-500 text-sm">
-              <UserRating :rating="merchant.userRating" />
-              <DotSeparator />
-              <span>{{ merchant.mainCategory.name }}</span>
-              <DotSeparator />
-              <div class="">{{ merchant.distance }} km</div>
-            </div>
-            <div class="flex gap-2 font-light text-gray-500 text-sm">
-              <span>{{ merchant.preparationTime }} min</span>
-              <DotSeparator />
-              <DeliveryFee :delivery-fee="merchant.deliveryFee" />
-            </div>
-          </div>
-        </div>
+        <MerchantItem
+          :merchant="merchant"
+          :default-merchant-logo-url="defaultMerchantLogoUrl"
+        />
       </RouterLink>
       <div class="col-span-full p-5 md:p-0">
         <SecondaryButton class="w-full"> Ver mais</SecondaryButton>

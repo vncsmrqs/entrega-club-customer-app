@@ -22,6 +22,8 @@
   import MerchantHeader from '@/components/Merchant/MerchantHeader.vue';
   import ScreenLoader from '@/components/Screen/ScreenLoader.vue';
   import ScreenError from '@/components/Screen/ScreenError.vue';
+  import ProductCarousselItem from '@/components/Product/ProductCarousselItem.vue';
+  import ProductListItem from '@/components/Product/ProductListItem.vue';
 
   const merchantStore = useMerchantStore();
   const merchantCatalogStore = useMerchantCatalogStore();
@@ -144,35 +146,12 @@
               {{ section.name }}
             </div>
             <div class="gap-4 flex flex-nowrap overflow-x-auto p-5">
-              <div
+              <ProductCarousselItem
                 v-for="product in section.products"
                 :key="product.id"
-                class="w-56 flex-shrink-0 rounded-lg border cursor-pointer"
+                :product="product"
                 @click="() => showProduct(product)"
-              >
-                <div
-                  class="w-full aspect-photo bg-gray-100 overflow-hidden rounded-t-lg"
-                >
-                  <img
-                    class="w-full h-full object-cover"
-                    :src="product.imageUrl"
-                    :alt="product.name"
-                  />
-                </div>
-                <div class="text-sm p-2 flex flex-col gap-2">
-                  <div class="h-10 text-ellipsis overflow-hidden">
-                    {{ product.name }}
-                  </div>
-                  <div class="flex items-center mt-2">
-                    <span class="text-green-700">
-                      {{ formatToCurrency(product.unitPrice) }}
-                    </span>
-                    <div class="text-gray-500 ml-2 text-sm line-through">
-                      {{ formatToCurrency(product.originalUnitPrice) }}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              />
             </div>
           </div>
           <div
@@ -201,42 +180,12 @@
               :threshold="0.5"
             >
               <div class="text-xl font-bold p-5">{{ menu.name }}</div>
-              <div
+              <ProductListItem
                 v-for="product in menu.products"
                 :key="product.id"
+                :product="product"
                 @click="() => showProduct(product)"
-                class="w-full border-y flex justify-between cursor-pointer gap-4 p-5"
-              >
-                <div>
-                  <div>{{ product.name }}</div>
-                  <div class="text-gray-500 text-sm">
-                    {{ product.description }}
-                  </div>
-                  <!--            <div class="mt-2 text-xs">Serve até 1 pessoa</div>-->
-                  <div class="flex items-center mt-2">
-                    <span class="text-green-700">{{
-                      formatToCurrency(product.unitPrice)
-                    }}</span>
-                    <div
-                      v-if="product.originalUnitPrice"
-                      class="text-gray-500 ml-2 text-sm line-through"
-                    >
-                      {{ formatToCurrency(product.originalUnitPrice) }}
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div
-                    class="w-24 aspect-photo rounded-lg border bg-gray-100 overflow-hidden"
-                  >
-                    <img
-                      class="w-full h-full object-cover"
-                      :src="product.imageUrl"
-                      :alt="product.name"
-                    />
-                  </div>
-                </div>
-              </div>
+              />
             </IntersectionItem>
           </div>
         </div>

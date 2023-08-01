@@ -1,94 +1,36 @@
 <script setup lang="ts">
   import SearchInput from '@/components/SearchInput.vue';
   import ScreenRoot from '@/components/Screen/ScreenRoot.vue';
-  import ScreenHeader from '@/components/Screen/ScreenHeader.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
-  import BackButton from '@/components/BackButton.vue';
-  import { generateId } from '@/utils';
-
-  const categories = [
-    {
-      id: generateId(8),
-      name: 'Açaí',
-    },
-    {
-      id: generateId(8),
-      name: 'Salgados',
-    },
-    {
-      id: generateId(8),
-      name: 'Pizza',
-    },
-    {
-      id: generateId(8),
-      name: 'Tapioca',
-    },
-    {
-      id: generateId(8),
-      name: 'Saudáveis',
-    },
-    {
-      id: generateId(8),
-      name: 'Espetinho',
-    },
-    {
-      id: generateId(8),
-      name: 'Vegetariana',
-    },
-    {
-      id: generateId(8),
-      name: 'Japonesa',
-    },
-    {
-      id: generateId(8),
-      name: 'Árabe',
-    },
-    {
-      id: generateId(8),
-      name: 'Lanches',
-    },
-  ];
 
   import { ref } from 'vue';
   import SearchFilterButton from '@/components/Search/SearchFilterButton.vue';
+  import SearchResult from '@/components/Search/SearchResult.vue';
+  import SearchHome from '@/components/Search/SearchHome.vue';
 
   const searchValue = ref('');
 </script>
 
 <template>
   <ScreenRoot>
-    <ScreenHeader class="lg:hidden">
-      <template #left>
-        <BackButton />
-      </template>
-      Busca
-      <template #right>
-        <SearchFilterButton />
-      </template>
-    </ScreenHeader>
+    <!--    <ScreenHeader class="lg:hidden">-->
+    <!--      <template #left>-->
+    <!--        <BackButton />-->
+    <!--      </template>-->
+    <!--      <SearchInput v-model="searchValue" />-->
+    <!--      <template #right> </template>-->
+    <!--    </ScreenHeader>-->
     <ScreenMain :with-padding="false" class="relative">
       <ScreenContent class="!col-span-full">
-        <form class="lg:hidden sticky top-0 left-0 bg-white px-5 py-4 border-b">
-          <label
-            for="default-search"
-            class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-            >Search</label
-          >
-          <SearchInput v-model="searchValue" />
-        </form>
-        <div class="mt-4">
-          <h2 class="px-5 font-bold dark:text-gray-100 text-lg">Categorias</h2>
-          <div class="grid grid-cols-2 gap-4 p-4">
-            <div
-              v-for="category in categories"
-              :key="category.id"
-              class="rounded-lg p-4 bg-gray-100 dark:bg-gray-800 dark:text-white"
-            >
-              {{ category.name }}
-            </div>
-          </div>
+        <div
+          class="lg:hidden w-full sticky top-0 left-0 bg-white px-5 py-4 border-b flex gap-4 z-40"
+        >
+          <SearchInput class="w-full" v-model="searchValue" />
+          <SearchFilterButton v-show="false" />
         </div>
+        <SearchResult />
+        <SearchHome v-show="false" />
       </ScreenContent>
     </ScreenMain>
   </ScreenRoot>
