@@ -21,7 +21,6 @@ export type OnDeliveryPaymentMethod = {
 };
 
 export type SortType =
-  | 'DEFAULT'
   | 'PRICE'
   | 'RATING'
   | 'DELIVERY_TIME'
@@ -86,19 +85,12 @@ export const generateEmptyAvailableFilters = (): AvailableFilters => ({
 
 export const generateAvailableFiltersFixture = (): AvailableFilters => ({
   distance: {
-    min: 0,
+    min: 1,
     max: 100,
   },
   deliveryFee: [0, 5, 10],
   deliveryMode: ['DELIVERY', 'TAKEOUT'],
-  sortBy: [
-    'DEFAULT',
-    'PRICE',
-    'RATING',
-    'DELIVERY_TIME',
-    'DELIVERY_FEE',
-    'DISTANCE',
-  ],
+  sortBy: ['PRICE', 'RATING', 'DELIVERY_TIME', 'DELIVERY_FEE', 'DISTANCE'],
 
   /* Categorias */
   categories: [
@@ -127,7 +119,7 @@ export const generateAvailableFiltersFixture = (): AvailableFilters => ({
     },
     {
       id: generateHashId(),
-      name: 'MASTERCARD - CREDITO',
+      name: 'MASTERCARD - CRÉDITO',
       type: 'CREDIT',
     },
     {
@@ -154,7 +146,7 @@ export const generateAvailableFiltersFixture = (): AvailableFilters => ({
     },
     {
       id: generateHashId(),
-      name: 'MASTERCARD - CREDITO',
+      name: 'MASTERCARD - CRÉDITO',
       type: 'CREDIT',
     },
     {

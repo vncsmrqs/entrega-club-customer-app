@@ -2,7 +2,7 @@
   import { formatToCurrency } from '@/utils';
   import type { Merchant } from '@/stores/merchant/merchant';
   import DotSeparator from '@/components/DotSeparator.vue';
-  import PriceRange from '@/components/Merchant/PriceRange.vue';
+  import PriceRange from '@/components/Merchant/MerchantPriceRange.vue';
   import DeliveryFee from '@/components/Merchant/DeliveryFee.vue';
 
   const props = defineProps<{ merchant: Merchant }>();
