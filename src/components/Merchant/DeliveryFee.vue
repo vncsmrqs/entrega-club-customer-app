@@ -10,7 +10,7 @@
   <span v-if="props.deliveryFee">
     {{ formatToCurrency(props.deliveryFee) }}
   </span>
-  <span v-else class="text-green-700"> Entrega grátis </span>
+  <span v-else class="text-green-700 rounded-md"> Entrega grátis </span>
 </template>
 
 <style scoped></style>
