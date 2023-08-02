@@ -15,7 +15,7 @@
     :to="{ name: 'merchant', params: { merchantId: props.merchant.id } }"
   >
     <div
-      class="grid grid-cols-5 gap-5 md:gap-3 p-5 md:px-3 md:py-3 md:rounded-xl border-b md:border items-center"
+      class="grid grid-cols-5 gap-5 md:gap-3 px-5 md:px-3 py-3 md:rounded-xl border-b md:border items-center"
     >
       <div
         class="col-span-1 rounded-full bg-gray-100 border aspect-square overflow-hidden"
