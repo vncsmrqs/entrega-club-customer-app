@@ -1,26 +1,20 @@
 <script setup lang="ts">
   import TabButton from '@/components/Search/TabButton.vue';
-  import { ref } from 'vue';
-  import TabItem from '@/components/Search/TabItem.vue';
+  import { onMounted, ref } from 'vue';
   import MerchantItem from '@/components/Home/MerchantItem.vue';
-  import { merchantFixture } from '@/stores/merchant/merchant';
-  import type { Merchant } from '@/stores/merchant/merchant';
-  import { productFixture } from '@/stores/merchant/product';
-  import type { Product } from '@/stores/merchant/product';
   import ProductListItem from '@/components/Product/ProductListItem.vue';
   import SearchFilterButton from '@/components/Search/SearchFilterButton.vue';
+  import EmptyResult from '@/components/Search/EmptyResult.vue';
+  import { useSearchStore } from '@/stores/search/search';
+  import SearchLoader from '@/components/Search/SearchLoader.vue';
+
+  const searchStore = useSearchStore();
 
   const selectedTab = ref(1);
 
-  const merchants: Merchant[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(
-    merchantFixture,
+  const term = ref(
+    'burguerburguerburguerburguerburguerburguerburguerburguerburguerburguerburguerburguer',
   );
-
-  const products: Product[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(
-    productFixture,
-  );
-
-  const term = ref('burguer');
 </script>
 
 <template>
@@ -33,14 +27,14 @@
         <div
           class="text-primary-600 text-ellipsis whitespace-nowrap overflow-hidden"
         >
-          "{{ term }}"
+          "{{ searchStore.term }}"
         </div>
       </div>
       <div class="col-span-1 text-right">
-        <SearchFilterButton v-show="true" />
+        <SearchFilterButton v-if="!searchStore.isEmpty" />
       </div>
     </div>
-    <div class="grid grid-cols-2 lg:flex bg-white sticky top-0 z-10">
+    <div class="grid grid-cols-2 bg-white sticky top-0 z-10">
       <TabButton :active="selectedTab === 1" @click="selectedTab = 1">
         <span class="relative"> Estabelecimentos </span>
       </TabButton>
@@ -48,29 +42,47 @@
         <span class="relative"> Produtos </span>
       </TabButton>
     </div>
-    <TabItem :show="selectedTab === 1">
-      <div
-        class="md:mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-4"
-      >
-        <MerchantItem
-          v-for="merchant in merchants"
-          :key="merchant.id"
-          :merchant="merchant"
-          default-merchant-logo-url="teste"
-        />
+    <Transition name="fade" mode="out-in" appear>
+      <div v-if="selectedTab === 1" class="w-full">
+        <template v-if="searchStore.loading">
+          <SearchLoader class="mt-20" />
+        </template>
+        <template v-else-if="!searchStore.totalMerchants">
+          <EmptyResult class="mt-20" />
+        </template>
+        <template v-else>
+          <div
+            class="md:mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-4"
+          >
+            <MerchantItem
+              v-for="merchant in searchStore.merchants"
+              :key="merchant.id"
+              :merchant="merchant"
+              default-merchant-logo-url="teste"
+            />
+          </div>
+        </template>
       </div>
-    </TabItem>
-    <TabItem :show="selectedTab === 2">
-      <div
-        class="md:mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-4"
-      >
-        <ProductListItem
-          v-for="product in products"
-          :key="product.id"
-          :product="product"
-        />
+      <div v-else-if="selectedTab === 2" class="w-full">
+        <template v-if="searchStore.loading">
+          <SearchLoader class="mt-20" />
+        </template>
+        <template v-else-if="!searchStore.totalProducts">
+          <EmptyResult class="mt-20" />
+        </template>
+        <template v-else>
+          <div
+            class="md:mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-4"
+          >
+            <ProductListItem
+              v-for="product in searchStore.products"
+              :key="product.id"
+              :product="product"
+            />
+          </div>
+        </template>
       </div>
-    </TabItem>
+    </Transition>
   </div>
 </template>
 

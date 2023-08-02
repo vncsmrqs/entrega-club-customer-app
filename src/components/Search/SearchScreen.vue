@@ -3,39 +3,100 @@
   import ScreenRoot from '@/components/Screen/ScreenRoot.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
-
-  import { ref } from 'vue';
-  import SearchFilterButton from '@/components/Search/SearchFilterButton.vue';
+  import { computed, onBeforeMount, ref, watch } from 'vue';
   import SearchResult from '@/components/Search/SearchResult.vue';
   import SearchHome from '@/components/Search/SearchHome.vue';
+  import SearchAutocomplete from '@/components/Search/SearchAutocomplete.vue';
+  import { useSearchStore } from '@/stores/search/search';
+  import { useRoute, useRouter } from 'vue-router';
+  import type { LocationQuery } from 'vue-router';
+  import CloseIcon from 'vue-material-design-icons/Close.vue';
+  import IconButton from '@/components/IconButton.vue';
 
-  const searchValue = ref('');
+  const router = useRouter();
+  const route = useRoute();
+  const searchStore = useSearchStore();
+
+  const searchTerm = ref('');
+  const showSearchHome = ref(false);
+  const showSearchResults = ref(false);
+
+  const submitSearch = () => {
+    router.push({
+      query: { q: searchTerm.value },
+      replace: true,
+    });
+  };
+
+  const search = async (term: string) => {
+    searchTerm.value = term;
+    await searchStore.search(term);
+  };
+
+  const handleQueryParams = (query: LocationQuery) => {
+    const { q: term } = query;
+    if (term) {
+      showSearchHome.value = false;
+      showSearchResults.value = true;
+
+      if (Array.isArray(term)) {
+        search(term[0] as string);
+        return;
+      }
+
+      search(term as string);
+      return;
+    }
+
+    searchTerm.value = '';
+    showSearchHome.value = true;
+    showSearchResults.value = false;
+  };
+
+  const clearSearch = () => {
+    router.push({
+      replace: true,
+    });
+  };
+
+  const showHome = computed(
+    () => showSearchHome.value && !showSearchResults.value,
+  );
+
+  watch(() => route.query, handleQueryParams);
+
+  onBeforeMount(() => {
+    handleQueryParams(route.query);
+  });
 </script>
 
 <template>
   <ScreenRoot>
-    <!--    <ScreenHeader class="lg:hidden">-->
-    <!--      <template #left>-->
-    <!--        <BackButton />-->
-    <!--      </template>-->
-    <!--      <SearchInput v-model="searchValue" />-->
-    <!--      <template #right> </template>-->
-    <!--    </ScreenHeader>-->
     <ScreenMain :with-padding="false" class="relative">
       <ScreenContent class="!col-span-full">
         <div
           class="md:hidden w-full sticky top-0 left-0 bg-white px-5 py-4 border-b flex gap-4 z-40"
+          @submit.prevent="submitSearch"
         >
-          <SearchInput class="w-full" v-model="searchValue" />
+          <form class="w-full relative">
+            <SearchInput class="w-full" v-model="searchTerm" />
+            <SearchAutocomplete v-show="false" />
+          </form>
+          <IconButton v-show="!showHome" @click="clearSearch">
+            <CloseIcon class="text-danger-600" />
+          </IconButton>
         </div>
-        <SearchResult />
-        <SearchHome v-show="false" />
+        <Transition name="fade" mode="out-in">
+          <SearchHome v-if="showHome" />
+          <SearchResult v-else />
+        </Transition>
       </ScreenContent>
     </ScreenMain>
   </ScreenRoot>
 </template>
 
 <style>
-  @media (min-width: 1024px) {
+  .max-h-56 {
+    max-height: 14rem;
   }
 </style>

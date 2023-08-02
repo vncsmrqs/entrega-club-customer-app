@@ -34,7 +34,7 @@ body,
 }
 
 .fade-leave-active {
-    position: absolute;
+    /*position: absolute;*/
 }
 
 .slide-left-enter-active,

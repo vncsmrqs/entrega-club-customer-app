@@ -4,9 +4,28 @@
   import BagButton from '@/components/Bag/BagButton.vue';
   import SearchInput from '@/components/SearchInput.vue';
   import AppLogo from '@/components/AppLogo.vue';
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
+  import { useRouter } from 'vue-router';
+  import { useSearchStore } from '@/stores/search/search';
 
-  const searchValue = ref('');
+  const router = useRouter();
+  const searchStore = useSearchStore();
+
+  const submitSearch = () => {
+    router.push({
+      query: { q: searchTerm.value },
+      replace: true,
+    });
+  };
+
+  const searchTerm = ref('');
+
+  watch(
+    () => searchStore.term,
+    (value: string) => {
+      searchTerm.value = value;
+    },
+  );
 </script>
 
 <template>
@@ -16,7 +35,9 @@
     >
       <AppLogo />
       <div class="flex-1"></div>
-      <SearchInput class="flex-1" v-model="searchValue" />
+      <form class="flex-1" @submit.prevent="submitSearch">
+        <SearchInput class="w-full" v-model="searchTerm" />
+      </form>
       <NotificationButton />
       <BagButton small />
       <MenuButton />

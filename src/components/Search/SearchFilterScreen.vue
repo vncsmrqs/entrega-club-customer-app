@@ -25,7 +25,6 @@
   import ScreenFooter from '@/components/Screen/ScreenFooter.vue';
   import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
   import TabButton from '@/components/Search/TabButton.vue';
-  import TabItem from '@/components/Search/TabItem.vue';
   import ChipRadio from '@/components/Search/ChipRadio.vue';
   import type {
     DeliveryMode,
@@ -196,208 +195,211 @@
             </span>
           </TabButton>
         </div>
-        <TabItem :show="selectedTab === 1">
-          <div class="w-full p-5 flex flex-col gap-4">
-            <div class="font-medium text-lg">Modo de entrega</div>
-            <div class="flex flex-wrap gap-2">
-              <ChipRadio
-                v-model="form.deliveryMode"
-                name="deliveryMode"
-                :value="null"
-              >
-                Qualquer um
-              </ChipRadio>
-              <ChipRadio
-                v-model="form.deliveryMode"
-                name="deliveryMode"
-                value="DELIVERY"
-              >
-                Entrega
-              </ChipRadio>
-              <ChipRadio
-                v-model="form.deliveryMode"
-                name="deliveryMode"
-                value="TAKEOUT"
-              >
-                Retirada
-              </ChipRadio>
-            </div>
-          </div>
-          <div
-            v-if="searchFilterStore.availableFilters.sortBy.length"
-            class="p-5 flex flex-col gap-4"
-          >
-            <div class="font-medium text-lg">Ordernar por</div>
-            <div class="grid grid-cols-3 auto-rows-min grid-flow-row gap-4">
-              <CircleRadio
-                label="Ordenação padrão"
-                name="sortBy"
-                v-model="form.sortBy"
-                :value="null"
-              >
-                <SwapVerticalIcon :size="40" />
-              </CircleRadio>
-              <CircleRadio
-                v-for="sortOption in searchFilterStore.availableFilters.sortBy"
-                :key="sortOption"
-                :label="sortByLabelMap[sortOption].label"
-                name="sortBy"
-                v-model="form.sortBy"
-                :value="sortOption"
-              >
-                <component :is="sortByLabelMap[sortOption].icon" :size="40" />
-              </CircleRadio>
-            </div>
-          </div>
-          <div
-            v-if="searchFilterStore.availableFilters.distance"
-            class="p-5 flex flex-col gap-2"
-          >
-            <div>
-              <div class="font-medium text-lg">Distância</div>
-              <div class="text-gray-500">{{ formattedDistance }}</div>
-            </div>
-            <div>
-              <div class="flex justify-between text-gray-500">
-                <span>
-                  {{ searchFilterStore.availableFilters.distance.min }}km
-                </span>
-                <span>
-                  {{ searchFilterStore.availableFilters.distance.max }}km
-                </span>
+        <Transition name="fade" mode="out-in">
+          <div class="w-full" v-if="selectedTab === 1">
+            <div class="w-full p-5 flex flex-col gap-4">
+              <div class="font-medium text-lg">Modo de entrega</div>
+              <div class="flex flex-wrap gap-2">
+                <ChipRadio
+                  v-model="form.deliveryMode"
+                  name="deliveryMode"
+                  :value="null"
+                >
+                  Qualquer um
+                </ChipRadio>
+                <ChipRadio
+                  v-model="form.deliveryMode"
+                  name="deliveryMode"
+                  value="DELIVERY"
+                >
+                  Entrega
+                </ChipRadio>
+                <ChipRadio
+                  v-model="form.deliveryMode"
+                  name="deliveryMode"
+                  value="TAKEOUT"
+                >
+                  Retirada
+                </ChipRadio>
               </div>
-              <input
-                :value="form.distance"
-                @input="(event: any) => (form.distance = parseInt(event.target.value || 0))"
-                class="w-full accent-primary-600"
-                step="1"
-                type="range"
-                :min="0"
-                :max="100"
-              />
             </div>
-          </div>
-          <div class="p-5 flex flex-col gap-4 mb-5">
-            <div class="font-medium text-lg">Taxa de entrega</div>
-            <div class="flex flex-wrap gap-2">
-              <ChipRadio
-                v-model="form.deliveryFee"
-                name="deliveryFee"
-                :value="null"
-              >
-                Qualquer valor
-              </ChipRadio>
-              <ChipRadio
-                v-for="deliveryFeeOption in searchFilterStore.availableFilters
-                  .deliveryFee"
-                :key="deliveryFeeOption"
-                v-model="form.deliveryFee"
-                name="deliveryFee"
-                :value="deliveryFeeOption"
-              >
-                {{ formatDeliveryFee(deliveryFeeOption) }}
-              </ChipRadio>
+            <div
+              v-if="searchFilterStore.availableFilters.sortBy.length"
+              class="p-5 flex flex-col gap-4"
+            >
+              <div class="font-medium text-lg">Ordernar por</div>
+              <div class="grid grid-cols-3 auto-rows-min grid-flow-row gap-4">
+                <CircleRadio
+                  label="Ordenação padrão"
+                  name="sortBy"
+                  v-model="form.sortBy"
+                  :value="null"
+                >
+                  <SwapVerticalIcon :size="40" />
+                </CircleRadio>
+                <CircleRadio
+                  v-for="sortOption in searchFilterStore.availableFilters
+                    .sortBy"
+                  :key="sortOption"
+                  :label="sortByLabelMap[sortOption].label"
+                  name="sortBy"
+                  v-model="form.sortBy"
+                  :value="sortOption"
+                >
+                  <component :is="sortByLabelMap[sortOption].icon" :size="40" />
+                </CircleRadio>
+              </div>
             </div>
-          </div>
-        </TabItem>
-        <TabItem :show="selectedTab === 2">
-          <div class="p-5 flex flex-col gap-4">
-            <div class="font-medium text-lg">Tipo de loja</div>
-            <div class="flex flex-wrap gap-2">
-              <ChipRadio
-                v-model="form.merchantType"
-                name="merchantType"
-                :value="null"
-              >
-                <StoreIcon :size="20" />
-                <span>Todos os estabelecimentos</span>
-              </ChipRadio>
-              <ChipRadio
-                v-for="merchantType in searchFilterStore.availableFilters
-                  .merchantType"
-                :key="merchantType"
-                v-model="form.merchantType"
-                name="merchantType"
-                :value="merchantType"
-              >
-                <component
-                  :is="formatMerchantTypeIcon(merchantType)"
-                  :size="20"
+            <div
+              v-if="searchFilterStore.availableFilters.distance"
+              class="p-5 flex flex-col gap-2"
+            >
+              <div>
+                <div class="font-medium text-lg">Distância</div>
+                <div class="text-gray-500">{{ formattedDistance }}</div>
+              </div>
+              <div>
+                <div class="flex justify-between text-gray-500">
+                  <span>
+                    {{ searchFilterStore.availableFilters.distance.min }}km
+                  </span>
+                  <span>
+                    {{ searchFilterStore.availableFilters.distance.max }}km
+                  </span>
+                </div>
+                <input
+                  :value="form.distance"
+                  @input="(event: any) => (form.distance = parseInt(event.target.value || 0))"
+                  class="w-full accent-primary-600"
+                  step="1"
+                  type="range"
+                  :min="0"
+                  :max="100"
                 />
-                <span>{{ formatMerchantTypeName(merchantType) }}</span>
-              </ChipRadio>
+              </div>
+            </div>
+            <div class="p-5 flex flex-col gap-4 mb-5">
+              <div class="font-medium text-lg">Taxa de entrega</div>
+              <div class="flex flex-wrap gap-2">
+                <ChipRadio
+                  v-model="form.deliveryFee"
+                  name="deliveryFee"
+                  :value="null"
+                >
+                  Qualquer valor
+                </ChipRadio>
+                <ChipRadio
+                  v-for="deliveryFeeOption in searchFilterStore.availableFilters
+                    .deliveryFee"
+                  :key="deliveryFeeOption"
+                  v-model="form.deliveryFee"
+                  name="deliveryFee"
+                  :value="deliveryFeeOption"
+                >
+                  {{ formatDeliveryFee(deliveryFeeOption) }}
+                </ChipRadio>
+              </div>
             </div>
           </div>
-          <div class="p-5 flex flex-col gap-4 mb-5">
-            <div class="font-medium text-lg">Categorias</div>
-            <div class="flex flex-wrap gap-2">
-              <ChipCheckbox
-                v-for="category in searchFilterStore.availableFilters
-                  .categories"
-                :key="category.id"
-                v-model="form.categories"
-                name="deliveryFee"
-                :value="category.id"
-              >
-                {{ category.name }}
-              </ChipCheckbox>
+          <div class="w-full" v-else-if="selectedTab === 2">
+            <div class="p-5 flex flex-col gap-4">
+              <div class="font-medium text-lg">Tipo de loja</div>
+              <div class="flex flex-wrap gap-2">
+                <ChipRadio
+                  v-model="form.merchantType"
+                  name="merchantType"
+                  :value="null"
+                >
+                  <StoreIcon :size="20" />
+                  <span>Todos os estabelecimentos</span>
+                </ChipRadio>
+                <ChipRadio
+                  v-for="merchantType in searchFilterStore.availableFilters
+                    .merchantType"
+                  :key="merchantType"
+                  v-model="form.merchantType"
+                  name="merchantType"
+                  :value="merchantType"
+                >
+                  <component
+                    :is="formatMerchantTypeIcon(merchantType)"
+                    :size="20"
+                  />
+                  <span>{{ formatMerchantTypeName(merchantType) }}</span>
+                </ChipRadio>
+              </div>
+            </div>
+            <div class="p-5 flex flex-col gap-4 mb-5">
+              <div class="font-medium text-lg">Categorias</div>
+              <div class="flex flex-wrap gap-2">
+                <ChipCheckbox
+                  v-for="category in searchFilterStore.availableFilters
+                    .categories"
+                  :key="category.id"
+                  v-model="form.categories"
+                  name="deliveryFee"
+                  :value="category.id"
+                >
+                  {{ category.name }}
+                </ChipCheckbox>
+              </div>
             </div>
           </div>
-        </TabItem>
-        <TabItem :show="selectedTab === 3">
-          <div class="p-5 flex flex-col gap-4">
-            <div class="font-medium text-lg">Preço médio</div>
-            <div class="flex flex-wrap gap-2">
-              <ChipRadio
-                v-model="form.priceRange"
-                name="priceRange"
-                :value="null"
-              >
-                <span>Qualquer um</span>
-              </ChipRadio>
-              <ChipRadio
-                v-for="priceRange in searchFilterStore.availableFilters
-                  .priceRange"
-                :key="priceRange"
-                v-model="form.priceRange"
-                name="priceRange"
-                :value="priceRange"
-              >
-                <SearchPriceRange :price-range="priceRange" />
-              </ChipRadio>
+          <div class="w-full" v-else-if="selectedTab === 3">
+            <div class="p-5 flex flex-col gap-4">
+              <div class="font-medium text-lg">Preço médio</div>
+              <div class="flex flex-wrap gap-2">
+                <ChipRadio
+                  v-model="form.priceRange"
+                  name="priceRange"
+                  :value="null"
+                >
+                  <span>Qualquer um</span>
+                </ChipRadio>
+                <ChipRadio
+                  v-for="priceRange in searchFilterStore.availableFilters
+                    .priceRange"
+                  :key="priceRange"
+                  v-model="form.priceRange"
+                  name="priceRange"
+                  :value="priceRange"
+                >
+                  <SearchPriceRange :price-range="priceRange" />
+                </ChipRadio>
+              </div>
+            </div>
+            <div class="p-5 flex flex-col gap-4">
+              <div class="font-medium text-lg">Pagamento pelo app</div>
+              <div class="flex flex-wrap gap-2">
+                <ChipCheckbox
+                  v-for="payment in searchFilterStore.availableFilters
+                    .onlinePayment"
+                  :key="payment.id"
+                  v-model="form.onlinePayment"
+                  name="onlinePayment"
+                  :value="payment.id"
+                >
+                  {{ payment.name }}
+                </ChipCheckbox>
+              </div>
+            </div>
+            <div class="p-5 flex flex-col gap-4 mb-5">
+              <div class="font-medium text-lg">Pagamento na entrega</div>
+              <div class="flex flex-wrap gap-2">
+                <ChipCheckbox
+                  v-for="payment in searchFilterStore.availableFilters
+                    .paymentOnDelivery"
+                  :key="payment.id"
+                  v-model="form.paymentOnDelivery"
+                  name="paymentOnDelivery"
+                  :value="payment.id"
+                >
+                  {{ payment.name }}
+                </ChipCheckbox>
+              </div>
             </div>
           </div>
-          <div class="p-5 flex flex-col gap-4">
-            <div class="font-medium text-lg">Pagamento pelo app</div>
-            <div class="flex flex-wrap gap-2">
-              <ChipCheckbox
-                v-for="payment in searchFilterStore.availableFilters
-                  .onlinePayment"
-                :key="payment.id"
-                v-model="form.onlinePayment"
-                name="onlinePayment"
-                :value="payment.id"
-              >
-                {{ payment.name }}
-              </ChipCheckbox>
-            </div>
-          </div>
-          <div class="p-5 flex flex-col gap-4 mb-5">
-            <div class="font-medium text-lg">Pagamento na entrega</div>
-            <div class="flex flex-wrap gap-2">
-              <ChipCheckbox
-                v-for="payment in searchFilterStore.availableFilters
-                  .paymentOnDelivery"
-                :key="payment.id"
-                v-model="form.paymentOnDelivery"
-                name="paymentOnDelivery"
-                :value="payment.id"
-              >
-                {{ payment.name }}
-              </ChipCheckbox>
-            </div>
-          </div>
-        </TabItem>
+        </Transition>
       </ScreenContent>
     </ScreenMain>
     <ScreenFooter>
