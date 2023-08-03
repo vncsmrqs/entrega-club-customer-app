@@ -18,11 +18,11 @@
     :class="{ 'p-5': props.withPadding }"
   >
     <div
-      class="w-full min-h-full md:max-w-screen-xl mx-auto grid container grid-cols-1 lg:grid-cols-8 md:gap-5"
+      class="w-full min-h-full md:max-w-screen-xl mx-auto grid container grid-cols-1 lg:grid-cols-8"
       v-bind="$attrs"
     >
       <slot name="side">
-        <div></div>
+        <div class="bg-danger-500"></div>
       </slot>
       <slot>ScreenMain</slot>
     </div>

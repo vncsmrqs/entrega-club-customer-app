@@ -7,9 +7,9 @@
   import ScreenHeader from '@/components/Screen/ScreenHeader.vue';
   import AppLogo from '@/components/AppLogo.vue';
   import AddressSelectionBar from '@/components/Main/AddressSelectionBar.vue';
-  import ScreenSide from '@/components/Screen/ScreenSide.vue';
   import NotificationButton from '@/components/Notification/NotificationButton.vue';
   import LoginButton from '@/components/Login/LoginButton.vue';
+  import TabButton from '@/components/Search/TabButton.vue';
 
   onMounted(async () => {
     initDropdowns();
@@ -28,40 +28,36 @@
       </template>
     </ScreenHeader>
     <ScreenMain :with-padding="false" class="md:p-5">
-      <template #side>
-        <ScreenSide>
-          <AddressSelectionBar class="md:hidden" />
-          <div class="border-b md:border md:rounded-xl p-4">
-            <div class="flex flex-wrap gap- 2">
-              <RouterLink :to="{ name: 'home-default' }" v-slot="{ isActive }">
-                <span
-                  class="text-primary-600 font-medium rounded-lg px-4 py-2 text-center"
-                  :class="{ 'bg-primary-100': isActive }"
-                >
-                  Início
-                </span>
-              </RouterLink>
-              <RouterLink :to="{ name: 'restaurants' }" v-slot="{ isActive }">
-                <span
-                  class="text-primary-600 font-medium rounded-lg px-4 py-2 text-center"
-                  :class="{ 'bg-primary-100': isActive }"
-                >
-                  Restaurantes
-                </span>
-              </RouterLink>
-              <RouterLink :to="{ name: 'liquor-store' }" v-slot="{ isActive }">
-                <span
-                  class="text-primary-600 font-medium rounded-lg px-4 py-2 text-center"
-                  :class="{ 'bg-primary-100': isActive }"
-                  >Bebidas</span
-                >
-              </RouterLink>
-            </div>
-          </div>
-        </ScreenSide>
-      </template>
-      <ScreenContent :full-height="false">
-        <RouterView></RouterView>
+      <ScreenContent :full-height="false" class="!col-span-full">
+        <AddressSelectionBar class="md:hidden" />
+        <div class="grid grid-flow-col lg:flex md:mb-5 overflow-x-auto">
+          <RouterLink
+            :to="{ name: 'home-default' }"
+            v-slot="{ isActive, navigate }"
+            custom
+          >
+            <TabButton @click="navigate" :active="isActive">Início</TabButton>
+          </RouterLink>
+          <RouterLink
+            :to="{ name: 'restaurants' }"
+            v-slot="{ isActive, navigate }"
+            custom
+          >
+            <TabButton @click="navigate" :active="isActive"
+              >Restaurantes
+            </TabButton>
+          </RouterLink>
+          <RouterLink
+            :to="{ name: 'liquor-store' }"
+            v-slot="{ isActive, navigate }"
+            custom
+          >
+            <TabButton @click="navigate" :active="isActive">Bebidas</TabButton>
+          </RouterLink>
+        </div>
+        <Transition name="fade" mode="out-in">
+          <RouterView></RouterView>
+        </Transition>
       </ScreenContent>
     </ScreenMain>
   </ScreenRoot>

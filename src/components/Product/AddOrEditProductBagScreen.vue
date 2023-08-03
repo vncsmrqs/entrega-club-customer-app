@@ -615,9 +615,9 @@
         :center="false"
       >
         <span>{{ !!props.bagProductProp ? 'Atualizar' : 'Adicionar' }}</span>
-        <span>{{
-          formatToCurrency(bagStore.calcTotalProduct(bagProduct))
-        }}</span>
+        <span>
+          {{ formatToCurrency(bagStore.calcTotalProduct(bagProduct)) }}
+        </span>
       </PrimaryButton>
     </ScreenFooter>
   </ScreenRoot>
