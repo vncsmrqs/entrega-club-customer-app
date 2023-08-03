@@ -3,7 +3,9 @@
 </script>
 
 <template>
-  <PrimaryButton v-show="false" small> Entrar</PrimaryButton>
+  <RouterLink :to="{ name: 'login' }">
+    <PrimaryButton v-show="true" small> Entrar</PrimaryButton>
+  </RouterLink>
 </template>
 
 <style scoped></style>

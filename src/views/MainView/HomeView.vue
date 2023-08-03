@@ -28,7 +28,7 @@
       </template>
     </ScreenHeader>
     <ScreenMain :with-padding="false" class="md:p-5">
-      <ScreenContent :full-height="false" class="!col-span-full">
+      <ScreenContent class="!col-span-full">
         <AddressSelectionBar class="md:hidden" />
         <div class="grid grid-flow-col lg:flex md:mb-5 overflow-x-auto">
           <RouterLink

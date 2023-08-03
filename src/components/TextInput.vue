@@ -69,7 +69,7 @@
       />
       <div
         v-if="$slots.right || props.blocked"
-        class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none"
+        class="absolute inset-y-0 right-0 pr-2.5 flex items-center"
       >
         <slot name="right">
           <LockIcon class="text-gray-500" />
