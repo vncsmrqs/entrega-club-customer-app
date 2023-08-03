@@ -10,20 +10,23 @@
   import { useRouter } from 'vue-router';
   import type { Address } from '@/stores/address/customer-address-list';
   import { onMounted, reactive, ref } from 'vue';
-  import { generateId, timeout } from '@/utils';
+  import { timeout } from '@/utils';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
   import FloatingAlert from '@/components/FloatingAlert.vue';
   import _ from 'lodash';
   import { markRaw } from 'vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import CompleteAddressScreen from '@/components/Address/CompleteAddressScreen.vue';
+  import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
 
   const props = defineProps<{
     saved: Function;
     address: Address;
   }>();
 
+  const router = useRouter();
   const drawersControlStore = useDrawersControlStore();
+  const drawerNavigation = useDrawerNavigation();
 
   const form: Address = reactive(_.cloneDeep(props.address));
 
@@ -36,10 +39,8 @@
       address: form,
     });
     await timeout(300);
-    router.push({ hash: `#${drawer.id}` });
+    await drawerNavigation.openDrawer(drawer.id);
   };
-
-  const router = useRouter();
 
   const back = () => {
     router.back();

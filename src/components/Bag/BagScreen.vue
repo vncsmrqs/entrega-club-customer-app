@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import { markRaw, onMounted } from 'vue';
-  import { useRouter } from 'vue-router';
   import AddressSelection from '@/components/Address/ListAddressScreen.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
@@ -22,16 +21,17 @@
   import AddOrEditProductBagScreen from '@/components/Product/AddOrEditProductBagScreen.vue';
   import type { ProductScreenProps } from '@/components/Product/AddOrEditProductBagScreen.vue';
   import MerchantHeader from '@/components/Merchant/MerchantHeader.vue';
+  import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
 
   onMounted(() => {});
 
-  const router = useRouter();
   const drawersControlStore = useDrawersControlStore();
   const bagStore = useBagStore();
+  const drawerNavigation = useDrawerNavigation();
 
   const openAddress = () => {
     const drawer = drawersControlStore.add(markRaw(AddressSelection), {});
-    router.push({ hash: `#${drawer.id}` });
+    drawerNavigation.openDrawer(drawer.id);
   };
 
   const editItem = (bagProduct: BagProduct) => {
@@ -41,7 +41,7 @@
     >(markRaw(AddOrEditProductBagScreen), {
       bagProductProp: bagProduct,
     });
-    router.push({ hash: `#${drawer.id}` });
+    drawerNavigation.openDrawer(drawer.id);
   };
 
   const deleteItem = (bagProduct: BagProduct) => {
@@ -52,7 +52,7 @@
         deleted: () => {},
       },
     );
-    router.push({ hash: `#${drawer.id}` });
+    drawerNavigation.openDrawer(drawer.id);
   };
 </script>
 

@@ -5,25 +5,35 @@
   import SearchInput from '@/components/SearchInput.vue';
   import AppLogo from '@/components/AppLogo.vue';
   import { ref, watch } from 'vue';
-  import { useRouter } from 'vue-router';
-  import { useSearchStore } from '@/stores/search/search';
+  import { useRoute, useRouter } from 'vue-router';
+  import type { LocationQueryValue } from 'vue-router';
 
   const router = useRouter();
-  const searchStore = useSearchStore();
+  const route = useRoute();
 
   const submitSearch = () => {
     router.push({
+      name: 'search',
       query: { q: searchTerm.value },
       replace: true,
     });
   };
 
-  const searchTerm = ref('');
+  const parseQueryParamsToString = (
+    value: string | LocationQueryValue | LocationQueryValue[],
+  ): string => {
+    if (value && Array.isArray(value)) {
+      return value[0] || '';
+    }
+    return value || '';
+  };
+
+  const searchTerm = ref<string>(parseQueryParamsToString(route.query.q));
 
   watch(
-    () => searchStore.term,
-    (value: string) => {
-      searchTerm.value = value;
+    () => route.query.q,
+    (term: string | LocationQueryValue | LocationQueryValue[]) => {
+      searchTerm.value = parseQueryParamsToString(term);
     },
   );
 </script>

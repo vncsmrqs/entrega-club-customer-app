@@ -2,18 +2,18 @@
   import FilterOutlineIcon from 'vue-material-design-icons/FilterOutline.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import { markRaw, onMounted } from 'vue';
-  import { useRouter } from 'vue-router';
   import IconButton from '@/components/IconButton.vue';
   import { useSearchFilterStore } from '@/stores/search/search-filter';
   import SearchFilterScreen from '@/components/Search/SearchFilterScreen.vue';
+  import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
 
-  const router = useRouter();
   const drawersControlStore = useDrawersControlStore();
   const searchFilterStore = useSearchFilterStore();
+  const drawerNavigation = useDrawerNavigation();
 
   const showSearchFilter = () => {
     const drawer = drawersControlStore.add(markRaw(SearchFilterScreen), {});
-    router.push({ hash: `#${drawer.id}` });
+    drawerNavigation.openDrawer(drawer.id);
   };
 
   onMounted(() => {

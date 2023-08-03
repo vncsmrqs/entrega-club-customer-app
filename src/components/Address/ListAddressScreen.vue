@@ -22,10 +22,13 @@
   import { useSelectedAddressStore } from '@/stores/address/selected-address';
   import ListAddressEmpty from '@/components/Address/ListAddressEmpty.vue';
   import MapMarkerOutlineIcon from 'vue-material-design-icons/MapMarkerOutline.vue';
+  import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
 
+  const router = useRouter();
   const customerAddressStore = useCustomerAddressStore();
   const selectedAddressStore = useSelectedAddressStore();
   const drawersControlStore = useDrawersControlStore();
+  const drawerNavigation = useDrawerNavigation();
 
   const props = withDefaults(
     defineProps<{
@@ -36,8 +39,6 @@
       showBackButton: true,
     },
   );
-
-  const router = useRouter();
 
   onMounted(async () => {
     await customerAddressStore.load();
@@ -50,7 +51,7 @@
     const drawer = drawersControlStore.add(markRaw(AddAddressScreen), {
       added: () => onSelected(),
     });
-    router.push({ hash: `#${drawer.id}` });
+    drawerNavigation.openDrawer(drawer.id);
   };
 
   const editAddress = (address: Address) => {
@@ -58,7 +59,7 @@
       address,
       saved: () => {},
     });
-    router.push({ hash: `#${drawer.id}` });
+    drawerNavigation.openDrawer(drawer.id);
   };
 
   const back = () => {

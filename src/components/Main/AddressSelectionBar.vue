@@ -2,19 +2,18 @@
   import MapMarkerOutlineIcon from 'vue-material-design-icons/MapMarkerOutline.vue';
   import ChevronRightIcon from 'vue-material-design-icons/ChevronRight.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
-  import { useRouter } from 'vue-router';
   import { markRaw, onMounted } from 'vue';
   import AddressSelection from '@/components/Address/ListAddressScreen.vue';
   import { useSelectedAddressStore } from '@/stores/address/selected-address';
+  import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
 
   const drawersControlStore = useDrawersControlStore();
   const selectedAddressStore = useSelectedAddressStore();
-
-  const router = useRouter();
+  const drawerNavigation = useDrawerNavigation();
 
   const showAddressDrawer = () => {
     const drawer = drawersControlStore.add(markRaw(AddressSelection), {});
-    router.push({ hash: `#${drawer.id}` });
+    drawerNavigation.openDrawer(drawer.id);
   };
 
   onMounted(async () => {});

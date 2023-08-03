@@ -3,7 +3,6 @@ import { defineStore } from 'pinia';
 import type { Address } from '@/stores/address/customer-address-list';
 import type { Phone } from '@/stores/auth';
 import type { Bag } from '@/stores/bag';
-import { useAuthStore } from '@/stores/auth';
 import { timeout } from '@/utils';
 
 export type OrderMerchant = {

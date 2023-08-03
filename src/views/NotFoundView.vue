@@ -13,9 +13,7 @@
 <template>
   <ScreenRoot>
     <ScreenHeader>
-      <template #left>
-        <AppLogo />
-      </template>
+      <AppLogo />
     </ScreenHeader>
     <ScreenMain>
       <ScreenContent class="!col-span-full">

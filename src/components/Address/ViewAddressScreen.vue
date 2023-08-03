@@ -20,6 +20,7 @@
   import { timeout } from '@/utils';
   import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
   import _ from 'lodash';
+  import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
 
   const props = defineProps<{
     // isOpened: boolean;
@@ -36,6 +37,7 @@
 
   const router = useRouter();
   const drawersControlStore = useDrawersControlStore();
+  const drawerNavigation = useDrawerNavigation();
 
   const currentAddressError = ref(false);
   let currentAddressErrorTimeout: any = 0;
@@ -59,7 +61,7 @@
       address: _.cloneDeep(props.address),
     });
     await timeout(300);
-    router.push({ hash: `#${drawer.id}` });
+    await drawerNavigation.openDrawer(drawer.id);
   };
 
   const deleteAddress = (address: Address) => {
@@ -79,7 +81,7 @@
         },
       },
     );
-    router.push({ hash: `#${drawer.id}` });
+    drawerNavigation.openDrawer(drawer.id);
   };
 
   const back = () => {

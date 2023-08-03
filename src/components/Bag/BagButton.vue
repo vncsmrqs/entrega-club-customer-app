@@ -3,22 +3,20 @@
   import BagScreen from '@/components/Bag/BagScreen.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import { markRaw } from 'vue';
-  import { useRouter } from 'vue-router';
   import { useBagStore } from '@/stores/bag';
   import { formatToCurrency } from '@/utils';
   import DefaultButton from '@/components/Buttons/DefaultButton.vue';
+  import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
 
   const props = defineProps<{ small?: boolean }>();
 
-  const router = useRouter();
-
   const drawersControlStore = useDrawersControlStore();
-
+  const drawerNavigation = useDrawerNavigation();
   const bagStore = useBagStore();
 
   const showBag = () => {
     const drawer = drawersControlStore.add(markRaw(BagScreen), {});
-    router.push({ hash: `#${drawer.id}` });
+    drawerNavigation.openDrawer(drawer.id);
   };
 </script>
 

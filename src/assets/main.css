@@ -1,111 +1,110 @@
 @import './tailwind.css';
 
 html {
-    /*scroll-behavior: smooth;*/
+  /*scroll-behavior: smooth;*/
+  overflow: hidden;
 }
 
 body,
 #app {
-    min-height: 100vh;
-    /* color: blue; */
-    /* background: red; */
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  /* color: blue; */
+  /* background: red; */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-
 .aspect-photo {
-    aspect-ratio: 4/3;
+  aspect-ratio: 4/3;
 }
 
 .aspect-banner {
-    aspect-ratio: 3/1;
+  aspect-ratio: 3/1;
 }
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
-    opacity: 0;
+  opacity: 0;
 }
 
 .fade-leave-active {
-    /*position: absolute;*/
+  /*position: absolute;*/
 }
 
 .slide-left-enter-active,
 .slide-left-leave-active {
-    transition: transform 0.5s ease;
+  transition: transform 0.5s ease;
 }
 
 .slide-left-enter-from,
 .slide-left-leave-to {
-    transform: translateX(100%);
+  transform: translateX(100%);
 }
 
 .slide-down-enter-active,
 .slide-down-leave-active {
-    transition: transform 0.5s ease;
+  transition: transform 0.5s ease;
 }
 
 .slide-down-enter-from,
 .slide-down-leave-to {
-    transform: translateY(100%);
+  transform: translateY(100%);
 }
 
 .accordion-enter-active,
 .accordion-leave-active {
-    transition: height 0.3s ease-in;
-    overflow: hidden;
+  transition: height 0.3s ease-in;
+  overflow: hidden;
 }
 
 .accordion-enter-from,
 .accordion-leave-to {
-    height: 0 !important;
+  height: 0 !important;
 }
 
 .slide-up-enter-active,
 .slide-up-leave-active {
-    transition: transform 0.5s ease;
+  transition: transform 0.5s ease;
 }
 
 .slide-up-enter-from,
 .slide-up-leave-to {
-    transform: translateY(-100%);
+  transform: translateY(-100%);
 }
 
 .slide-right-enter-active,
 .slide-right-leave-active {
-    transition: transform 0.5s ease;
+  transition: transform 0.5s ease;
 }
 
 .slide-right-enter-from,
 .slide-right-leave-to {
-    transform: translateX(-100%);
+  transform: translateX(-100%);
 }
 
 .list-move, /* apply transition to moving elements */
 .list-enter-active,
 .list-leave-active {
-    transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .list-enter-from,
 .list-leave-to {
-    opacity: 0;
-    transform: translateX(30px);
+  opacity: 0;
+  transform: translateX(30px);
 }
 
 /* ensure leaving items are taken out of layout flow so that moving
    animations can be calculated correctly. */
 .list-leave-active {
-    /*position: absolute;*/
+  /*position: absolute;*/
 }
-
 
 /*a.router-link-exact-active {*/
 /*  color: red;*/

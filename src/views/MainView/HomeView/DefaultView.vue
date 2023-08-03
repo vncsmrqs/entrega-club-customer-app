@@ -2,9 +2,6 @@
   import { reactive, ref } from 'vue';
   import { merchantFixture } from '@/stores/merchant/merchant';
   import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
-  import UserRating from '@/components/Merchant/UserRating.vue';
-  import DotSeparator from '@/components/DotSeparator.vue';
-  import DeliveryFee from '@/components/Merchant/DeliveryFee.vue';
   import MerchantItem from '@/components/Home/MerchantItem.vue';
 
   const defaultMerchantLogoUrl = ref('/images/merchant/logo-default.png');

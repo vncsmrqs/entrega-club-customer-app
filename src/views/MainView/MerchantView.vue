@@ -1,16 +1,13 @@
 <script setup lang="ts">
-  import { computed, markRaw, onMounted, ref } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
   import MagnifyIcon from 'vue-material-design-icons/Magnify.vue';
   import IntersectionItem from '@/components/IntersectionItem.vue';
-  import { debounce, formatToCurrency } from '@/utils';
+  import { debounce } from '@/utils';
   import { useMerchantStore } from '@/stores/merchant/merchant';
   import type { Merchant } from '@/stores/merchant/merchant';
   import type { MerchantCatalog } from '@/stores/merchant/merchant-catalog';
   import { useMerchantCatalogStore } from '@/stores/merchant/merchant-catalog';
-  import type { Product } from '@/stores/merchant/product';
-  import AddOrEditProductBagScreen from '@/components/Product/AddOrEditProductBagScreen.vue';
-  import { useDrawersControlStore } from '@/stores/drawers-control';
-  import { useRoute, useRouter } from 'vue-router';
+  import { useRoute } from 'vue-router';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import ScreenHeader from '@/components/Screen/ScreenHeader.vue';
   import ScreenRoot from '@/components/Screen/ScreenRoot.vue';
@@ -101,30 +98,32 @@
     <ScreenLoader v-if="merchantStore.loading" />
     <ScreenError v-else-if="merchantStore.error" />
     <ScreenMain v-else id="merchant-main" :with-padding="false" class="md:p-5">
-      <ScreenSide>
-        <div class="flex flex-col gap-5">
-          <div class="md:rounded-xl md:border border-b overflow-hidden">
-            <div class="bg-gray-100 w-full aspect-banner">
-              <img
-                class="w-full h-full object-cover"
-                :src="
-                  merchant.bannerUrl
-                    ? merchant.bannerUrl
-                    : defaultMerchantBannerImgUrl
-                "
-                :alt="merchant.name"
-              />
+      <template #side>
+        <ScreenSide>
+          <div class="flex flex-col gap-5">
+            <div class="md:rounded-xl md:border border-b overflow-hidden">
+              <div class="bg-gray-100 w-full aspect-banner">
+                <img
+                  class="w-full h-full object-cover"
+                  :src="
+                    merchant.bannerUrl
+                      ? merchant.bannerUrl
+                      : defaultMerchantBannerImgUrl
+                  "
+                  :alt="merchant.name"
+                />
+              </div>
+              <MerchantHeader :merchant="merchant" />
             </div>
-            <MerchantHeader :merchant="merchant" />
-          </div>
-          <div class="md:rounded-xl border mb-5 md:m-0 overflow-hidden">
-            <div class="flex-1 flex gap-1 items-center p-5 justify-between">
-              <h2 class="font-bold text-lg">Avaliações (23)</h2>
-              <UserRating :rating="merchant.userRating" />
+            <div class="md:rounded-xl border mb-5 md:m-0 overflow-hidden">
+              <div class="flex-1 flex gap-1 items-center p-5 justify-between">
+                <h2 class="font-bold text-lg">Avaliações (23)</h2>
+                <UserRating :rating="merchant.userRating" />
+              </div>
             </div>
           </div>
-        </div>
-      </ScreenSide>
+        </ScreenSide>
+      </template>
       <ScreenContent>
         <div class="md:border rounded-xl">
           <div

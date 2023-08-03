@@ -2,17 +2,16 @@
   import MenuIcon from 'vue-material-design-icons/Menu.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import { markRaw } from 'vue';
-  import { useRouter } from 'vue-router';
   import IconButton from '@/components/IconButton.vue';
   import MenuScreen from '@/components/Menu/MenuScreen.vue';
-
-  const router = useRouter();
+  import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
 
   const drawersControlStore = useDrawersControlStore();
+  const drawerNavigation = useDrawerNavigation();
 
   const showMenu = () => {
     const drawer = drawersControlStore.add(markRaw(MenuScreen), {});
-    router.push({ hash: `#${drawer.id}` });
+    drawerNavigation.openDrawer(drawer.id);
   };
 </script>
 

@@ -9,14 +9,14 @@
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import { markRaw } from 'vue';
   import MenuScreen from '@/components/Menu/MenuScreen.vue';
-  import { useRouter } from 'vue-router';
+  import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
 
-  const router = useRouter();
   const drawersControlStore = useDrawersControlStore();
+  const drawerNavigation = useDrawerNavigation();
 
   const showMenu = () => {
     const drawer = drawersControlStore.add(markRaw(MenuScreen), {});
-    router.push({ hash: `#${drawer.id}` });
+    drawerNavigation.openDrawer(drawer.id);
   };
 </script>
 

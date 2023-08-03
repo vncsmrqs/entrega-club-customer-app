@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import TabButton from '@/components/Search/TabButton.vue';
-  import { onMounted, ref } from 'vue';
+  import { ref } from 'vue';
   import MerchantItem from '@/components/Home/MerchantItem.vue';
   import ProductListItem from '@/components/Product/ProductListItem.vue';
   import SearchFilterButton from '@/components/Search/SearchFilterButton.vue';
@@ -11,10 +11,6 @@
   const searchStore = useSearchStore();
 
   const selectedTab = ref(1);
-
-  const term = ref(
-    'burguerburguerburguerburguerburguerburguerburguerburguerburguerburguerburguerburguer',
-  );
 </script>
 
 <template>

@@ -4,18 +4,18 @@
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import { markRaw } from 'vue';
   import AddOrEditProductBagScreen from '@/components/Product/AddOrEditProductBagScreen.vue';
-  import { useRouter } from 'vue-router';
+  import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
 
   const props = defineProps<{ product: Product }>();
 
-  const router = useRouter();
   const drawersControlStore = useDrawersControlStore();
+  const drawerNavigation = useDrawerNavigation();
 
   const showProduct = () => {
     const drawer = drawersControlStore.add(markRaw(AddOrEditProductBagScreen), {
       productProp: props.product,
     });
-    router.push({ hash: `#${drawer.id}` });
+    drawerNavigation.openDrawer(drawer.id);
   };
 </script>
 

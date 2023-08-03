@@ -18,12 +18,19 @@
     :class="{ 'p-5': props.withPadding }"
   >
     <div
-      class="w-full min-h-full md:max-w-screen-xl mx-auto grid grid-cols-1 lg:grid-cols-8 md:gap-5"
+      class="w-full min-h-full md:max-w-screen-xl mx-auto grid container grid-cols-1 lg:grid-cols-8 md:gap-5"
       v-bind="$attrs"
     >
+      <slot name="side">
+        <div></div>
+      </slot>
       <slot>ScreenMain</slot>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+  .container {
+    grid-template-rows: min-content auto;
+  }
+</style>

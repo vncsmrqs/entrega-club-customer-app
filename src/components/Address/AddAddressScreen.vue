@@ -24,6 +24,7 @@
     generateEmptyAddress,
   } from '@/stores/address/customer-address-list';
   import { timeout } from '@/utils';
+  import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
 
   export type LocalizationPermissionType = 'denied' | 'granted' | 'prompt';
 
@@ -32,12 +33,12 @@
   }>();
 
   const router = useRouter();
+  const drawersControlStore = useDrawersControlStore();
+  const drawerNavigation = useDrawerNavigation();
 
   const back = () => {
     router.back();
   };
-
-  const drawersControlStore = useDrawersControlStore();
 
   const showMapAddressSelection = async (address: Address) => {
     const drawer = drawersControlStore.add(markRaw(MapAddressSelectionScreen), {
@@ -49,7 +50,7 @@
     });
 
     await timeout(300);
-    router.push({ hash: `#${drawer.id}` });
+    await drawerNavigation.openDrawer(drawer.id);
   };
 
   const localizationPermission = ref<LocalizationPermissionType | null>(null);
@@ -126,13 +127,13 @@
   const loadingLocation = ref(false);
 
   const error = ref(false);
-  let errorTimeout: any = 0;
+  // let errorTimeout: any = 0;
 
   const showIcon = ref(true);
 
   const addressList = ref<Address[]>([]);
 
-  const selectAddress = async (address: Address) => {
+  const selectAddress = (address: Address) => {
     selectedAddress.value = address;
     showMapAddressSelection(address);
   };

@@ -9,7 +9,7 @@
   import SearchAutocomplete from '@/components/Search/SearchAutocomplete.vue';
   import { useSearchStore } from '@/stores/search/search';
   import { useRoute, useRouter } from 'vue-router';
-  import type { LocationQuery } from 'vue-router';
+  import type { LocationQueryValue } from 'vue-router';
   import CloseIcon from 'vue-material-design-icons/Close.vue';
   import IconButton from '@/components/IconButton.vue';
 
@@ -33,8 +33,9 @@
     await searchStore.search(term);
   };
 
-  const handleQueryParams = (query: LocationQuery) => {
-    const { q: term } = query;
+  const handleQueryParams = (
+    term: string | LocationQueryValue | LocationQueryValue[],
+  ) => {
     if (term) {
       showSearchHome.value = false;
       showSearchResults.value = true;
@@ -63,10 +64,10 @@
     () => showSearchHome.value && !showSearchResults.value,
   );
 
-  watch(() => route.query, handleQueryParams);
+  watch(() => route.query.q, handleQueryParams);
 
   onBeforeMount(() => {
-    handleQueryParams(route.query);
+    handleQueryParams(route.query.q);
   });
 </script>
 
@@ -95,8 +96,4 @@
   </ScreenRoot>
 </template>
 
-<style>
-  .max-h-56 {
-    max-height: 14rem;
-  }
-</style>
+<style scoped></style>

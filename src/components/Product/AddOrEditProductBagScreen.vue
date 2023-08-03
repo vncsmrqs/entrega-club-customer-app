@@ -6,7 +6,6 @@
   import MinusIcon from 'vue-material-design-icons/Minus.vue';
   import CheckIcon from 'vue-material-design-icons/Check.vue';
   import CheckBoldIcon from 'vue-material-design-icons/CheckBold.vue';
-  import AlertIcon from 'vue-material-design-icons/Alert.vue';
   import CommentTextOutlineIcon from 'vue-material-design-icons/CommentTextOutline.vue';
   import { useRouter } from 'vue-router';
   import {

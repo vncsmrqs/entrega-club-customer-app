@@ -21,19 +21,21 @@
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
   import NotificationScreen from '@/components/Notification/NotificationScreen.vue';
+  import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
 
   const drawersControlStore = useDrawersControlStore();
+  const drawerNavigation = useDrawerNavigation();
 
   const router = useRouter();
 
   const navigateToAddressScreen = () => {
     const drawer = drawersControlStore.add(markRaw(AddressSelection), {});
-    router.push({ hash: `#${drawer.id}` });
+    drawerNavigation.openDrawer(drawer.id);
   };
 
   const navigateToNotificationScreen = () => {
     const drawer = drawersControlStore.add(markRaw(NotificationScreen), {});
-    router.push({ hash: `#${drawer.id}` });
+    drawerNavigation.openDrawer(drawer.id);
   };
 
   const navigateToOrderScreen = async () => {

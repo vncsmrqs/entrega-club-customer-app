@@ -3,17 +3,17 @@
   import NotificationScreen from '@/components/Notification/NotificationScreen.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import { markRaw, onMounted } from 'vue';
-  import { useRouter } from 'vue-router';
   import { useNotificationStore } from '@/stores/notification';
   import IconButton from '@/components/IconButton.vue';
+  import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
 
-  const router = useRouter();
   const drawersControlStore = useDrawersControlStore();
   const notificationStore = useNotificationStore();
+  const drawerNavigation = useDrawerNavigation();
 
   const showNotification = () => {
     const drawer = drawersControlStore.add(markRaw(NotificationScreen), {});
-    router.push({ hash: `#${drawer.id}` });
+    drawerNavigation.openDrawer(drawer.id);
   };
 
   onMounted(() => {
