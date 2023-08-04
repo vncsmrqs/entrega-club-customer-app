@@ -40,8 +40,12 @@
     },
   );
 
-  onMounted(async () => {
+  const load = async () => {
     await customerAddressStore.load();
+  };
+
+  onMounted(async () => {
+    await load();
     if (!customerAddressStore.customerAddressList.length) {
       addAddress();
     }
@@ -97,7 +101,7 @@
     <ScreenLoader v-if="customerAddressStore.loading" />
     <ScreenError v-else-if="customerAddressStore.error" />
     <template v-else>
-      <ScreenMain>
+      <ScreenMain @reload="load">
         <ScreenContent class="!col-span-full">
           <template
             v-if="!customerAddressStore.sortedCustomerAddressList.length"

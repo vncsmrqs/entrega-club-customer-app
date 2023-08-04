@@ -14,10 +14,11 @@
 
   const notificationStore = useNotificationStore();
 
-  onMounted(async () => {
+  const load = async () => {
     await notificationStore.fetch();
     await notificationStore.dispatch();
-  });
+  };
+  onMounted(load);
 </script>
 <template>
   <ScreenRoot>
@@ -29,7 +30,7 @@
     </ScreenHeader>
     <ScreenLoader v-if="notificationStore.loading" />
     <ScreenError v-else-if="notificationStore.error" />
-    <ScreenMain v-else :with-padding="false">
+    <ScreenMain v-else :with-padding="false" @reload="load">
       <ScreenContent class="!col-span-full">
         <template v-if="notificationStore.isEmpty">
           <NotificationEmpty />

@@ -12,9 +12,11 @@
 
   const ordersStore = useOrdersStore();
 
-  onMounted(async () => {
+  const load = async () => {
     await ordersStore.fetch();
-  });
+  };
+
+  onMounted(load);
 </script>
 
 <template>
@@ -27,7 +29,7 @@
     </ScreenHeader>
     <ScreenLoader v-if="ordersStore.loading" />
     <ScreenError v-else-if="ordersStore.error" />
-    <ScreenMain v-else>
+    <ScreenMain v-else @reload="load">
       <ScreenContent class="!col-span-full">
         <OrderEmpty />
       </ScreenContent>

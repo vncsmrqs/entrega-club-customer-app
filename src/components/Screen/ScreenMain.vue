@@ -1,4 +1,9 @@
 <script setup lang="ts">
+  import ReloadIcon from 'vue-material-design-icons/Reload.vue';
+  import { computed, onMounted, ref } from 'vue';
+
+  const emit = defineEmits(['reload']);
+
   defineOptions({
     inheritAttrs: false,
   });
@@ -10,13 +15,72 @@
       withPadding: true,
     },
   );
+
+  let pullToRefresh: HTMLElement | null = null;
+
+  onMounted(() => {
+    pullToRefresh = document.querySelector('.pull-to-refresh');
+  });
+
+  const scrollableElement = ref<HTMLElement | null>(null);
+
+  const touchstartY = ref(0);
+  const touchY = ref(0);
+  const touchDiff = ref(0);
+  const scrollTop = ref(0);
+
+  const touchstart = (e: any) => {
+    touchstartY.value = e.touches[0].clientY;
+  };
+
+  const touchmove = (e: any) => {
+    touchY.value = e.touches[0].clientY;
+    touchDiff.value = touchY.value - touchstartY.value;
+    scrollTop.value = scrollableElement.value?.scrollTop || 0;
+  };
+
+  const touchend = (e: any) => {
+    if (touchDiff.value > 200 && scrollTop.value === 0) {
+      pullToRefresh?.classList.add('visible');
+      e.preventDefault();
+      emit('reload');
+    }
+    touchstartY.value = 0;
+    touchY.value = 0;
+    touchDiff.value = 0;
+  };
+
+  const updateIconYPosition = computed(() => {
+    if (touchDiff.value > 0) {
+      return touchDiff.value > 200 ? 200 : touchDiff.value;
+    }
+    return 0;
+  });
 </script>
 
 <template>
   <div
+    ref="scrollableElement"
     class="w-full h-full overflow-auto relative scroll-smooth"
     :class="{ 'p-5': props.withPadding }"
+    @touchstart="touchstart"
+    @touchmove="touchmove"
+    @touchend="touchend"
   >
+    <Transition name="fade">
+      <div
+        v-show="updateIconYPosition"
+        class="w-10 h-10 bg-white drop-shadow rounded-full absolute top-0 left-1/2 z-40 flex items-center justify-center text-primary-600"
+        :style="{
+          'z-index': 99999,
+          transform: `translateX(-50%) translateY(calc(${updateIconYPosition}px - 100%)) rotate(${
+            updateIconYPosition * 2
+          }deg)`,
+        }"
+      >
+        <ReloadIcon :style="{ opacity: updateIconYPosition / 2 / 100 }" />
+      </div>
+    </Transition>
     <div
       class="w-full min-h-full md:max-w-screen-xl mx-auto grid container grid-cols-1 lg:grid-cols-8"
       v-bind="$attrs"
