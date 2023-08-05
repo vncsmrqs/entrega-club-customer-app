@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import ReloadIcon from 'vue-material-design-icons/Reload.vue';
-  import { computed, onMounted, ref } from 'vue';
+  import { computed, ref } from 'vue';
 
   const emit = defineEmits(['reload']);
 
@@ -10,17 +10,15 @@
   const props = withDefaults(
     defineProps<{
       withPadding?: boolean;
+      withReload?: boolean;
     }>(),
     {
       withPadding: true,
+      withReload: false,
     },
   );
 
-  let pullToRefresh: HTMLElement | null = null;
-
-  onMounted(() => {
-    pullToRefresh = document.querySelector('.pull-to-refresh');
-  });
+  const PULL_TO_SCROLL_LIMIT = 360;
 
   const scrollableElement = ref<HTMLElement | null>(null);
 
@@ -36,7 +34,7 @@
   };
 
   const touchmove = (e: any) => {
-    if (startTop.value === 0) {
+    if (props.withReload && startTop.value === 0) {
       touchY.value = e.touches[0].clientY;
       scrollTop.value = scrollableElement.value?.scrollTop || 0;
       touchDiff.value = touchY.value - touchstartY.value;
@@ -44,8 +42,11 @@
   };
 
   const touchend = (e: any) => {
-    if (touchDiff.value > 200 && scrollTop.value === 0) {
-      pullToRefresh?.classList.add('visible');
+    if (
+      props.withReload &&
+      touchDiff.value >= PULL_TO_SCROLL_LIMIT &&
+      scrollTop.value === 0
+    ) {
       e.preventDefault();
       emit('reload');
     }
@@ -56,10 +57,24 @@
   };
 
   const updateIconYPosition = computed(() => {
-    if (touchDiff.value > 0 && scrollTop.value === 0) {
-      return touchDiff.value > 200 ? 200 : touchDiff.value;
+    const pulled = touchDiff.value * 0.8;
+    if (props.withReload && pulled > 0 && scrollTop.value === 0) {
+      return pulled >= PULL_TO_SCROLL_LIMIT ? PULL_TO_SCROLL_LIMIT : pulled;
     }
     return 0;
+  });
+
+  const handlers = {
+    touchstart,
+    touchmove,
+    touchend,
+  };
+
+  const addHandlers = computed(() => {
+    if (props.withReload) {
+      return handlers;
+    }
+    return {};
   });
 </script>
 
@@ -68,9 +83,7 @@
     ref="scrollableElement"
     class="w-full h-full overflow-auto relative scroll-smooth"
     :class="{ 'p-5': props.withPadding }"
-    @touchstart="touchstart"
-    @touchmove="touchmove"
-    @touchend="touchend"
+    v-on="addHandlers"
   >
     <div class="fixed z-10 bg-red-500 top-0 left-0">
       <div>start: {{ touchstartY }}</div>
@@ -87,10 +100,15 @@
           'z-index': 99999,
           transform: `translateX(-50%) translateY(calc(${
             updateIconYPosition / 2
-          }px - 100%)) rotate(${updateIconYPosition * 2}deg)`,
+          }px - 100%)) rotate(${updateIconYPosition * 1.25}deg)`,
         }"
       >
-        <ReloadIcon :style="{ opacity: updateIconYPosition / 2 / 100 }" />
+        <ReloadIcon
+          class="ml-0.5"
+          :style="{
+            opacity: updateIconYPosition / (PULL_TO_SCROLL_LIMIT / 100) / 100,
+          }"
+        />
       </div>
     </Transition>
     <div

@@ -66,14 +66,21 @@
 
   watch(() => route.query.q, handleQueryParams);
 
-  onBeforeMount(() => {
+  const load = () => {
     handleQueryParams(route.query.q);
-  });
+  };
+
+  onBeforeMount(load);
 </script>
 
 <template>
   <ScreenRoot>
-    <ScreenMain :with-padding="false" class="relative">
+    <ScreenMain
+      :with-padding="false"
+      with-reload
+      @reload="load"
+      class="relative"
+    >
       <ScreenContent class="!col-span-full">
         <div
           class="md:hidden w-full sticky top-0 left-0 bg-white px-5 py-4 border-b flex gap-4 z-40"
