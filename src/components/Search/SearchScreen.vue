@@ -80,6 +80,7 @@
       with-reload
       @reload="load"
       class="relative"
+      :loading="searchStore.loading"
     >
       <ScreenContent class="!col-span-full">
         <div

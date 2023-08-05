@@ -60,7 +60,7 @@ export const useSearchStore = defineStore(
       loading.value = true;
       try {
         term.value = searchTerm;
-        await timeout(500);
+        await timeout(1000);
         result.value = generateSearchResultFixture();
         error.value = null;
       } catch (e: any) {
