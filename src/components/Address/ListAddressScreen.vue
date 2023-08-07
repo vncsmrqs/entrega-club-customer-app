@@ -101,7 +101,11 @@
     <ScreenLoader v-if="customerAddressStore.loading" />
     <ScreenError v-else-if="customerAddressStore.error" />
     <template v-else>
-      <ScreenMain @reload="load">
+      <ScreenMain
+        @reload="load"
+        :loading="customerAddressStore.loading"
+        with-reload
+      >
         <ScreenContent class="!col-span-full">
           <template
             v-if="!customerAddressStore.sortedCustomerAddressList.length"

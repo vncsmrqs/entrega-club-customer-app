@@ -65,7 +65,7 @@
     () => props.loading,
     (value) => {
       if (value) {
-        touchDiff.value = PULL_TO_SCROLL_LIMIT * 2;
+        touchDiff.value = PULL_TO_SCROLL_LIMIT;
         return;
       }
       startTop.value = 0;
@@ -109,20 +109,25 @@
     :class="{ 'p-5': props.withPadding }"
     v-on="addHandlers"
   >
-<!--    <div class="fixed z-40 bg-red-500 top-0 left-0" style="z-index: 99999999">-->
-      <!--      <div>start: {{ touchstartY  }}</div>-->
-      <!--      <div>move: {{ touchY }}</div>-->
+<!--    <div-->
+<!--      class="fixed z-40 bg-red-500 bottom-0 left-0"-->
+<!--      style="z-index: 99999999"-->
+<!--    >-->
+<!--      <div>start: {{ touchstartY }}</div>-->
+<!--      <div>move: {{ touchY }}</div>-->
 <!--      <div>diff: {{ touchDiff }}</div>-->
-      <!--      <div>top: {{ scrollTop }}</div>-->
+<!--      <div>top: {{ scrollTop }}</div>-->
 <!--      <div>icon-position {{ updateIconYPosition }}</div>-->
-      <!--      <div>rotation: {{ rotation }}deg</div>-->
+<!--      <div>rotation: {{ rotation }}deg</div>-->
 <!--    </div>-->
+
     <div
       class="w-10 h-10 bg-white drop-shadow rounded-full absolute top-0 left-1/2 z-40 flex items-center justify-center text-primary-600"
-      :class="{ 'transition-all duration-300': !updateIconYPosition }"
+      :class="{ 'transition-all duration-300': !touchY }"
       :style="{
         'z-index': 99999,
         transform: `translateX(-50%) translateY(calc(${updateIconYPosition}px - 100%)) rotate(${rotation}deg)`,
+        opacity: updateIconYPosition,
       }"
     >
       <span
@@ -131,7 +136,7 @@
       >
         <ReloadIcon
           class="absolute top-1/2 left-1/2"
-          :class="{ 'transition-all duration-300': !updateIconYPosition }"
+          :class="{ 'transition-all duration-300': !touchY }"
           :style="{
             transform: 'translateX(-45%) translateY(-50%)',
             opacity: updateIconYPosition / (PULL_TO_SCROLL_LIMIT / 100) / 100,

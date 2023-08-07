@@ -29,7 +29,12 @@
     </ScreenHeader>
     <ScreenLoader v-if="ordersStore.loading" />
     <ScreenError v-else-if="ordersStore.error" />
-    <ScreenMain v-else @reload="load">
+    <ScreenMain
+      v-else
+      @reload="load"
+      :loading="ordersStore.loading"
+      with-reload
+    >
       <ScreenContent class="!col-span-full">
         <OrderEmpty />
       </ScreenContent>

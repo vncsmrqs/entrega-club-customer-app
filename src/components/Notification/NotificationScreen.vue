@@ -30,7 +30,13 @@
     </ScreenHeader>
     <ScreenLoader v-if="notificationStore.loading" />
     <ScreenError v-else-if="notificationStore.error" />
-    <ScreenMain v-else :with-padding="false" @reload="load">
+    <ScreenMain
+      v-else
+      :with-padding="false"
+      @reload="load"
+      :loading="notificationStore.loading"
+      with-reload
+    >
       <ScreenContent class="!col-span-full">
         <template v-if="notificationStore.isEmpty">
           <NotificationEmpty />
