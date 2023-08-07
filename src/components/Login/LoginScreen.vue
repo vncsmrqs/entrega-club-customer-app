@@ -1,18 +1,10 @@
 <script setup lang="ts">
-  import ScreenHeader from '@/components/Screen/ScreenHeader.vue';
   import ScreenRoot from '@/components/Screen/ScreenRoot.vue';
-  import BackButton from '@/components/BackButton.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
-  import OrderEmpty from '@/components/Order/OrderEmpty.vue';
-  import { onMounted, ref } from 'vue';
+  import { onMounted } from 'vue';
   import { useOrdersStore } from '@/stores/orders';
-  import ScreenLoader from '@/components/Screen/ScreenLoader.vue';
-  import ScreenError from '@/components/Screen/ScreenError.vue';
   import TextInput from '@/components/TextInput.vue';
-  import AppLogo from '@/components/AppLogo.vue';
-  import EyeIcon from 'vue-material-design-icons/Eye.vue';
-  import EyeOffIcon from 'vue-material-design-icons/EyeOff.vue';
   import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
   import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
 
@@ -21,8 +13,44 @@
   onMounted(async () => {
     await ordersStore.fetch();
   });
-  const showPassword = ref(false);
-  const togglePassword = () => (showPassword.value = !showPassword.value);
+  // const showPassword = ref(false);
+  // const togglePassword = () => (showPassword.value = !showPassword.value);
+
+  const handleFocusCode = (event: any) => {
+    // event.target.setSelectionRange(0, 1);
+    event.target.select();
+  };
+
+  const handleInputCode = (event: any, codeNumber: number) => {
+    const length = event.target.value.length;
+    if (length > 1) {
+      event.target.value = event.target.value.slice(length - 1, length);
+    }
+
+    if (event.target.value.length) {
+      const nextInput = document.querySelector(
+        `input[name=code-${codeNumber + 1}]`,
+      );
+
+      if (nextInput && nextInput instanceof HTMLInputElement) {
+        nextInput.focus();
+      }
+    }
+  };
+
+  const handleKeyUpCode = (event: any, codeNumber: number) => {
+    const length = event.target.value.length;
+
+    if (!length && Number(event.keyCode) === 8) {
+      const previousInput = document.querySelector(
+        `input[name=code-${codeNumber - 1}]`,
+      );
+
+      if (previousInput && previousInput instanceof HTMLInputElement) {
+        previousInput.focus();
+      }
+    }
+  };
 </script>
 
 <template>
@@ -73,52 +101,17 @@
           </div>
           <div class="grid grid-cols-6 gap-2">
             <TextInput
+              v-for="i in 6"
+              :key="i"
               class="col-span-1"
-              name="code-1"
+              :name="'code-' + i"
               value=""
               type="number"
               min="0"
               max="9"
-            />
-            <TextInput
-              class="col-span-1"
-              name="code-2"
-              value=""
-              type="number"
-              min="0"
-              max="9"
-            />
-            <TextInput
-              class="col-span-1"
-              name="code-3"
-              value=""
-              type="number"
-              min="0"
-              max="9"
-            />
-            <TextInput
-              class="col-span-1"
-              name="code-4"
-              value=""
-              type="number"
-              min="0"
-              max="9"
-            />
-            <TextInput
-              class="col-span-1"
-              name="code-5"
-              value=""
-              type="number"
-              min="0"
-              max="9"
-            />
-            <TextInput
-              class="col-span-1"
-              name="code-6"
-              value=""
-              type="number"
-              min="0"
-              max="9"
+              @focus="handleFocusCode"
+              @input="(e: any) => handleInputCode(e, i)"
+              @keyup="(e: any) => handleKeyUpCode(e, i)"
             />
           </div>
           <div class="mt-10 flex flex-col items-center">

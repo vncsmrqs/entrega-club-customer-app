@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, onMounted } from 'vue';
+  import { computed } from 'vue';
   import { generateHashId } from '@/utils';
   import LockIcon from 'vue-material-design-icons/Lock.vue';
 
@@ -28,8 +28,6 @@
       emit('update:modelValue', value);
     },
   });
-
-  onMounted(() => console.log(props));
 </script>
 
 <template>
@@ -53,8 +51,8 @@
         :id="fieldId"
         v-bind="$attrs"
         v-model="internalValue"
-        @focus="emit('focus')"
-        @blur="emit('blur')"
+        @focus="emit('focus', $event)"
+        @blur="emit('blur', $event)"
         :class="{
           'pl-10': $slots.left,
           'pr-10': $slots.right || props.blocked,
