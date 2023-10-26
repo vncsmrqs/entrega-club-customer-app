@@ -14,6 +14,7 @@
   import IconButton from '@/components/IconButton.vue';
   import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue';
   import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue';
+  import ReloadIcon from 'vue-material-design-icons/Reload.vue';
   import IncrementControl from '@/components/Product/IncrementControl.vue';
   import { formatToCurrency } from '@/utils';
   import DeleteBagItemScreen from '@/components/Bag/DeleteBagItemScreen.vue';
@@ -22,8 +23,12 @@
   import type { ProductScreenProps } from '@/components/Product/AddOrEditProductBagScreen.vue';
   import MerchantHeader from '@/components/Merchant/MerchantHeader.vue';
   import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
+  import FloatingAlert from '@/components/FloatingAlert.vue';
+  import FloatingLoader from '@/components/FloatingLoader.vue';
 
-  onMounted(() => {});
+  onMounted(async () => {
+    await bagStore.loadBag();
+  });
 
   const drawersControlStore = useDrawersControlStore();
   const bagStore = useBagStore();
@@ -66,6 +71,22 @@
     </ScreenHeader>
     <ScreenMain>
       <ScreenContent class="!col-span-full">
+        <FloatingLoader :show="bagStore.loadingCurrentMerchant">
+          Atualizando informações...
+        </FloatingLoader>
+
+        <FloatingAlert :show="!!bagStore.errorOnLoadCurrentMerchant">
+          <div class="w-full flex justify-between items-center gap-4">
+            {{ bagStore.errorOnLoadCurrentMerchant }}
+            <IconButton
+              class="text-danger-600"
+              @click="() => bagStore.loadBag()"
+            >
+              <ReloadIcon />
+            </IconButton>
+          </div>
+        </FloatingAlert>
+
         <template v-if="bagStore.isEmpty">
           <BagEmpty />
         </template>

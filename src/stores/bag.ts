@@ -1,9 +1,10 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import type { Choice, GarnishItem, Product } from '@/stores/merchant/product';
-import { generateId } from '@/utils';
 import _ from 'lodash';
 import type { Merchant } from '@/stores/merchant/merchant';
+import { getMerchantById } from '@/gateways';
+import { useAuthStore } from '@/stores/auth';
 
 export type BagProduct = {
   id: string;
@@ -63,7 +64,8 @@ export type BagGarnishItem = {
 // };
 
 export type Bag = {
-  merchant: Merchant;
+  merchantId: string;
+  accountId: string | null;
   items: BagProduct[];
 };
 
@@ -71,18 +73,35 @@ export const useBagStore = defineStore(
   'bag',
   () => {
     /* state */
-    const accountId = ref<string | null>(generateId());
+    const merchantState = ref<{
+      data: Merchant | null;
+      loading: boolean;
+      error: string | null;
+    }>({
+      data: null,
+      loading: false,
+      error: null,
+    });
+
+    const authStore = useAuthStore();
 
     const bag = ref<Bag | null>(null);
 
     /* getters */
-
     const isEmpty = computed(() => {
       return !bag.value?.items.length;
     });
 
     const currentMerchant = computed<Merchant | null>(() => {
-      return bag.value?.merchant || null;
+      return merchantState.value.data;
+    });
+
+    const errorOnLoadCurrentMerchant = computed<string | null>(() => {
+      return merchantState.value.error;
+    });
+
+    const loadingCurrentMerchant = computed<boolean>(() => {
+      return merchantState.value.loading;
     });
 
     const items = computed<BagProduct[]>(() => {
@@ -94,6 +113,16 @@ export const useBagStore = defineStore(
         (totalItem, item) => totalItem + item.quantity,
         0,
       );
+    });
+
+    const totalPrice = computed<number>(() => {
+      if (!bag.value) {
+        return 0;
+      }
+      return bag.value.items.reduce((totalBag, bagProduct) => {
+        const totalProduct = calcTotalProduct(bagProduct);
+        return totalBag + totalProduct;
+      }, 0);
     });
 
     /* actions */
@@ -124,16 +153,6 @@ export const useBagStore = defineStore(
       return bagGarnishItem.quantity * unitPrice;
     };
 
-    const totalPrice = computed<number>(() => {
-      if (!bag.value) {
-        return 0;
-      }
-      return bag.value.items.reduce((totalBag, bagProduct) => {
-        const totalProduct = calcTotalProduct(bagProduct);
-        return totalBag + totalProduct;
-      }, 0);
-    });
-
     const incrementProduct = (bagProduct: BagProduct) => {
       const item = bag.value?.items.find((item) => item.id === bagProduct.id);
 
@@ -150,24 +169,35 @@ export const useBagStore = defineStore(
       }
     };
 
-    const addItem = (bagItem: BagProduct, merchant: Merchant) => {
-      if (!bag.value || merchant.id !== bag.value?.merchant.id) {
-        bag.value = {
-          merchant: _.cloneDeep(merchant),
-          items: [],
-        };
+    const initBag = (merchantId: string, accountId: string | null) => {
+      bag.value = {
+        accountId,
+        merchantId,
+        items: [],
+      };
+    };
+
+    const addItem = async (bagItem: BagProduct, merchantId: string) => {
+      if (!bag.value || bag.value.merchantId !== merchantId) {
+        initBag(merchantId, authStore.account?.id || null);
       }
 
-      const itemIndex = bag.value.items.findIndex(
-        (item) => item.id === bagItem.id,
-      );
+      await loadMerchant();
 
-      if (itemIndex >= 0) {
-        bag.value.items.splice(itemIndex, 1, bagItem);
+      if (bag.value) {
+        const itemIndex = bag.value.items.findIndex(
+          (item) => item.id === bagItem.id,
+        );
+
+        if (itemIndex >= 0) {
+          bag.value.items.splice(itemIndex, 1, bagItem);
+          return;
+        }
+
+        bag.value.items.push(_.cloneDeep(bagItem));
+
         return;
       }
-
-      bag.value.items.push(_.cloneDeep(bagItem));
     };
 
     const deleteItem = (bagItem: BagProduct) => {
@@ -178,24 +208,61 @@ export const useBagStore = defineStore(
       }
     };
 
+    const loadBag = async () => {
+      if (bag.value) {
+        if (
+          bag.value.accountId === null ||
+          authStore.account?.id === bag.value.accountId
+        ) {
+          await loadMerchant();
+          return;
+        }
+        bag.value = null;
+      }
+    };
+
+    const loadMerchant = async (): Promise<void> => {
+      if (bag.value) {
+        merchantState.value.loading = true;
+        try {
+          merchantState.value.error = null;
+          merchantState.value.data = await getMerchantById({
+            merchantId: bag.value.merchantId,
+          });
+        } catch (error: any) {
+          merchantState.value.data = null;
+          merchantState.value.error = `Erro ao buscar dados do estabelecimento. ${error.toString()}`;
+        } finally {
+          merchantState.value.loading = false;
+        }
+      }
+    };
+
+    const purchase = async (): Promise<void> => {
+      return;
+    };
+
     return {
       /* state */
       bag,
-      accountId,
 
       /* getters */
       isEmpty,
       items,
       currentMerchant,
+      loadingCurrentMerchant,
+      errorOnLoadCurrentMerchant,
       totalPrice,
       totalItems,
 
       /* actions */
+      loadBag,
       addItem,
       deleteItem,
       calcTotalProduct,
       incrementProduct,
       decrementProduct,
+      purchase,
     };
   },
   {

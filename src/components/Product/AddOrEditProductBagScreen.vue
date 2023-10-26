@@ -315,7 +315,7 @@
       return;
     }
 
-    bagStore.addItem(bagProduct, merchant);
+    await bagStore.addItem(bagProduct, merchant.id);
     await back();
   };
 

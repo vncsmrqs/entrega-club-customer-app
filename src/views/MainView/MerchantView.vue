@@ -97,7 +97,12 @@
     </ScreenHeader>
     <ScreenLoader v-if="merchantStore.loading" />
     <ScreenError v-else-if="merchantStore.error" />
-    <ScreenMain v-else id="merchant-main" :with-padding="false" class="md:p-5">
+    <ScreenMain
+      v-else
+      id="merchant-main"
+      :with-padding="false"
+      class="md:p-5 lg:gap-5"
+    >
       <template #side>
         <ScreenSide>
           <div class="flex flex-col gap-5">

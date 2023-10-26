@@ -125,8 +125,8 @@ const generateEmptyMerchant = (): Merchant => ({
   available: false,
   preparationTime: 0,
   name: '',
-  logoUrl: '/images/merchant/default-logo.png',
-  bannerUrl: '/images/merchant/default-banner.png',
+  logoUrl: '/images/merchant/logo-default.png',
+  bannerUrl: '/images/merchant/banner-default.png',
   minimumOrderValue: 0,
   userRating: 0,
   mainCategory: {
