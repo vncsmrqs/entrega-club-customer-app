@@ -1,6 +1,5 @@
 <script setup lang="ts">
-  import { markRaw, onMounted } from 'vue';
-  import AddressSelection from '@/components/Address/ListAddressScreen.vue';
+  import { markRaw, onMounted, ref } from 'vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
@@ -25,18 +24,35 @@
   import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
   import FloatingAlert from '@/components/FloatingAlert.vue';
   import FloatingLoader from '@/components/FloatingLoader.vue';
+  import BagDeliveryTypeSelection from '@/components/Bag/BagDeliveryTypeSelection.vue';
+  import DefaultButton from '@/components/Buttons/DefaultButton.vue';
 
   onMounted(async () => {
     await bagStore.loadBag();
   });
 
-  const drawersControlStore = useDrawersControlStore();
-  const bagStore = useBagStore();
-  const drawerNavigation = useDrawerNavigation();
+  const step = ref<'BAG' | 'DELIVERY_TYPE' | 'PAYMENT'>('BAG');
 
-  const openAddress = () => {
-    const drawer = drawersControlStore.add(markRaw(AddressSelection), {});
-    drawerNavigation.openDrawer(drawer.id);
+  const bagStore = useBagStore();
+
+  const nextStep = () => {
+    if (step.value === 'BAG') {
+      step.value = 'DELIVERY_TYPE';
+    } else if (step.value === 'DELIVERY_TYPE') {
+      step.value = 'PAYMENT';
+    } else {
+      step.value = 'BAG';
+    }
+  };
+
+  const previousStep = () => {
+    if (step.value === 'PAYMENT') {
+      step.value = 'DELIVERY_TYPE';
+    } else if (step.value === 'DELIVERY_TYPE') {
+      step.value = 'BAG';
+    } else {
+      step.value = 'BAG';
+    }
   };
 
   const editItem = (bagProduct: BagProduct) => {
@@ -59,6 +75,9 @@
     );
     drawerNavigation.openDrawer(drawer.id);
   };
+
+  const drawersControlStore = useDrawersControlStore();
+  const drawerNavigation = useDrawerNavigation();
 </script>
 
 <template>
@@ -90,7 +109,8 @@
         <template v-if="bagStore.isEmpty">
           <BagEmpty />
         </template>
-        <template v-else>
+
+        <template v-if="step === 'BAG'">
           <div v-if="bagStore.currentMerchant">
             <div class="text-lg font-medium mb-2">Você está pedindo em:</div>
             <MerchantHeader
@@ -98,7 +118,9 @@
               class="border rounded-xl"
             />
           </div>
-          <div class="text-lg font-medium mt-8 mb-2">Itens selecionados:</div>
+          <div class="text-lg font-medium mt-8 mb-2">
+            Os itens selecionados são:
+          </div>
           <div class="flex flex-col gap-4">
             <TransitionGroup name="list">
               <div
@@ -186,22 +208,72 @@
             </TransitionGroup>
           </div>
         </template>
+
+        <template v-if="step === 'DELIVERY_TYPE'">
+          <BagDeliveryTypeSelection />
+        </template>
+
+        <template v-if="step === 'PAYMENT'"> Pagamento</template>
       </ScreenContent>
     </ScreenMain>
     <ScreenFooter v-if="!bagStore.isEmpty">
-      <div class="w-full flex items-center justify-between mb-4">
-        <div class="font-bold">Total</div>
+      <div class="w-full flex items-center justify-between mb-2 text-sm">
+        <div class="">Subtotal</div>
         <div class="inline-flex items-center">
-          <span class="text-green-700">{{
-            formatToCurrency(bagStore.totalPrice)
-          }}</span>
-          <div class="text-gray-500 ml-2 text-sm line-through">
-            {{ formatToCurrency(30) }}
-          </div>
+          <span class="text-gray-500">
+            {{ formatToCurrency(bagStore.subtotalPrice) }}
+          </span>
         </div>
       </div>
-      <PrimaryButton @click="openAddress" class="w-full"
-        >Continuar
+      <div class="w-full flex items-center justify-between mb-2 text-sm">
+        <div class="">Taxa de serviço</div>
+        <div class="inline-flex items-center">
+          <span v-if="!bagStore.serviceFee" class="text-green-700">
+            Grátis
+          </span>
+          <span v-else class="text-gray-500">
+            {{ formatToCurrency(bagStore.serviceFee) }}
+          </span>
+        </div>
+      </div>
+      <div
+        v-if="bagStore.deliveryType === 'DELIVERY'"
+        class="w-full flex items-center justify-between mb-2 text-sm"
+      >
+        <div class="">Taxa de entrega</div>
+        <div class="inline-flex items-center">
+          <span v-if="!bagStore.deliveryFee" class="text-green-700">
+            Grátis
+          </span>
+          <span v-else class="text-gray-500">
+            {{ formatToCurrency(bagStore.deliveryFee) }}
+          </span>
+        </div>
+      </div>
+      <div class="w-full flex items-center justify-between mb-4 font-bold">
+        <div>Total</div>
+        <div class="inline-flex items-center">
+          <span class="text-green-700">
+            {{ formatToCurrency(bagStore.totalPrice) }}
+          </span>
+          <!--          <div class="text-gray-500 ml-2 text-sm line-through">-->
+          <!--            {{ formatToCurrency(30) }}-->
+          <!--          </div>-->
+        </div>
+      </div>
+      <DefaultButton
+        v-if="step !== 'BAG'"
+        @click="previousStep"
+        full
+        class="mb-2"
+      >
+        Voltar
+      </DefaultButton>
+      <PrimaryButton v-if="step !== 'PAYMENT'" @click="nextStep" full>
+        Continuar
+      </PrimaryButton>
+      <PrimaryButton v-if="step === 'PAYMENT'" full>
+        Concluir pedido
       </PrimaryButton>
     </ScreenFooter>
   </ScreenRoot>

@@ -46,9 +46,9 @@
 
   onMounted(async () => {
     await load();
-    if (!customerAddressStore.customerAddressList.length) {
-      addAddress();
-    }
+    // if (!customerAddressStore.customerAddressList.length) {
+    //   addAddress();
+    // }
   });
 
   const addAddress = () => {
@@ -135,7 +135,7 @@
                       {{ address.streetName }}, {{ address.streetNumber }}
                     </div>
                     <div class="text-sm text-gray-500">
-                      {{ address.neighborhood }}, {{ address.city }} -
+                      {{ address.neighborhood }} / {{ address.city }} -
                       {{ address.state }}
                     </div>
                   </div>

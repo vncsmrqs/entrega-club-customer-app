@@ -69,6 +69,8 @@ export type Bag = {
   items: BagProduct[];
 };
 
+type DeliveryType = 'DELIVERY' | 'TAKEOUT';
+
 export const useBagStore = defineStore(
   'bag',
   () => {
@@ -86,6 +88,8 @@ export const useBagStore = defineStore(
     const authStore = useAuthStore();
 
     const bag = ref<Bag | null>(null);
+
+    const deliveryType = ref<DeliveryType>('DELIVERY');
 
     /* getters */
     const isEmpty = computed(() => {
@@ -115,7 +119,7 @@ export const useBagStore = defineStore(
       );
     });
 
-    const totalPrice = computed<number>(() => {
+    const subtotalPrice = computed<number>(() => {
       if (!bag.value) {
         return 0;
       }
@@ -124,6 +128,20 @@ export const useBagStore = defineStore(
         return totalBag + totalProduct;
       }, 0);
     });
+
+    const totalPrice = computed<number>(() => {
+      return subtotalPrice.value + deliveryFee.value + serviceFee.value;
+    });
+
+    const deliveryFee = computed(() => {
+      if (deliveryType.value === 'TAKEOUT') {
+        return 0;
+      }
+
+      return merchantState.value.data?.deliveryFee || 0;
+    });
+
+    const serviceFee = computed(() => 1);
 
     /* actions */
     const calcTotalProduct = (bagProduct: BagProduct) => {
@@ -181,8 +199,6 @@ export const useBagStore = defineStore(
       if (!bag.value || bag.value.merchantId !== merchantId) {
         initBag(merchantId, authStore.account?.id || null);
       }
-
-      await loadMerchant();
 
       if (bag.value) {
         const itemIndex = bag.value.items.findIndex(
@@ -242,9 +258,14 @@ export const useBagStore = defineStore(
       return;
     };
 
+    const selectDeliveryType = (_deliveryType: DeliveryType): void => {
+      deliveryType.value = _deliveryType;
+    };
+
     return {
       /* state */
       bag,
+      deliveryType,
 
       /* getters */
       isEmpty,
@@ -252,8 +273,11 @@ export const useBagStore = defineStore(
       currentMerchant,
       loadingCurrentMerchant,
       errorOnLoadCurrentMerchant,
+      subtotalPrice,
       totalPrice,
       totalItems,
+      deliveryFee,
+      serviceFee,
 
       /* actions */
       loadBag,
@@ -262,6 +286,7 @@ export const useBagStore = defineStore(
       calcTotalProduct,
       incrementProduct,
       decrementProduct,
+      selectDeliveryType,
       purchase,
     };
   },
