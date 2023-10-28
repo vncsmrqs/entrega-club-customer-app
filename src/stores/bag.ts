@@ -70,6 +70,7 @@ export type Bag = {
 };
 
 type DeliveryType = 'DELIVERY' | 'TAKEOUT';
+type PaymentType = 'ONLINE' | 'ON_DELIVERY';
 
 export const useBagStore = defineStore(
   'bag',
@@ -90,6 +91,7 @@ export const useBagStore = defineStore(
     const bag = ref<Bag | null>(null);
 
     const deliveryType = ref<DeliveryType>('DELIVERY');
+    const paymentType = ref<PaymentType>('ONLINE');
 
     /* getters */
     const isEmpty = computed(() => {
@@ -262,10 +264,15 @@ export const useBagStore = defineStore(
       deliveryType.value = _deliveryType;
     };
 
+    const selectPaymentType = (_paymentType: PaymentType): void => {
+      paymentType.value = _paymentType;
+    };
+
     return {
       /* state */
       bag,
       deliveryType,
+      paymentType,
 
       /* getters */
       isEmpty,
@@ -287,12 +294,13 @@ export const useBagStore = defineStore(
       incrementProduct,
       decrementProduct,
       selectDeliveryType,
+      selectPaymentType,
       purchase,
     };
   },
   {
     persist: {
-      storage: sessionStorage,
+      storage: localStorage,
       paths: ['bag', 'accountId'],
       debug: true,
     },

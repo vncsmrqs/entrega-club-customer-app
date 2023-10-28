@@ -26,6 +26,7 @@
   import FloatingLoader from '@/components/FloatingLoader.vue';
   import BagDeliveryTypeSelection from '@/components/Bag/BagDeliveryTypeSelection.vue';
   import DefaultButton from '@/components/Buttons/DefaultButton.vue';
+  import BagPayment from '@/components/Bag/BagPayment.vue';
 
   onMounted(async () => {
     await bagStore.loadBag();
@@ -213,7 +214,9 @@
           <BagDeliveryTypeSelection />
         </template>
 
-        <template v-if="step === 'PAYMENT'"> Pagamento</template>
+        <template v-if="step === 'PAYMENT'">
+          <BagPayment />
+        </template>
       </ScreenContent>
     </ScreenMain>
     <ScreenFooter v-if="!bagStore.isEmpty">
@@ -273,7 +276,8 @@
         Continuar
       </PrimaryButton>
       <PrimaryButton v-if="step === 'PAYMENT'" full>
-        Concluir pedido
+        <span v-if="bagStore.deliveryType === 'DELIVERY'">Fazer pedido</span>
+        <span v-else>Confirmar retirada</span>
       </PrimaryButton>
     </ScreenFooter>
   </ScreenRoot>
