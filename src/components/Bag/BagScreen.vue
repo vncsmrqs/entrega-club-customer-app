@@ -13,6 +13,8 @@
   import IconButton from '@/components/IconButton.vue';
   import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue';
   import DeleteOutlineIcon from 'vue-material-design-icons/DeleteOutline.vue';
+  import ChevronUpIcon from 'vue-material-design-icons/ChevronUp.vue';
+  import ChevronDownIcon from 'vue-material-design-icons/ChevronDown.vue';
   import ReloadIcon from 'vue-material-design-icons/Reload.vue';
   import IncrementControl from '@/components/Product/IncrementControl.vue';
   import { formatToCurrency } from '@/utils';
@@ -27,6 +29,7 @@
   import BagDeliveryTypeSelection from '@/components/Bag/BagDeliveryTypeSelection.vue';
   import DefaultButton from '@/components/Buttons/DefaultButton.vue';
   import BagPayment from '@/components/Bag/BagPayment.vue';
+  import AccordionItem from '@/components/AccordionItem.vue';
 
   onMounted(async () => {
     await bagStore.loadBag();
@@ -76,6 +79,8 @@
     );
     drawerNavigation.openDrawer(drawer.id);
   };
+
+  const showTotalDetails = ref(false);
 
   const drawersControlStore = useDrawersControlStore();
   const drawerNavigation = useDrawerNavigation();
@@ -220,39 +225,56 @@
       </ScreenContent>
     </ScreenMain>
     <ScreenFooter v-if="!bagStore.isEmpty">
-      <div class="w-full flex items-center justify-between mb-2 text-sm">
-        <div class="">Subtotal</div>
-        <div class="inline-flex items-center">
-          <span class="text-gray-500">
-            {{ formatToCurrency(bagStore.subtotalPrice) }}
-          </span>
-        </div>
+      <div class="flex justify-between mb-2">
+        <div class="font-semibold">Resumo de valores</div>
+        <DefaultButton
+          small
+          dense
+          @click="() => (showTotalDetails = !showTotalDetails)"
+        >
+          <template v-if="!showTotalDetails">
+            <ChevronUpIcon />
+          </template>
+          <template v-else>
+            <ChevronDownIcon />
+          </template>
+        </DefaultButton>
       </div>
-      <div class="w-full flex items-center justify-between mb-2 text-sm">
-        <div class="">Taxa de serviço</div>
-        <div class="inline-flex items-center">
-          <span v-if="!bagStore.serviceFee" class="text-green-700">
-            Grátis
-          </span>
-          <span v-else class="text-gray-500">
-            {{ formatToCurrency(bagStore.serviceFee) }}
-          </span>
+      <AccordionItem :opened="showTotalDetails">
+        <div class="w-full flex items-center justify-between mb-2 text-sm">
+          <div class="">Subtotal</div>
+          <div class="inline-flex items-center">
+            <span class="text-gray-500">
+              {{ formatToCurrency(bagStore.subtotalPrice) }}
+            </span>
+          </div>
         </div>
-      </div>
-      <div
-        v-if="bagStore.deliveryType === 'DELIVERY'"
-        class="w-full flex items-center justify-between mb-2 text-sm"
-      >
-        <div class="">Taxa de entrega</div>
-        <div class="inline-flex items-center">
-          <span v-if="!bagStore.deliveryFee" class="text-green-700">
-            Grátis
-          </span>
-          <span v-else class="text-gray-500">
-            {{ formatToCurrency(bagStore.deliveryFee) }}
-          </span>
+        <div class="w-full flex items-center justify-between mb-2 text-sm">
+          <div class="">Taxa de serviço</div>
+          <div class="inline-flex items-center">
+            <span v-if="!bagStore.serviceFee" class="text-green-700">
+              Grátis
+            </span>
+            <span v-else class="text-gray-500">
+              {{ formatToCurrency(bagStore.serviceFee) }}
+            </span>
+          </div>
         </div>
-      </div>
+        <div
+          v-if="bagStore.deliveryType === 'DELIVERY'"
+          class="w-full flex items-center justify-between mb-2 text-sm"
+        >
+          <div class="">Taxa de entrega</div>
+          <div class="inline-flex items-center">
+            <span v-if="!bagStore.deliveryFee" class="text-green-700">
+              Grátis
+            </span>
+            <span v-else class="text-gray-500">
+              {{ formatToCurrency(bagStore.deliveryFee) }}
+            </span>
+          </div>
+        </div>
+      </AccordionItem>
       <div class="w-full flex items-center justify-between mb-4 font-bold">
         <div>Total</div>
         <div class="inline-flex items-center">

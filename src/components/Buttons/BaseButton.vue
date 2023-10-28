@@ -5,6 +5,7 @@
   const props = withDefaults(
     defineProps<{
       small?: boolean;
+      dense?: boolean;
       loading?: boolean;
       color?: 'primary' | 'secondary' | 'default';
       full?: boolean;
@@ -17,6 +18,7 @@
       loading: false,
       full: false,
       center: true,
+      dense: false,
     },
   );
 
@@ -38,8 +40,10 @@
   <button
     class="base-button"
     :class="{
-      'px-6 py-4 text-lg h-14': !props.small,
-      'px-3 py-1.5 h-10': props.small,
+      'px-6 py-4 text-lg h-14': !props.small && !props.dense,
+      'px-4 py-3 text-lg h-12': !props.small && props.dense,
+      'px-3 py-1.5 h-10': props.small && !props.dense,
+      'px-2 py-1 h-8': props.small && props.dense,
       [buttonColors]: true,
       'w-full': props.full,
       'flex justify-center': props.center,
