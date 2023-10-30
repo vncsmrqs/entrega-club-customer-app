@@ -72,6 +72,12 @@ export type Bag = {
 type DeliveryType = 'DELIVERY' | 'TAKEOUT';
 type PaymentType = 'ONLINE' | 'ON_DELIVERY';
 
+const defaultMerchantState = () => ({
+  data: null,
+  loading: false,
+  error: null,
+});
+
 export const useBagStore = defineStore(
   'bag',
   () => {
@@ -80,11 +86,7 @@ export const useBagStore = defineStore(
       data: Merchant | null;
       loading: boolean;
       error: string | null;
-    }>({
-      data: null,
-      loading: false,
-      error: null,
-    });
+    }>(defaultMerchantState());
 
     const authStore = useAuthStore();
 
@@ -187,14 +189,26 @@ export const useBagStore = defineStore(
       if (item && item.quantity > 1) {
         item.quantity--;
       }
+
+      if (isEmpty.value) {
+        resetBag();
+      }
     };
 
     const initBag = (merchantId: string, accountId: string | null) => {
+      resetBag();
       bag.value = {
         accountId,
         merchantId,
         items: [],
       };
+    };
+
+    const resetBag = (): void => {
+      merchantState.value = defaultMerchantState();
+      bag.value = null;
+      deliveryType.value = 'DELIVERY';
+      paymentType.value = 'ONLINE';
     };
 
     const addItem = async (bagItem: BagProduct, merchantId: string) => {
@@ -223,6 +237,10 @@ export const useBagStore = defineStore(
         bag.value.items = bag.value?.items.filter(
           (item) => item.id !== bagItem.id,
         );
+      }
+
+      if (isEmpty.value) {
+        resetBag();
       }
     };
 
