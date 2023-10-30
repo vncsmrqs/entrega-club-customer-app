@@ -51,7 +51,7 @@
           <MapMarkerOutlineIcon />
         </div>
         <div v-if="bagStore.currentMerchant">
-          <div class="font-semibold">
+          <div>
             {{ bagStore.currentMerchant.address.streetName }},
             <span v-if="bagStore.currentMerchant.address.streetNumber">
               {{ bagStore.currentMerchant.address.streetNumber }}
@@ -77,7 +77,7 @@
           <MapMarkerOutlineIcon />
         </div>
         <div class="flex-1">
-          <div class="font-semibold">
+          <div>
             {{ selectedAddressStore.selectedAddress?.streetName }},
             <span v-if="selectedAddressStore.selectedAddress?.streetNumber">
               {{ selectedAddressStore.selectedAddress?.streetNumber }}
