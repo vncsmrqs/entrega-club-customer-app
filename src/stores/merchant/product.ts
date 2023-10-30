@@ -5,6 +5,7 @@ import { generateHashId, generateId } from '@/utils';
 export const generateEmptyProduct = (): Product => ({
   id: generateId(),
   name: '',
+  version: 0,
   available: false,
   description: '',
   preparationTime: 0,
@@ -14,6 +15,7 @@ export const generateEmptyProduct = (): Product => ({
 
 export type Product = {
   id: string;
+  version: number;
   name: string;
   available: boolean;
   description: string;
@@ -42,6 +44,7 @@ export type GarnishItem = {
 
 export const productFixture = (): Product => ({
   id: generateId(),
+  version: 0,
   name: '2 Sanduíches Favoritos + Batata',
   description:
     '2 sanduíches (Escolha um Sanduíche entre: Whopper, Chicken Duplo, Rodeio Duplo, Big King, Whopper de plantas, Stacker Duplo e Cheeseburger Duplo) + 1 Batata Frita + 1 Bebida.',
