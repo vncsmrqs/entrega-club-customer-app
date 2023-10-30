@@ -44,12 +44,14 @@
     </div>
     <div class="text-lg font-medium mb-2">No endereço:</div>
     <template v-if="bagStore.deliveryType === 'TAKEOUT'">
-      <div class="bg-gray-100 rounded-lg p-4 flex gap-4">
-        <div class="py-2 text-primary-600">
+      <div class="border border-primary-600 rounded-lg p-4 flex gap-4">
+        <div
+          class="py-2 text-primary-600 bg-primary-100 rounded-lg w-10 h-10 flex justify-center"
+        >
           <MapMarkerOutlineIcon />
         </div>
         <div v-if="bagStore.currentMerchant">
-          <div class="font-bold">
+          <div class="font-semibold">
             {{ bagStore.currentMerchant.address.streetName }},
             <span v-if="bagStore.currentMerchant.address.streetNumber">
               {{ bagStore.currentMerchant.address.streetNumber }}
@@ -68,12 +70,14 @@
       </div>
     </template>
     <template v-else>
-      <div class="bg-gray-100 rounded-lg p-4 flex gap-4">
-        <div class="py-2 text-primary-600">
+      <div class="border border-primary-600 rounded-lg p-4 flex gap-4">
+        <div
+          class="py-2 text-primary-600 bg-primary-100 rounded-lg w-10 h-10 flex justify-center"
+        >
           <MapMarkerOutlineIcon />
         </div>
         <div class="flex-1">
-          <div class="font-bold">
+          <div class="font-semibold">
             {{ selectedAddressStore.selectedAddress?.streetName }},
             <span v-if="selectedAddressStore.selectedAddress?.streetNumber">
               {{ selectedAddressStore.selectedAddress?.streetNumber }}
@@ -93,7 +97,7 @@
         </div>
       </div>
       <div class="flex justify-end">
-        <SecondaryButton small class="mt-4" @click="openAddress">
+        <SecondaryButton full class="mt-4" @click="openAddress">
           Trocar endereço de entrega
         </SecondaryButton>
       </div>
