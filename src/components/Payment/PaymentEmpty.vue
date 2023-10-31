@@ -25,7 +25,7 @@
     <div class="text-center">
       <div class="font-medium text-xl">Adicione um cartão no EntregaClub</div>
       <div class="text-gray-500 text-sm mt-2">
-        É seguro e você não perde tempo na hora de receber o seu pedido.
+        É prático, seguro e você não perde nenhum minuto a mais quando o seu pedido chegar.
       </div>
     </div>
     <div class="mt-4">
