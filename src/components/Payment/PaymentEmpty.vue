@@ -11,13 +11,8 @@
       <CreditCardOutlineIcon :size="64" />
     </div>
     <div class="text-center">
-      <div class="font-medium text-xl">
-        Parece que você ainda não tem nenhuma forma de pagamento cadastrada.
-      </div>
-      <div class="text-gray-500 text-sm mt-2">
-        Cadastre uma forma de pagamento para que você consiga concluir o seu
-        pedido.
-      </div>
+      <div class="font-medium text-xl">Adicione um cartão no EntregaClub</div>
+      <div class="text-gray-500 text-sm mt-2">É rá</div>
     </div>
     <div class="mt-4">
       <RouterLink :to="{ name: 'home' }">

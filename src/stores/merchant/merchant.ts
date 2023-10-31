@@ -76,7 +76,7 @@ export const merchantFixture = (): Merchant => ({
   preparationTime: 10,
   name: `Restaurante ${generateHashId()}`,
   logoUrl: 'https://loremflickr.com/256/256/restaurant?hash=' + generateId(),
-  bannerUrl: '/images/merchant/rei-da-pizza-banner.png',
+  bannerUrl: 'https://loremflickr.com/900/300/restaurant?hash=' + generateId(),
   minimumOrderValue: 40,
   userRating: 4.7,
   mainCategory: {

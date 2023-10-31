@@ -8,16 +8,16 @@
   import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
-  import AddressSelection from '@/components/Address/ListAddressScreen.vue';
   import DotSeparator from '@/components/DotSeparator.vue';
+  import AddPaymentScreen from '@/components/Payment/AddPaymentScreen.vue';
 
   const bagStore = useBagStore();
 
   const drawersControlStore = useDrawersControlStore();
   const drawerNavigation = useDrawerNavigation();
 
-  const openAddress = () => {
-    const drawer = drawersControlStore.add(markRaw(AddressSelection), {});
+  const openAddPaymentScreen = () => {
+    const drawer = drawersControlStore.add(markRaw(AddPaymentScreen), {});
     drawerNavigation.openDrawer(drawer.id);
   };
 </script>
@@ -98,7 +98,9 @@
             <DotsVerticalIcon />
           </div>
         </div>
-        <SecondaryButton full>Adicionar cartão</SecondaryButton>
+        <SecondaryButton @click="() => openAddPaymentScreen()" full>
+          Adicionar cartão
+        </SecondaryButton>
       </div>
     </template>
   </div>
