@@ -42,6 +42,10 @@
     await router.push({ name: `orders`, replace: true });
   };
 
+  const navigateToPaymentScreen = async () => {
+    await router.push({ name: `payments`, replace: true });
+  };
+
   const appVersion = ref(version);
 </script>
 
@@ -73,6 +77,12 @@
           </template>
           <template #default>Pedidos</template>
         </ListItem>
+        <ListItem @click="navigateToPaymentScreen">
+          <template #icon>
+            <CreditCardOutlineIcon></CreditCardOutlineIcon>
+          </template>
+          <template #default>Pagamento</template>
+        </ListItem>
         <ListItem class="opacity-50">
           <template #icon>
             <ChatOutlineIcon></ChatOutlineIcon>
@@ -91,12 +101,6 @@
             <HelpIcon></HelpIcon>
           </template>
           <template #default>Ajuda</template>
-        </ListItem>
-        <ListItem class="opacity-50">
-          <template #icon>
-            <CreditCardOutlineIcon></CreditCardOutlineIcon>
-          </template>
-          <template #default>Pagamento</template>
         </ListItem>
         <ListItem class="opacity-50">
           <template #icon>

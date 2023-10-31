@@ -103,6 +103,14 @@ const router = createRouter({
           },
           component: () => import('../views/MainView/MerchantView.vue'),
         },
+        {
+          path: '/pagamentos',
+          name: 'payments',
+          component: () => import('../components/Payment/PaymentScreen.vue'),
+          meta: {
+            showMenu: true,
+          },
+        },
       ],
     },
     {
