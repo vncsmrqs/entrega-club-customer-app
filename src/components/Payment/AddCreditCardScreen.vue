@@ -64,7 +64,7 @@
     ownerDocument: string;
     dueDate: string;
     cvv: number;
-    nickname: string | null;
+    nickname?: string;
   };
 
   const form = ref<{
@@ -136,7 +136,8 @@
         <div class="col-span-6">
           <TextInput
             @blur="() => validateField('cvv')"
-            v-model="form.card.cvv"
+            @update:model-value="(value) => (form.card.cvv = Number(value))"
+            :model-value="form.card.cvv.toString()"
             label="CVV"
             type="number"
             :min="0"
