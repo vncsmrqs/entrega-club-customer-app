@@ -1,0 +1,1301 @@
+[
+  {
+    "id": "04f5319c-e923-4369-b107-613653e18a9a",
+    "name": "DINERS",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "CREDIT",
+      "description": "Crédito"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "ed4f2cee-a87d-4659-9b0b-c37b854c99eb",
+      "name": "DINERS",
+      "regex": "^3(?:0[0-5]|[68][0-9])[0-9]{11}$",
+      "description": "Diners",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "token_configuration": {
+      "id": "d9083a16-80ee-49a7-95db-c46e1efc83e2",
+      "voucher": false,
+      "providers": [
+        {
+          "name": "ZOOP",
+          "zero_dollar": true,
+          "test": false,
+          "url": "https://payment.ifood.com.br/v1/customers/me/card-tokens",
+          "revalidation_url": "https://payment.ifood.com.br/v1/customers/me/card-tokens/retokenize",
+          "public_key": "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FnOEFNSUlDQ2dLQ0FnRUEweCsyN29YdGpjQllVdW9YR0hLNQo0ZjQ4WDIvV3VlUVVLTUZBWnNnZkZ0NjlicW5vRjdtWjZ5UVIwNEpkd0FWQkJYS2JIR3N2dFQva3RWZThDR3REClU1V1dMK1plV294T3FKM2cwaW1YMEdDMHlsQkdjWC82VVI0bkZ2OGRLWjhpd0NFcE9zV3I3a0NuLzZRWEV0QloKN2IzZzdmd2VDTS9DWTQrRnpTT2ZwbEJzUjgrdUJWcjlYT29wL2c0Z3NkeTdINkQyR2p2QmRaeGphdDNscHlBdwpGNVpwRkRUYmZjZXBDNWRYb3UwVkdhZzE1dUJaUUgwZEk5cFdhVER0MVJvWnJnTGZxN1NRZ3JsSHYzVzRGbXFFClN4RVNQS2RyUmxkUXJIWnJydnNlR1lIU2NNQTRIRk16Vjk3NlFraTZvRlUrY1pKY3ErZkVhcW9PaGtpZ0Q2bWYKaTQvTFZkL0tuYjdQeldMcXBReTNoMFkxOHl5cGdrK1ozN05PZzdDOFJqTEJ3RHdnL2RGMU0ydkRmaHZvdndLMwp3WjdoZGNxZTQwbG1Cd1dKa0dIb3N3bFZPZzh0RVJGK1RJdUlYRDdCVTAzMFlEVHlvSEVwUitMSHhIT3VMQmNoCndQQmcrSmlVQk5ZSERFMERub2xmV1VmeFV0ZkNQbTZ4MG1tSGgrZ1c3MGtLYzMyaVZrbVhNcE4xSmN2RWZPSkwKUTk5UDJaNkF4S0lGRllOYUh2cWNzRDhNSXI2MGJmNzh2ZDZCeDhhR1ZwaUpnK0RPZkwrdGNQUFFMS0tIdnIrOAoyMFRiUUFyeEhlZitGVXlObjc0blhjV0RQQzBoc3pCMEdGQnkreHZQczdhMThiR24vUmJ6T0hEU2VBVlVYTWlwCk9WWVNxY0MyMHEvZmZtRFdxY3NLR2FNQ0F3RUFBUT09Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQ==",
+          "acquirers": "GQrmC2SombSuMEdHQiSth3zswXg9M8XFeHZ/EXzifoe/Fu2tPQEcVuv5935682JafFy9CWGsVwD5eQ9um/Mifx2GQ7RfhmKOLJRFjFbIQ5HEROagpaov2qBbuJpG72AJeadExlW2jmKtC9LU1r8TTIJZPUvHMBpsH4Tkq5Q/tpBbuyM8Npw+NmrUNfD7E+TFOM9M/mm5HhUgI67fdcgW4iqT4ADseItzqaXopLPjvw72Pmxx0OyHu7GcbJqp2l3Jr5Ga9p+JiqTLiTRl3ituWrYsGSllbGJVyEkIsJBAM7AS2z1HhIL2ANKLPVQcaJjRLC7KzKcdy13ztkUR4oUeyje3oFPY0s33DQ6WX/TtHWPu42/ulwiLrcy4dfuvwCwLKwfHmgO5WmXvmECDH6v0eL38/FA2KHIIIAvuqQAdfApFn09LTT7mClFp7jvWWxuWz4p1R+GPNft8sfrRQpg2pVZwK3Jdc8kjY3q+GCzTqBELxE36RexQeBKrgQmEXTctVmxuqh1O+FqqPnsijerwsoS2T5aeeVs5i1qvH9I6FYSL+Mt3ZY37wMkgb7SKTShhdNH4etyC5XS9IEuksZCRAbuPKEefK9yutmobHdFel7VribL/1VcdQi6iGx/1Uj1xsUJt5lmm54L2U/50hy+KcJAjtYTFUrnrZtdwYV+zKzs=|ApG0kpbyqk1ws/uiDXNMO18ewTr4OqghxQlTaOczEb7eQc9EcITCnCpUC27uz+1L7ADmyW5K2Hu+AvKO/H90d7YxhUUE7AKSF8WGZkKRWYS/3jsp6lGbzOpL7CmYjMIk22R4qvxa4RXealPufJHJOW7rHN2+U8VEZ5GIjHa3jUpUUa+BCfcvSvv9mnfRmLw17vCeYy5vkoCLAXIkw988Ha0oIWCNQiXVnQM4oGf5Dn1XouqQcLNlmhXlig/Gi8HJrI0fNJm8ZgDouia95jqBtg=="
+        }
+      ]
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "07379126-4369-4194-b079-7dba1f48ee5b",
+    "name": "Movile Pay",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "MOVILE_PAY",
+    "brand": {
+      "id": "aa61600a-c92f-4f11-9e31-5e42c4b635dc",
+      "name": "MOVILE_PAY",
+      "description": "Saldo da carteira"
+    },
+    "digital_wallet": {
+      "id": "840a9d09-7aed-41fb-ad94-a511c46b722a",
+      "name": "MOVILE_PAY",
+      "description": "Saldo da carteira"
+    },
+    "additional_data": {
+      "movile_pay_allowed_brands": [
+        {
+          "brand_id": "ca34f400-9ba1-49c9-9f08-d269f97fd678",
+          "method": "CREDIT",
+          "type": "ONLINE"
+        },
+        {
+          "brand_id": "3fc410d4-a5ea-424c-8ef1-4847fc23723e",
+          "method": "CREDIT",
+          "type": "ONLINE"
+        },
+        {
+          "brand_id": "bdeb3d59-e42f-48a7-ae63-d064e3ef9cab",
+          "method": "CREDIT",
+          "type": "ONLINE"
+        },
+        {
+          "brand_id": "70764a4a-84bb-4697-82e2-7e63d88f4aa3",
+          "method": "CREDIT",
+          "type": "ONLINE"
+        },
+        {
+          "brand_id": "b2a613b7-f9de-424b-9ee8-35c4f692f771",
+          "method": "CREDIT",
+          "type": "ONLINE"
+        }
+      ],
+      "payment_maestro_allowed_combination": [
+        {
+          "minimum_version": "9.180.0",
+          "name": "android"
+        },
+        {
+          "minimum_version": "9.180.0",
+          "name": "ios"
+        }
+      ]
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "07c5ebd6-b4d3-4c36-881a-28568ab19108",
+    "name": "Movile Pay Master",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "MOVILE_PAY",
+    "brand": {
+      "id": "ca34f400-9ba1-49c9-9f08-d269f97fd678",
+      "name": "MASTERCARD",
+      "regex": "^(5[1-5]|2[2-7])[0-9]{14}|(502120|502121)[0-9]{10}|(603326|608710|637529)[0-9]{10}$",
+      "description": "Mastercard",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "840a9d09-7aed-41fb-ad94-a511c46b722a",
+      "name": "MOVILE_PAY",
+      "description": "Saldo da carteira"
+    },
+    "additional_data": {
+      "digital_wallet_brand_payment_method": "CREDIT"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "0f3c36d6-b8dc-4b1f-93ee-c7d731eb710d",
+    "name": "CRÉDITO - AMERICAN EXPRESS (MÁQUINA)",
+    "type": {
+      "name": "OFFLINE",
+      "description": "Pagamento na entrega"
+    },
+    "method": {
+      "name": "CREDIT",
+      "description": "Crédito"
+    },
+    "liability": "MERCHANT",
+    "brand": {
+      "id": "b2a613b7-f9de-424b-9ee8-35c4f692f771",
+      "name": "AMEX",
+      "regex": "^3[47][0-9]{13}$",
+      "description": "Amex",
+      "cvv_regex": "^[0-9]{4}$"
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "13e5507f-c1da-45b4-b8b8-5742ed04a4a5",
+    "name": "MASTERCARD",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "CREDIT",
+      "description": "Crédito"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "ca34f400-9ba1-49c9-9f08-d269f97fd678",
+      "name": "MASTERCARD",
+      "regex": "^(5[1-5]|2[2-7])[0-9]{14}|(502120|502121)[0-9]{10}|(603326|608710|637529)[0-9]{10}$",
+      "description": "Mastercard",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "token_configuration": {
+      "id": "d9083a16-80ee-49a7-95db-c46e1efc83e2",
+      "voucher": false,
+      "providers": [
+        {
+          "name": "ZOOP",
+          "zero_dollar": true,
+          "test": false,
+          "url": "https://payment.ifood.com.br/v1/customers/me/card-tokens",
+          "revalidation_url": "https://payment.ifood.com.br/v1/customers/me/card-tokens/retokenize",
+          "public_key": "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FnOEFNSUlDQ2dLQ0FnRUEweCsyN29YdGpjQllVdW9YR0hLNQo0ZjQ4WDIvV3VlUVVLTUZBWnNnZkZ0NjlicW5vRjdtWjZ5UVIwNEpkd0FWQkJYS2JIR3N2dFQva3RWZThDR3REClU1V1dMK1plV294T3FKM2cwaW1YMEdDMHlsQkdjWC82VVI0bkZ2OGRLWjhpd0NFcE9zV3I3a0NuLzZRWEV0QloKN2IzZzdmd2VDTS9DWTQrRnpTT2ZwbEJzUjgrdUJWcjlYT29wL2c0Z3NkeTdINkQyR2p2QmRaeGphdDNscHlBdwpGNVpwRkRUYmZjZXBDNWRYb3UwVkdhZzE1dUJaUUgwZEk5cFdhVER0MVJvWnJnTGZxN1NRZ3JsSHYzVzRGbXFFClN4RVNQS2RyUmxkUXJIWnJydnNlR1lIU2NNQTRIRk16Vjk3NlFraTZvRlUrY1pKY3ErZkVhcW9PaGtpZ0Q2bWYKaTQvTFZkL0tuYjdQeldMcXBReTNoMFkxOHl5cGdrK1ozN05PZzdDOFJqTEJ3RHdnL2RGMU0ydkRmaHZvdndLMwp3WjdoZGNxZTQwbG1Cd1dKa0dIb3N3bFZPZzh0RVJGK1RJdUlYRDdCVTAzMFlEVHlvSEVwUitMSHhIT3VMQmNoCndQQmcrSmlVQk5ZSERFMERub2xmV1VmeFV0ZkNQbTZ4MG1tSGgrZ1c3MGtLYzMyaVZrbVhNcE4xSmN2RWZPSkwKUTk5UDJaNkF4S0lGRllOYUh2cWNzRDhNSXI2MGJmNzh2ZDZCeDhhR1ZwaUpnK0RPZkwrdGNQUFFMS0tIdnIrOAoyMFRiUUFyeEhlZitGVXlObjc0blhjV0RQQzBoc3pCMEdGQnkreHZQczdhMThiR24vUmJ6T0hEU2VBVlVYTWlwCk9WWVNxY0MyMHEvZmZtRFdxY3NLR2FNQ0F3RUFBUT09Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQ==",
+          "acquirers": "GQrmC2SombSuMEdHQiSth3zswXg9M8XFeHZ/EXzifoe/Fu2tPQEcVuv5935682JafFy9CWGsVwD5eQ9um/Mifx2GQ7RfhmKOLJRFjFbIQ5HEROagpaov2qBbuJpG72AJeadExlW2jmKtC9LU1r8TTIJZPUvHMBpsH4Tkq5Q/tpBbuyM8Npw+NmrUNfD7E+TFOM9M/mm5HhUgI67fdcgW4iqT4ADseItzqaXopLPjvw72Pmxx0OyHu7GcbJqp2l3Jr5Ga9p+JiqTLiTRl3ituWrYsGSllbGJVyEkIsJBAM7AS2z1HhIL2ANKLPVQcaJjRLC7KzKcdy13ztkUR4oUeyje3oFPY0s33DQ6WX/TtHWPu42/ulwiLrcy4dfuvwCwLKwfHmgO5WmXvmECDH6v0eL38/FA2KHIIIAvuqQAdfApFn09LTT7mClFp7jvWWxuWz4p1R+GPNft8sfrRQpg2pVZwK3Jdc8kjY3q+GCzTqBELxE36RexQeBKrgQmEXTctVmxuqh1O+FqqPnsijerwsoS2T5aeeVs5i1qvH9I6FYSL+Mt3ZY37wMkgb7SKTShhdNH4etyC5XS9IEuksZCRAbuPKEefK9yutmobHdFel7VribL/1VcdQi6iGx/1Uj1xsUJt5lmm54L2U/50hy+KcJAjtYTFUrnrZtdwYV+zKzs=|ApG0kpbyqk1ws/uiDXNMO18ewTr4OqghxQlTaOczEb7eQc9EcITCnCpUC27uz+1L7ADmyW5K2Hu+AvKO/H90d7YxhUUE7AKSF8WGZkKRWYS/3jsp6lGbzOpL7CmYjMIk22R4qvxa4RXealPufJHJOW7rHN2+U8VEZ5GIjHa3jUpUUa+BCfcvSvv9mnfRmLw17vCeYy5vkoCLAXIkw988Ha0oIWCNQiXVnQM4oGf5Dn1XouqQcLNlmhXlig/Gi8HJrI0fNJm8ZgDouia95jqBtg=="
+        }
+      ]
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "14c7dbf8-b900-4768-8167-965c7a94d79b",
+    "name": "Google Pay Elo",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "70764a4a-84bb-4697-82e2-7e63d88f4aa3",
+      "name": "ELO",
+      "regex": "^(4(3(1274|8935)|0117[89]|57(393|63[12]))|50(67(0[78]|1[5789]|2[012456789]|3[01234569]|4[0-7]|53|7[4-8])|9(0(0[0-9]|14|2[0-9]|3[0356789]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-8]|9[1-9])|1(0[013456789]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|2(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|3(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|4(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[012346789]|9[0-9])|5(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|6(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|7(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|80[0-7]))|6(27780|36368|5(0(0(3[12356789]|4[0-9]|5[01789]|6[0-9]|7[0-6])|4(0[6-9]|1[0-9]|2[0-9]|3[0-9]|8[5-9]|9[0-9])|5(0[012346789]|1[0-9]|2[0-9]|3[0-8]|5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-8])|72[0-7]|9(0[1-9]|1[0-9]|2[0128]|3[89]|4[6-9]|5[0-9]|6[0123789]|7[0-8]))|1(6(5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|70[0-4])|50(0[0-9]|1[0-9]|2[1-9]|3[0-9]|4[0-9]|5[0-7])))|65(0(0(4[689]|5[01789]|6[0-9]|7[0-6])|4(1[1-9]|2[0-9]|3[012378])|5(3[1-8]|5[2-9]|6[0-9]|7[0-6]|81|9[2-8])|720|9(49|5[01236789]|6[014589]|7[02345678]))|1(6(6[89]|7[012349]|8[0-9]|9[0-9])|70[0-4])|50(1[16789]|2[1-9]|3[0-9]|4[0-9]|5[0345])))[0-9]{10,12}$",
+      "description": "Elo",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "97761f73-93e0-4cea-9585-5e780d1be268",
+      "name": "GOOGLE_PAY",
+      "description": "Google Pay"
+    },
+    "additional_data": {
+      "braintree_android_tokenization_key": "production_fwkgnqpq_bc5nbnhgs8zg5z7t\\t",
+      "braintree_ios_tokenization_key": "production_tvj5tx2m_bc5nbnhgs8zg5z7t",
+      "digital_wallet_brand_payment_method": "CREDIT",
+      "google_pay_gateway": "adyen",
+      "google_pay_merchant": "IFoodBR_PwGoogle",
+      "payment_methods_digital_wallet_preferred_gateway": "BRAINTREE"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "1728ff36-08a6-444a-b066-36d99bf110ef",
+    "name": "CRÉDITO - ELO (MÁQUINA)",
+    "type": {
+      "name": "OFFLINE",
+      "description": "Pagamento na entrega"
+    },
+    "method": {
+      "name": "CREDIT",
+      "description": "Crédito"
+    },
+    "liability": "MERCHANT",
+    "brand": {
+      "id": "70764a4a-84bb-4697-82e2-7e63d88f4aa3",
+      "name": "ELO",
+      "regex": "^(4(3(1274|8935)|0117[89]|57(393|63[12]))|50(67(0[78]|1[5789]|2[012456789]|3[01234569]|4[0-7]|53|7[4-8])|9(0(0[0-9]|14|2[0-9]|3[0356789]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-8]|9[1-9])|1(0[013456789]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|2(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|3(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|4(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[012346789]|9[0-9])|5(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|6(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|7(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|80[0-7]))|6(27780|36368|5(0(0(3[12356789]|4[0-9]|5[01789]|6[0-9]|7[0-6])|4(0[6-9]|1[0-9]|2[0-9]|3[0-9]|8[5-9]|9[0-9])|5(0[012346789]|1[0-9]|2[0-9]|3[0-8]|5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-8])|72[0-7]|9(0[1-9]|1[0-9]|2[0128]|3[89]|4[6-9]|5[0-9]|6[0123789]|7[0-8]))|1(6(5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|70[0-4])|50(0[0-9]|1[0-9]|2[1-9]|3[0-9]|4[0-9]|5[0-7])))|65(0(0(4[689]|5[01789]|6[0-9]|7[0-6])|4(1[1-9]|2[0-9]|3[012378])|5(3[1-8]|5[2-9]|6[0-9]|7[0-6]|81|9[2-8])|720|9(49|5[01236789]|6[014589]|7[02345678]))|1(6(6[89]|7[012349]|8[0-9]|9[0-9])|70[0-4])|50(1[16789]|2[1-9]|3[0-9]|4[0-9]|5[0345])))[0-9]{10,12}$",
+      "description": "Elo",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "180583b2-d268-46d0-bda2-a502636368b7",
+    "name": "CRÉDITO - MASTERCARD (MÁQUINA)",
+    "type": {
+      "name": "OFFLINE",
+      "description": "Pagamento na entrega"
+    },
+    "method": {
+      "name": "CREDIT",
+      "description": "Crédito"
+    },
+    "liability": "MERCHANT",
+    "brand": {
+      "id": "ca34f400-9ba1-49c9-9f08-d269f97fd678",
+      "name": "MASTERCARD",
+      "regex": "^(5[1-5]|2[2-7])[0-9]{14}|(502120|502121)[0-9]{10}|(603326|608710|637529)[0-9]{10}$",
+      "description": "Mastercard",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "1ed7ee56-4818-4f1f-bedb-fc466acb317b",
+    "name": "ELO DÉBITO",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DEBIT",
+      "description": "Débito"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "74809c10-775f-4eab-ba6d-6fe1f82d1a72",
+      "name": "ELO_DEBIT",
+      "regex": "^(4(0117[89]|38935|57(393|63[12])|51416)|50(67(0[78]|1[589]|2[012456789]|3[01234569]|4[1-7]|53|7[4-8])|9(0(0[012345679]|14|2[0-9]|3[056789]|4[012456789]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[1-9])|1(0[01456789]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|2(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|3(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|4(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|5(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|6(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|7(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|80[0-7]))|6(27680|27780|36368|5(0(0(3[12356789]|4[0-9]|5[01789]|6[0-9]|7[0-7])|4(0[6-9]|1[0-9]|2[0-9]|3[0-9]|8[5-9]|9[0-9])|5(0[012346789]|1[0-9]|2[0-9]|3[0-8]|5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-8])|72[0-7]|9(0[1-9]|1[0-9]|2[0128]|3[89]|4[6-9]|5[0-9]|6[0123789]|7[0-8]))|1(6(5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|70[0-4])|50(0[0-9]|1[0-9]|2[1-9]|3[0-9]|4[0-9]|5[0-7])))|65(0(0(4[689]|5[01789]|6[0-9]|7[0-6])|4(1[1-9]|2[0-9]|3[012378])|5(3[1-8]|5[2-9]|6[0-9]|7[0-6]|81|9[2-8])|720|9(49|5[01236789]|6[0189]|7[02345678]))|1(6(6[89]|7[012349]|8[0-9]|9[0-9])|70[0-4])|50(1[16789]|2[1-9]|3[0-9]|4[0-9]|5[0345])))[0-9]{10,12}$",
+      "description": "Elo Débito",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "token_configuration": {
+      "id": "b6ac2f32-9adf-4b18-858f-a2ff11a4f924",
+      "voucher": false,
+      "providers": [
+        {
+          "name": "ZOOP",
+          "zero_dollar": true,
+          "test": false,
+          "url": "https://payment.ifood.com.br/v1/customers/me/card-tokens",
+          "revalidation_url": "https://payment.ifood.com.br/v1/customers/me/card-tokens/retokenize",
+          "public_key": "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FnOEFNSUlDQ2dLQ0FnRUEweCsyN29YdGpjQllVdW9YR0hLNQo0ZjQ4WDIvV3VlUVVLTUZBWnNnZkZ0NjlicW5vRjdtWjZ5UVIwNEpkd0FWQkJYS2JIR3N2dFQva3RWZThDR3REClU1V1dMK1plV294T3FKM2cwaW1YMEdDMHlsQkdjWC82VVI0bkZ2OGRLWjhpd0NFcE9zV3I3a0NuLzZRWEV0QloKN2IzZzdmd2VDTS9DWTQrRnpTT2ZwbEJzUjgrdUJWcjlYT29wL2c0Z3NkeTdINkQyR2p2QmRaeGphdDNscHlBdwpGNVpwRkRUYmZjZXBDNWRYb3UwVkdhZzE1dUJaUUgwZEk5cFdhVER0MVJvWnJnTGZxN1NRZ3JsSHYzVzRGbXFFClN4RVNQS2RyUmxkUXJIWnJydnNlR1lIU2NNQTRIRk16Vjk3NlFraTZvRlUrY1pKY3ErZkVhcW9PaGtpZ0Q2bWYKaTQvTFZkL0tuYjdQeldMcXBReTNoMFkxOHl5cGdrK1ozN05PZzdDOFJqTEJ3RHdnL2RGMU0ydkRmaHZvdndLMwp3WjdoZGNxZTQwbG1Cd1dKa0dIb3N3bFZPZzh0RVJGK1RJdUlYRDdCVTAzMFlEVHlvSEVwUitMSHhIT3VMQmNoCndQQmcrSmlVQk5ZSERFMERub2xmV1VmeFV0ZkNQbTZ4MG1tSGgrZ1c3MGtLYzMyaVZrbVhNcE4xSmN2RWZPSkwKUTk5UDJaNkF4S0lGRllOYUh2cWNzRDhNSXI2MGJmNzh2ZDZCeDhhR1ZwaUpnK0RPZkwrdGNQUFFMS0tIdnIrOAoyMFRiUUFyeEhlZitGVXlObjc0blhjV0RQQzBoc3pCMEdGQnkreHZQczdhMThiR24vUmJ6T0hEU2VBVlVYTWlwCk9WWVNxY0MyMHEvZmZtRFdxY3NLR2FNQ0F3RUFBUT09Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQ==",
+          "acquirers": "Mn2o/22tptD8BdqYfFXEJWc2Ugx4r0x4n73ZGeZ4eiQ8GhAResn4xmWrksEZo5nmGXeHwDtx4AdmpnQQkk7y0aDRLFSEwxsWhyoqR2KjkERL8AYxKokupMAkZYmPmb9CB8fqn2pFONLCW405GwNdHhZdvZddVSfDeo2oXLLv74+z4tW5HH8Kl/fQlNVSwR9kgyyyKrCNiVB5jVTi2hYFFiDQjlSeqcare0nHIh+FdUHb3woXt7SRHUXWddO4YSa4rZfEZgjaBTuWCV/x0osSMUUKuScFPDIeqjKYvPlyq0oipeWuuFeITFNH64hDZo7leoKf19VIGPZ0z/Gfgr5MKKcmgf8TtG3mCzFv6/MujUH00imvdWdDFkor9SjvNG9gd+bC2mpfmLdtG+BtrT5J8WEcQDNN1+X1/5ThfHr6gSEJVtNkbVia0Gd45fHGPUiqa3O6S1Zz8qzWSgciKxt5Erdeqo1oG9ovSZtOeObJ+zRZ4Fi+aWus1c60TR80q91W1zBQf8PnDex+mmul5IlOf+DmXF57hYGNQFOaXk9ZkA1LQSJAzrHStoIwOodvH6oP/adVVE5G+JJkHsLdrpZB5nxtIqsphQ3aKBq9POzKKvYxg6SGQfB6jKvEM93fOj59DPLGHW5YSv/7hqD8NJ+uk3c7LsXfbagTQqtkUucPA9c=|phCbYloXEock2arb3lQDD93vcyhHYLGATQuwvTQrQt6OVpoXNFPDzkPoPkXDwhWSng70tGtki9WaAJf9zBX3XBc2weZMO7d+hwWmkCcN/NdNzCFd0YlPFAGmB0VYhhktFcVjOzcEEvv9blcJEu65NnyD7/m8MGJqWPqwd8pTHUDDNHra4dge+Atvbey9DmbQin2pthadeMdVwwGcdHS/sAKkUnXHD37zXpN7gDg7h0E9rOnIuP2fK2SHBb+fLehv0QaypZ7pd28biuJ4dmS3Ag=="
+        }
+      ]
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "21bfc5bc-228f-40ec-b16a-3b8e3c206756",
+    "name": "Google Pay Master Debit",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "db7a623e-8106-4e55-948b-201a44c3fe51",
+      "name": "MASTERCARD_MAESTRO",
+      "regex": "^(5[1-5]|2[2-7])[0-9]{14}|(502120|502121|508116|589916)[0-9]{10}|(603326|608710|637529|603689)[0-9]{10}$",
+      "description": "Mastercard Débito",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "97761f73-93e0-4cea-9585-5e780d1be268",
+      "name": "GOOGLE_PAY",
+      "description": "Google Pay"
+    },
+    "additional_data": {
+      "braintree_android_tokenization_key": "production_fwkgnqpq_bc5nbnhgs8zg5z7t\\t",
+      "braintree_ios_tokenization_key": "production_tvj5tx2m_bc5nbnhgs8zg5z7t",
+      "digital_wallet_brand_payment_method": "DEBIT",
+      "google_pay_gateway": "adyen",
+      "google_pay_merchant": "IFoodBR_PwGoogle",
+      "payment_methods_digital_wallet_preferred_gateway": "BRAINTREE"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "3488df51-0f14-46ef-b25e-c9514d5ea085",
+    "name": "AMEX",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "CREDIT",
+      "description": "Crédito"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "b2a613b7-f9de-424b-9ee8-35c4f692f771",
+      "name": "AMEX",
+      "regex": "^3[47][0-9]{13}$",
+      "description": "Amex",
+      "cvv_regex": "^[0-9]{4}$"
+    },
+    "token_configuration": {
+      "id": "d9083a16-80ee-49a7-95db-c46e1efc83e2",
+      "voucher": false,
+      "providers": [
+        {
+          "name": "ZOOP",
+          "zero_dollar": true,
+          "test": false,
+          "url": "https://payment.ifood.com.br/v1/customers/me/card-tokens",
+          "revalidation_url": "https://payment.ifood.com.br/v1/customers/me/card-tokens/retokenize",
+          "public_key": "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FnOEFNSUlDQ2dLQ0FnRUEweCsyN29YdGpjQllVdW9YR0hLNQo0ZjQ4WDIvV3VlUVVLTUZBWnNnZkZ0NjlicW5vRjdtWjZ5UVIwNEpkd0FWQkJYS2JIR3N2dFQva3RWZThDR3REClU1V1dMK1plV294T3FKM2cwaW1YMEdDMHlsQkdjWC82VVI0bkZ2OGRLWjhpd0NFcE9zV3I3a0NuLzZRWEV0QloKN2IzZzdmd2VDTS9DWTQrRnpTT2ZwbEJzUjgrdUJWcjlYT29wL2c0Z3NkeTdINkQyR2p2QmRaeGphdDNscHlBdwpGNVpwRkRUYmZjZXBDNWRYb3UwVkdhZzE1dUJaUUgwZEk5cFdhVER0MVJvWnJnTGZxN1NRZ3JsSHYzVzRGbXFFClN4RVNQS2RyUmxkUXJIWnJydnNlR1lIU2NNQTRIRk16Vjk3NlFraTZvRlUrY1pKY3ErZkVhcW9PaGtpZ0Q2bWYKaTQvTFZkL0tuYjdQeldMcXBReTNoMFkxOHl5cGdrK1ozN05PZzdDOFJqTEJ3RHdnL2RGMU0ydkRmaHZvdndLMwp3WjdoZGNxZTQwbG1Cd1dKa0dIb3N3bFZPZzh0RVJGK1RJdUlYRDdCVTAzMFlEVHlvSEVwUitMSHhIT3VMQmNoCndQQmcrSmlVQk5ZSERFMERub2xmV1VmeFV0ZkNQbTZ4MG1tSGgrZ1c3MGtLYzMyaVZrbVhNcE4xSmN2RWZPSkwKUTk5UDJaNkF4S0lGRllOYUh2cWNzRDhNSXI2MGJmNzh2ZDZCeDhhR1ZwaUpnK0RPZkwrdGNQUFFMS0tIdnIrOAoyMFRiUUFyeEhlZitGVXlObjc0blhjV0RQQzBoc3pCMEdGQnkreHZQczdhMThiR24vUmJ6T0hEU2VBVlVYTWlwCk9WWVNxY0MyMHEvZmZtRFdxY3NLR2FNQ0F3RUFBUT09Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQ==",
+          "acquirers": "GQrmC2SombSuMEdHQiSth3zswXg9M8XFeHZ/EXzifoe/Fu2tPQEcVuv5935682JafFy9CWGsVwD5eQ9um/Mifx2GQ7RfhmKOLJRFjFbIQ5HEROagpaov2qBbuJpG72AJeadExlW2jmKtC9LU1r8TTIJZPUvHMBpsH4Tkq5Q/tpBbuyM8Npw+NmrUNfD7E+TFOM9M/mm5HhUgI67fdcgW4iqT4ADseItzqaXopLPjvw72Pmxx0OyHu7GcbJqp2l3Jr5Ga9p+JiqTLiTRl3ituWrYsGSllbGJVyEkIsJBAM7AS2z1HhIL2ANKLPVQcaJjRLC7KzKcdy13ztkUR4oUeyje3oFPY0s33DQ6WX/TtHWPu42/ulwiLrcy4dfuvwCwLKwfHmgO5WmXvmECDH6v0eL38/FA2KHIIIAvuqQAdfApFn09LTT7mClFp7jvWWxuWz4p1R+GPNft8sfrRQpg2pVZwK3Jdc8kjY3q+GCzTqBELxE36RexQeBKrgQmEXTctVmxuqh1O+FqqPnsijerwsoS2T5aeeVs5i1qvH9I6FYSL+Mt3ZY37wMkgb7SKTShhdNH4etyC5XS9IEuksZCRAbuPKEefK9yutmobHdFel7VribL/1VcdQi6iGx/1Uj1xsUJt5lmm54L2U/50hy+KcJAjtYTFUrnrZtdwYV+zKzs=|ApG0kpbyqk1ws/uiDXNMO18ewTr4OqghxQlTaOczEb7eQc9EcITCnCpUC27uz+1L7ADmyW5K2Hu+AvKO/H90d7YxhUUE7AKSF8WGZkKRWYS/3jsp6lGbzOpL7CmYjMIk22R4qvxa4RXealPufJHJOW7rHN2+U8VEZ5GIjHa3jUpUUa+BCfcvSvv9mnfRmLw17vCeYy5vkoCLAXIkw988Ha0oIWCNQiXVnQM4oGf5Dn1XouqQcLNlmhXlig/Gi8HJrI0fNJm8ZgDouia95jqBtg=="
+        }
+      ]
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "384fa720-7229-4f06-9b86-59ca76fad2d1",
+    "name": "MASTERCARD MAESTRO",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DEBIT",
+      "description": "Débito"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "db7a623e-8106-4e55-948b-201a44c3fe51",
+      "name": "MASTERCARD_MAESTRO",
+      "regex": "^(5[1-5]|2[2-7])[0-9]{14}|(502120|502121|508116|589916)[0-9]{10}|(603326|608710|637529|603689)[0-9]{10}$",
+      "description": "Mastercard Débito",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "token_configuration": {
+      "id": "b6ac2f32-9adf-4b18-858f-a2ff11a4f924",
+      "voucher": false,
+      "providers": [
+        {
+          "name": "ZOOP",
+          "zero_dollar": true,
+          "test": false,
+          "url": "https://payment.ifood.com.br/v1/customers/me/card-tokens",
+          "revalidation_url": "https://payment.ifood.com.br/v1/customers/me/card-tokens/retokenize",
+          "public_key": "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FnOEFNSUlDQ2dLQ0FnRUEweCsyN29YdGpjQllVdW9YR0hLNQo0ZjQ4WDIvV3VlUVVLTUZBWnNnZkZ0NjlicW5vRjdtWjZ5UVIwNEpkd0FWQkJYS2JIR3N2dFQva3RWZThDR3REClU1V1dMK1plV294T3FKM2cwaW1YMEdDMHlsQkdjWC82VVI0bkZ2OGRLWjhpd0NFcE9zV3I3a0NuLzZRWEV0QloKN2IzZzdmd2VDTS9DWTQrRnpTT2ZwbEJzUjgrdUJWcjlYT29wL2c0Z3NkeTdINkQyR2p2QmRaeGphdDNscHlBdwpGNVpwRkRUYmZjZXBDNWRYb3UwVkdhZzE1dUJaUUgwZEk5cFdhVER0MVJvWnJnTGZxN1NRZ3JsSHYzVzRGbXFFClN4RVNQS2RyUmxkUXJIWnJydnNlR1lIU2NNQTRIRk16Vjk3NlFraTZvRlUrY1pKY3ErZkVhcW9PaGtpZ0Q2bWYKaTQvTFZkL0tuYjdQeldMcXBReTNoMFkxOHl5cGdrK1ozN05PZzdDOFJqTEJ3RHdnL2RGMU0ydkRmaHZvdndLMwp3WjdoZGNxZTQwbG1Cd1dKa0dIb3N3bFZPZzh0RVJGK1RJdUlYRDdCVTAzMFlEVHlvSEVwUitMSHhIT3VMQmNoCndQQmcrSmlVQk5ZSERFMERub2xmV1VmeFV0ZkNQbTZ4MG1tSGgrZ1c3MGtLYzMyaVZrbVhNcE4xSmN2RWZPSkwKUTk5UDJaNkF4S0lGRllOYUh2cWNzRDhNSXI2MGJmNzh2ZDZCeDhhR1ZwaUpnK0RPZkwrdGNQUFFMS0tIdnIrOAoyMFRiUUFyeEhlZitGVXlObjc0blhjV0RQQzBoc3pCMEdGQnkreHZQczdhMThiR24vUmJ6T0hEU2VBVlVYTWlwCk9WWVNxY0MyMHEvZmZtRFdxY3NLR2FNQ0F3RUFBUT09Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQ==",
+          "acquirers": "Mn2o/22tptD8BdqYfFXEJWc2Ugx4r0x4n73ZGeZ4eiQ8GhAResn4xmWrksEZo5nmGXeHwDtx4AdmpnQQkk7y0aDRLFSEwxsWhyoqR2KjkERL8AYxKokupMAkZYmPmb9CB8fqn2pFONLCW405GwNdHhZdvZddVSfDeo2oXLLv74+z4tW5HH8Kl/fQlNVSwR9kgyyyKrCNiVB5jVTi2hYFFiDQjlSeqcare0nHIh+FdUHb3woXt7SRHUXWddO4YSa4rZfEZgjaBTuWCV/x0osSMUUKuScFPDIeqjKYvPlyq0oipeWuuFeITFNH64hDZo7leoKf19VIGPZ0z/Gfgr5MKKcmgf8TtG3mCzFv6/MujUH00imvdWdDFkor9SjvNG9gd+bC2mpfmLdtG+BtrT5J8WEcQDNN1+X1/5ThfHr6gSEJVtNkbVia0Gd45fHGPUiqa3O6S1Zz8qzWSgciKxt5Erdeqo1oG9ovSZtOeObJ+zRZ4Fi+aWus1c60TR80q91W1zBQf8PnDex+mmul5IlOf+DmXF57hYGNQFOaXk9ZkA1LQSJAzrHStoIwOodvH6oP/adVVE5G+JJkHsLdrpZB5nxtIqsphQ3aKBq9POzKKvYxg6SGQfB6jKvEM93fOj59DPLGHW5YSv/7hqD8NJ+uk3c7LsXfbagTQqtkUucPA9c=|phCbYloXEock2arb3lQDD93vcyhHYLGATQuwvTQrQt6OVpoXNFPDzkPoPkXDwhWSng70tGtki9WaAJf9zBX3XBc2weZMO7d+hwWmkCcN/NdNzCFd0YlPFAGmB0VYhhktFcVjOzcEEvv9blcJEu65NnyD7/m8MGJqWPqwd8pTHUDDNHra4dge+Atvbey9DmbQin2pthadeMdVwwGcdHS/sAKkUnXHD37zXpN7gDg7h0E9rOnIuP2fK2SHBb+fLehv0QaypZ7pd28biuJ4dmS3Ag=="
+        }
+      ]
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "391cf1b9-d7ed-4be6-a957-df3b3bfa3193",
+    "name": "Movile Pay Amex",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "MOVILE_PAY",
+    "brand": {
+      "id": "b2a613b7-f9de-424b-9ee8-35c4f692f771",
+      "name": "AMEX",
+      "regex": "^3[47][0-9]{13}$",
+      "description": "Amex",
+      "cvv_regex": "^[0-9]{4}$"
+    },
+    "digital_wallet": {
+      "id": "840a9d09-7aed-41fb-ad94-a511c46b722a",
+      "name": "MOVILE_PAY",
+      "description": "Saldo da carteira"
+    },
+    "additional_data": {
+      "digital_wallet_brand_payment_method": "CREDIT"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "392217f7-5682-4631-9250-a01429a6362d",
+    "name": "DINHEIRO",
+    "type": {
+      "name": "OFFLINE",
+      "description": "Pagamento na entrega"
+    },
+    "method": {
+      "name": "CASH",
+      "description": "Dinheiro"
+    },
+    "liability": "MERCHANT",
+    "brand": {
+      "id": "f528df5a-7a3a-4b5a-b455-aec67204b4c1",
+      "name": "DINHEIRO",
+      "description": "Dinheiro"
+    },
+    "additional_data": {},
+    "accept_change": true,
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "3ebfcd35-1864-4216-9e1d-af492bbc5f25",
+    "name": "Apple Pay Elo Debit",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "74809c10-775f-4eab-ba6d-6fe1f82d1a72",
+      "name": "ELO_DEBIT",
+      "regex": "^(4(0117[89]|38935|57(393|63[12])|51416)|50(67(0[78]|1[589]|2[012456789]|3[01234569]|4[1-7]|53|7[4-8])|9(0(0[012345679]|14|2[0-9]|3[056789]|4[012456789]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[1-9])|1(0[01456789]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|2(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|3(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|4(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|5(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|6(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|7(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|80[0-7]))|6(27680|27780|36368|5(0(0(3[12356789]|4[0-9]|5[01789]|6[0-9]|7[0-7])|4(0[6-9]|1[0-9]|2[0-9]|3[0-9]|8[5-9]|9[0-9])|5(0[012346789]|1[0-9]|2[0-9]|3[0-8]|5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-8])|72[0-7]|9(0[1-9]|1[0-9]|2[0128]|3[89]|4[6-9]|5[0-9]|6[0123789]|7[0-8]))|1(6(5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|70[0-4])|50(0[0-9]|1[0-9]|2[1-9]|3[0-9]|4[0-9]|5[0-7])))|65(0(0(4[689]|5[01789]|6[0-9]|7[0-6])|4(1[1-9]|2[0-9]|3[012378])|5(3[1-8]|5[2-9]|6[0-9]|7[0-6]|81|9[2-8])|720|9(49|5[01236789]|6[0189]|7[02345678]))|1(6(6[89]|7[012349]|8[0-9]|9[0-9])|70[0-4])|50(1[16789]|2[1-9]|3[0-9]|4[0-9]|5[0345])))[0-9]{10,12}$",
+      "description": "Elo Débito",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "973acff8-8be0-46e4-8e62-3a3fadbfda90",
+      "name": "APPLE_PAY",
+      "description": "Apple Pay"
+    },
+    "additional_data": {
+      "braintree_android_tokenization_key": "production_fwkgnqpq_bc5nbnhgs8zg5z7t\\t",
+      "braintree_ios_tokenization_key": "production_tvj5tx2m_bc5nbnhgs8zg5z7t",
+      "digital_wallet_brand_payment_method": "DEBIT",
+      "payment_methods_digital_wallet_preferred_gateway": "BRAINTREE"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "4cf37675-c507-424f-9bb0-a6c07b367359",
+    "name": "DÉBITO - BANRICOMPRAS (MÁQUINA)",
+    "type": {
+      "name": "OFFLINE",
+      "description": "Pagamento na entrega"
+    },
+    "method": {
+      "name": "DEBIT",
+      "description": "Débito"
+    },
+    "liability": "MERCHANT",
+    "brand": {
+      "id": "83f7d201-7d58-4d4e-8ef0-7111817230c7",
+      "name": "BANRICOMPRAS",
+      "description": "Banricompras",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "504a5ff7-9fdb-4566-b513-e030411576a9",
+    "name": "Movile Pay Visa",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "MOVILE_PAY",
+    "brand": {
+      "id": "3fc410d4-a5ea-424c-8ef1-4847fc23723e",
+      "name": "VISA",
+      "regex": "^4\\\\d{12}(?:\\\\d{3})?$",
+      "description": "Visa",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "840a9d09-7aed-41fb-ad94-a511c46b722a",
+      "name": "MOVILE_PAY",
+      "description": "Saldo da carteira"
+    },
+    "additional_data": {
+      "digital_wallet_brand_payment_method": "CREDIT"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "54cb0914-3e6d-4a3b-be3e-0321c960674a",
+    "name": "Google Pay Elo Debit",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "74809c10-775f-4eab-ba6d-6fe1f82d1a72",
+      "name": "ELO_DEBIT",
+      "regex": "^(4(0117[89]|38935|57(393|63[12])|51416)|50(67(0[78]|1[589]|2[012456789]|3[01234569]|4[1-7]|53|7[4-8])|9(0(0[012345679]|14|2[0-9]|3[056789]|4[012456789]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[1-9])|1(0[01456789]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|2(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|3(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|4(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|5(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|6(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|7(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|80[0-7]))|6(27680|27780|36368|5(0(0(3[12356789]|4[0-9]|5[01789]|6[0-9]|7[0-7])|4(0[6-9]|1[0-9]|2[0-9]|3[0-9]|8[5-9]|9[0-9])|5(0[012346789]|1[0-9]|2[0-9]|3[0-8]|5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-8])|72[0-7]|9(0[1-9]|1[0-9]|2[0128]|3[89]|4[6-9]|5[0-9]|6[0123789]|7[0-8]))|1(6(5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|70[0-4])|50(0[0-9]|1[0-9]|2[1-9]|3[0-9]|4[0-9]|5[0-7])))|65(0(0(4[689]|5[01789]|6[0-9]|7[0-6])|4(1[1-9]|2[0-9]|3[012378])|5(3[1-8]|5[2-9]|6[0-9]|7[0-6]|81|9[2-8])|720|9(49|5[01236789]|6[0189]|7[02345678]))|1(6(6[89]|7[012349]|8[0-9]|9[0-9])|70[0-4])|50(1[16789]|2[1-9]|3[0-9]|4[0-9]|5[0345])))[0-9]{10,12}$",
+      "description": "Elo Débito",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "97761f73-93e0-4cea-9585-5e780d1be268",
+      "name": "GOOGLE_PAY",
+      "description": "Google Pay"
+    },
+    "additional_data": {
+      "braintree_android_tokenization_key": "production_fwkgnqpq_bc5nbnhgs8zg5z7t\\t",
+      "braintree_ios_tokenization_key": "production_tvj5tx2m_bc5nbnhgs8zg5z7t",
+      "digital_wallet_brand_payment_method": "DEBIT",
+      "google_pay_gateway": "adyen",
+      "google_pay_merchant": "IFoodBR_PwGoogle",
+      "payment_methods_digital_wallet_preferred_gateway": "BRAINTREE"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "603fa149-9501-4b83-83bc-174100747c90",
+    "name": "Apple Pay Master Debit",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "db7a623e-8106-4e55-948b-201a44c3fe51",
+      "name": "MASTERCARD_MAESTRO",
+      "regex": "^(5[1-5]|2[2-7])[0-9]{14}|(502120|502121|508116|589916)[0-9]{10}|(603326|608710|637529|603689)[0-9]{10}$",
+      "description": "Mastercard Débito",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "973acff8-8be0-46e4-8e62-3a3fadbfda90",
+      "name": "APPLE_PAY",
+      "description": "Apple Pay"
+    },
+    "additional_data": {
+      "braintree_android_tokenization_key": "production_fwkgnqpq_bc5nbnhgs8zg5z7t\\t",
+      "braintree_ios_tokenization_key": "production_tvj5tx2m_bc5nbnhgs8zg5z7t",
+      "digital_wallet_brand_payment_method": "DEBIT",
+      "payment_methods_digital_wallet_preferred_gateway": "BRAINTREE"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "63260e51-0a1f-48c5-b6fb-7cba817a40bc",
+    "name": "Google Pay Master",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "ca34f400-9ba1-49c9-9f08-d269f97fd678",
+      "name": "MASTERCARD",
+      "regex": "^(5[1-5]|2[2-7])[0-9]{14}|(502120|502121)[0-9]{10}|(603326|608710|637529)[0-9]{10}$",
+      "description": "Mastercard",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "97761f73-93e0-4cea-9585-5e780d1be268",
+      "name": "GOOGLE_PAY",
+      "description": "Google Pay"
+    },
+    "additional_data": {
+      "braintree_android_tokenization_key": "production_fwkgnqpq_bc5nbnhgs8zg5z7t\\t",
+      "braintree_ios_tokenization_key": "production_tvj5tx2m_bc5nbnhgs8zg5z7t",
+      "digital_wallet_brand_payment_method": "CREDIT",
+      "google_pay_gateway": "adyen",
+      "google_pay_merchant": "IFoodBR_PwGoogle",
+      "payment_methods_digital_wallet_preferred_gateway": "BRAINTREE"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "648b80b6-b859-455e-98dd-74c32d4f4611",
+    "name": "Apple Pay Elo Credit",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "70764a4a-84bb-4697-82e2-7e63d88f4aa3",
+      "name": "ELO",
+      "regex": "^(4(3(1274|8935)|0117[89]|57(393|63[12]))|50(67(0[78]|1[5789]|2[012456789]|3[01234569]|4[0-7]|53|7[4-8])|9(0(0[0-9]|14|2[0-9]|3[0356789]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-8]|9[1-9])|1(0[013456789]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|2(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|3(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|4(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[012346789]|9[0-9])|5(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|6(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|7(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|80[0-7]))|6(27780|36368|5(0(0(3[12356789]|4[0-9]|5[01789]|6[0-9]|7[0-6])|4(0[6-9]|1[0-9]|2[0-9]|3[0-9]|8[5-9]|9[0-9])|5(0[012346789]|1[0-9]|2[0-9]|3[0-8]|5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-8])|72[0-7]|9(0[1-9]|1[0-9]|2[0128]|3[89]|4[6-9]|5[0-9]|6[0123789]|7[0-8]))|1(6(5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|70[0-4])|50(0[0-9]|1[0-9]|2[1-9]|3[0-9]|4[0-9]|5[0-7])))|65(0(0(4[689]|5[01789]|6[0-9]|7[0-6])|4(1[1-9]|2[0-9]|3[012378])|5(3[1-8]|5[2-9]|6[0-9]|7[0-6]|81|9[2-8])|720|9(49|5[01236789]|6[014589]|7[02345678]))|1(6(6[89]|7[012349]|8[0-9]|9[0-9])|70[0-4])|50(1[16789]|2[1-9]|3[0-9]|4[0-9]|5[0345])))[0-9]{10,12}$",
+      "description": "Elo",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "973acff8-8be0-46e4-8e62-3a3fadbfda90",
+      "name": "APPLE_PAY",
+      "description": "Apple Pay"
+    },
+    "additional_data": {
+      "braintree_android_tokenization_key": "production_fwkgnqpq_bc5nbnhgs8zg5z7t\\t",
+      "braintree_ios_tokenization_key": "production_tvj5tx2m_bc5nbnhgs8zg5z7t",
+      "digital_wallet_brand_payment_method": "CREDIT",
+      "payment_methods_digital_wallet_preferred_gateway": "BRAINTREE"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "68a36b59-bb30-4d72-852c-852baed88ee8",
+    "name": "Movile Pay Hipercard",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "MOVILE_PAY",
+    "brand": {
+      "id": "bdeb3d59-e42f-48a7-ae63-d064e3ef9cab",
+      "name": "HIPERCARD",
+      "regex": "^(606282(\\\\d{10,19})?)|(3841\\\\d{11,15})$",
+      "description": "Hipercard",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "840a9d09-7aed-41fb-ad94-a511c46b722a",
+      "name": "MOVILE_PAY",
+      "description": "Saldo da carteira"
+    },
+    "additional_data": {
+      "digital_wallet_brand_payment_method": "CREDIT"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "6b9c3bf9-54b8-42d0-a8e1-b6d2278ff67f",
+    "name": "CRÉDITO - DINERS (MÁQUINA)",
+    "type": {
+      "name": "OFFLINE",
+      "description": "Pagamento na entrega"
+    },
+    "method": {
+      "name": "CREDIT",
+      "description": "Crédito"
+    },
+    "liability": "MERCHANT",
+    "brand": {
+      "id": "ed4f2cee-a87d-4659-9b0b-c37b854c99eb",
+      "name": "DINERS",
+      "regex": "^3(?:0[0-5]|[68][0-9])[0-9]{11}$",
+      "description": "Diners",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "75354fd8-e916-41db-9286-93be2232efe2",
+    "name": "Pix",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "PIX",
+      "description": "PIX"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "3dc38545-6c1b-43a0-a2d0-dd2e1ac3bc73",
+      "name": "PIX",
+      "description": "PIX"
+    },
+    "additional_data": {
+      "payment_maestro_allowed_combination": [
+        {
+          "minimum_version": "9.201.0",
+          "name": "android"
+        },
+        {
+          "minimum_version": "9.201.0",
+          "name": "ios"
+        }
+      ]
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "836e8b49-577a-43b9-850d-0198d576d98e",
+    "name": "Apple Pay Visa Debit",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "48365b80-aedc-4d7b-92a5-5b3de326be88",
+      "name": "VISA_ELECTRON",
+      "regex": "^4\\\\d{12}(?:\\\\d{3})?$",
+      "description": "Visa Débito",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "973acff8-8be0-46e4-8e62-3a3fadbfda90",
+      "name": "APPLE_PAY",
+      "description": "Apple Pay"
+    },
+    "additional_data": {
+      "braintree_android_tokenization_key": "production_fwkgnqpq_bc5nbnhgs8zg5z7t\\t",
+      "braintree_ios_tokenization_key": "production_tvj5tx2m_bc5nbnhgs8zg5z7t",
+      "digital_wallet_brand_payment_method": "DEBIT",
+      "payment_methods_digital_wallet_preferred_gateway": "BRAINTREE"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "8d6db74a-adfa-4db5-a891-3a8198d28a3f",
+    "name": "HIPERCARD ONLINE",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "CREDIT",
+      "description": "Crédito"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "bdeb3d59-e42f-48a7-ae63-d064e3ef9cab",
+      "name": "HIPERCARD",
+      "regex": "^(606282(\\\\d{10,19})?)|(3841\\\\d{11,15})$",
+      "description": "Hipercard",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "token_configuration": {
+      "id": "d9083a16-80ee-49a7-95db-c46e1efc83e2",
+      "voucher": false,
+      "providers": [
+        {
+          "name": "ZOOP",
+          "zero_dollar": true,
+          "test": false,
+          "url": "https://payment.ifood.com.br/v1/customers/me/card-tokens",
+          "revalidation_url": "https://payment.ifood.com.br/v1/customers/me/card-tokens/retokenize",
+          "public_key": "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FnOEFNSUlDQ2dLQ0FnRUEweCsyN29YdGpjQllVdW9YR0hLNQo0ZjQ4WDIvV3VlUVVLTUZBWnNnZkZ0NjlicW5vRjdtWjZ5UVIwNEpkd0FWQkJYS2JIR3N2dFQva3RWZThDR3REClU1V1dMK1plV294T3FKM2cwaW1YMEdDMHlsQkdjWC82VVI0bkZ2OGRLWjhpd0NFcE9zV3I3a0NuLzZRWEV0QloKN2IzZzdmd2VDTS9DWTQrRnpTT2ZwbEJzUjgrdUJWcjlYT29wL2c0Z3NkeTdINkQyR2p2QmRaeGphdDNscHlBdwpGNVpwRkRUYmZjZXBDNWRYb3UwVkdhZzE1dUJaUUgwZEk5cFdhVER0MVJvWnJnTGZxN1NRZ3JsSHYzVzRGbXFFClN4RVNQS2RyUmxkUXJIWnJydnNlR1lIU2NNQTRIRk16Vjk3NlFraTZvRlUrY1pKY3ErZkVhcW9PaGtpZ0Q2bWYKaTQvTFZkL0tuYjdQeldMcXBReTNoMFkxOHl5cGdrK1ozN05PZzdDOFJqTEJ3RHdnL2RGMU0ydkRmaHZvdndLMwp3WjdoZGNxZTQwbG1Cd1dKa0dIb3N3bFZPZzh0RVJGK1RJdUlYRDdCVTAzMFlEVHlvSEVwUitMSHhIT3VMQmNoCndQQmcrSmlVQk5ZSERFMERub2xmV1VmeFV0ZkNQbTZ4MG1tSGgrZ1c3MGtLYzMyaVZrbVhNcE4xSmN2RWZPSkwKUTk5UDJaNkF4S0lGRllOYUh2cWNzRDhNSXI2MGJmNzh2ZDZCeDhhR1ZwaUpnK0RPZkwrdGNQUFFMS0tIdnIrOAoyMFRiUUFyeEhlZitGVXlObjc0blhjV0RQQzBoc3pCMEdGQnkreHZQczdhMThiR24vUmJ6T0hEU2VBVlVYTWlwCk9WWVNxY0MyMHEvZmZtRFdxY3NLR2FNQ0F3RUFBUT09Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQ==",
+          "acquirers": "GQrmC2SombSuMEdHQiSth3zswXg9M8XFeHZ/EXzifoe/Fu2tPQEcVuv5935682JafFy9CWGsVwD5eQ9um/Mifx2GQ7RfhmKOLJRFjFbIQ5HEROagpaov2qBbuJpG72AJeadExlW2jmKtC9LU1r8TTIJZPUvHMBpsH4Tkq5Q/tpBbuyM8Npw+NmrUNfD7E+TFOM9M/mm5HhUgI67fdcgW4iqT4ADseItzqaXopLPjvw72Pmxx0OyHu7GcbJqp2l3Jr5Ga9p+JiqTLiTRl3ituWrYsGSllbGJVyEkIsJBAM7AS2z1HhIL2ANKLPVQcaJjRLC7KzKcdy13ztkUR4oUeyje3oFPY0s33DQ6WX/TtHWPu42/ulwiLrcy4dfuvwCwLKwfHmgO5WmXvmECDH6v0eL38/FA2KHIIIAvuqQAdfApFn09LTT7mClFp7jvWWxuWz4p1R+GPNft8sfrRQpg2pVZwK3Jdc8kjY3q+GCzTqBELxE36RexQeBKrgQmEXTctVmxuqh1O+FqqPnsijerwsoS2T5aeeVs5i1qvH9I6FYSL+Mt3ZY37wMkgb7SKTShhdNH4etyC5XS9IEuksZCRAbuPKEefK9yutmobHdFel7VribL/1VcdQi6iGx/1Uj1xsUJt5lmm54L2U/50hy+KcJAjtYTFUrnrZtdwYV+zKzs=|ApG0kpbyqk1ws/uiDXNMO18ewTr4OqghxQlTaOczEb7eQc9EcITCnCpUC27uz+1L7ADmyW5K2Hu+AvKO/H90d7YxhUUE7AKSF8WGZkKRWYS/3jsp6lGbzOpL7CmYjMIk22R4qvxa4RXealPufJHJOW7rHN2+U8VEZ5GIjHa3jUpUUa+BCfcvSvv9mnfRmLw17vCeYy5vkoCLAXIkw988Ha0oIWCNQiXVnQM4oGf5Dn1XouqQcLNlmhXlig/Gi8HJrI0fNJm8ZgDouia95jqBtg=="
+        }
+      ]
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "a42d588a-1961-4eeb-b9a3-8c279a5fa49d",
+    "name": "VISA",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "CREDIT",
+      "description": "Crédito"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "3fc410d4-a5ea-424c-8ef1-4847fc23723e",
+      "name": "VISA",
+      "regex": "^4\\\\d{12}(?:\\\\d{3})?$",
+      "description": "Visa",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "token_configuration": {
+      "id": "d9083a16-80ee-49a7-95db-c46e1efc83e2",
+      "voucher": false,
+      "providers": [
+        {
+          "name": "ZOOP",
+          "zero_dollar": true,
+          "test": false,
+          "url": "https://payment.ifood.com.br/v1/customers/me/card-tokens",
+          "revalidation_url": "https://payment.ifood.com.br/v1/customers/me/card-tokens/retokenize",
+          "public_key": "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FnOEFNSUlDQ2dLQ0FnRUEweCsyN29YdGpjQllVdW9YR0hLNQo0ZjQ4WDIvV3VlUVVLTUZBWnNnZkZ0NjlicW5vRjdtWjZ5UVIwNEpkd0FWQkJYS2JIR3N2dFQva3RWZThDR3REClU1V1dMK1plV294T3FKM2cwaW1YMEdDMHlsQkdjWC82VVI0bkZ2OGRLWjhpd0NFcE9zV3I3a0NuLzZRWEV0QloKN2IzZzdmd2VDTS9DWTQrRnpTT2ZwbEJzUjgrdUJWcjlYT29wL2c0Z3NkeTdINkQyR2p2QmRaeGphdDNscHlBdwpGNVpwRkRUYmZjZXBDNWRYb3UwVkdhZzE1dUJaUUgwZEk5cFdhVER0MVJvWnJnTGZxN1NRZ3JsSHYzVzRGbXFFClN4RVNQS2RyUmxkUXJIWnJydnNlR1lIU2NNQTRIRk16Vjk3NlFraTZvRlUrY1pKY3ErZkVhcW9PaGtpZ0Q2bWYKaTQvTFZkL0tuYjdQeldMcXBReTNoMFkxOHl5cGdrK1ozN05PZzdDOFJqTEJ3RHdnL2RGMU0ydkRmaHZvdndLMwp3WjdoZGNxZTQwbG1Cd1dKa0dIb3N3bFZPZzh0RVJGK1RJdUlYRDdCVTAzMFlEVHlvSEVwUitMSHhIT3VMQmNoCndQQmcrSmlVQk5ZSERFMERub2xmV1VmeFV0ZkNQbTZ4MG1tSGgrZ1c3MGtLYzMyaVZrbVhNcE4xSmN2RWZPSkwKUTk5UDJaNkF4S0lGRllOYUh2cWNzRDhNSXI2MGJmNzh2ZDZCeDhhR1ZwaUpnK0RPZkwrdGNQUFFMS0tIdnIrOAoyMFRiUUFyeEhlZitGVXlObjc0blhjV0RQQzBoc3pCMEdGQnkreHZQczdhMThiR24vUmJ6T0hEU2VBVlVYTWlwCk9WWVNxY0MyMHEvZmZtRFdxY3NLR2FNQ0F3RUFBUT09Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQ==",
+          "acquirers": "GQrmC2SombSuMEdHQiSth3zswXg9M8XFeHZ/EXzifoe/Fu2tPQEcVuv5935682JafFy9CWGsVwD5eQ9um/Mifx2GQ7RfhmKOLJRFjFbIQ5HEROagpaov2qBbuJpG72AJeadExlW2jmKtC9LU1r8TTIJZPUvHMBpsH4Tkq5Q/tpBbuyM8Npw+NmrUNfD7E+TFOM9M/mm5HhUgI67fdcgW4iqT4ADseItzqaXopLPjvw72Pmxx0OyHu7GcbJqp2l3Jr5Ga9p+JiqTLiTRl3ituWrYsGSllbGJVyEkIsJBAM7AS2z1HhIL2ANKLPVQcaJjRLC7KzKcdy13ztkUR4oUeyje3oFPY0s33DQ6WX/TtHWPu42/ulwiLrcy4dfuvwCwLKwfHmgO5WmXvmECDH6v0eL38/FA2KHIIIAvuqQAdfApFn09LTT7mClFp7jvWWxuWz4p1R+GPNft8sfrRQpg2pVZwK3Jdc8kjY3q+GCzTqBELxE36RexQeBKrgQmEXTctVmxuqh1O+FqqPnsijerwsoS2T5aeeVs5i1qvH9I6FYSL+Mt3ZY37wMkgb7SKTShhdNH4etyC5XS9IEuksZCRAbuPKEefK9yutmobHdFel7VribL/1VcdQi6iGx/1Uj1xsUJt5lmm54L2U/50hy+KcJAjtYTFUrnrZtdwYV+zKzs=|ApG0kpbyqk1ws/uiDXNMO18ewTr4OqghxQlTaOczEb7eQc9EcITCnCpUC27uz+1L7ADmyW5K2Hu+AvKO/H90d7YxhUUE7AKSF8WGZkKRWYS/3jsp6lGbzOpL7CmYjMIk22R4qvxa4RXealPufJHJOW7rHN2+U8VEZ5GIjHa3jUpUUa+BCfcvSvv9mnfRmLw17vCeYy5vkoCLAXIkw988Ha0oIWCNQiXVnQM4oGf5Dn1XouqQcLNlmhXlig/Gi8HJrI0fNJm8ZgDouia95jqBtg=="
+        }
+      ]
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "b34aa510-82fc-4756-83c9-f315c50c5955",
+    "name": "DÉBITO - ELO (MÁQUINA)",
+    "type": {
+      "name": "OFFLINE",
+      "description": "Pagamento na entrega"
+    },
+    "method": {
+      "name": "DEBIT",
+      "description": "Débito"
+    },
+    "liability": "MERCHANT",
+    "brand": {
+      "id": "70764a4a-84bb-4697-82e2-7e63d88f4aa3",
+      "name": "ELO",
+      "regex": "^(4(3(1274|8935)|0117[89]|57(393|63[12]))|50(67(0[78]|1[5789]|2[012456789]|3[01234569]|4[0-7]|53|7[4-8])|9(0(0[0-9]|14|2[0-9]|3[0356789]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-8]|9[1-9])|1(0[013456789]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|2(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|3(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|4(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[012346789]|9[0-9])|5(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|6(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|7(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|80[0-7]))|6(27780|36368|5(0(0(3[12356789]|4[0-9]|5[01789]|6[0-9]|7[0-6])|4(0[6-9]|1[0-9]|2[0-9]|3[0-9]|8[5-9]|9[0-9])|5(0[012346789]|1[0-9]|2[0-9]|3[0-8]|5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-8])|72[0-7]|9(0[1-9]|1[0-9]|2[0128]|3[89]|4[6-9]|5[0-9]|6[0123789]|7[0-8]))|1(6(5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|70[0-4])|50(0[0-9]|1[0-9]|2[1-9]|3[0-9]|4[0-9]|5[0-7])))|65(0(0(4[689]|5[01789]|6[0-9]|7[0-6])|4(1[1-9]|2[0-9]|3[012378])|5(3[1-8]|5[2-9]|6[0-9]|7[0-6]|81|9[2-8])|720|9(49|5[01236789]|6[014589]|7[02345678]))|1(6(6[89]|7[012349]|8[0-9]|9[0-9])|70[0-4])|50(1[16789]|2[1-9]|3[0-9]|4[0-9]|5[0345])))[0-9]{10,12}$",
+      "description": "Elo",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "be43e4a3-c8b4-4437-9676-664c13f03f21",
+    "name": "DÉBITO - VISA (MÁQUINA)",
+    "type": {
+      "name": "OFFLINE",
+      "description": "Pagamento na entrega"
+    },
+    "method": {
+      "name": "DEBIT",
+      "description": "Débito"
+    },
+    "liability": "MERCHANT",
+    "brand": {
+      "id": "3fc410d4-a5ea-424c-8ef1-4847fc23723e",
+      "name": "VISA",
+      "regex": "^4\\\\d{12}(?:\\\\d{3})?$",
+      "description": "Visa",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "c2498f8e-10d6-4def-afbe-2e8b30e46392",
+    "name": "CRÉDITO - VISA (MÁQUINA)",
+    "type": {
+      "name": "OFFLINE",
+      "description": "Pagamento na entrega"
+    },
+    "method": {
+      "name": "CREDIT",
+      "description": "Crédito"
+    },
+    "liability": "MERCHANT",
+    "brand": {
+      "id": "3fc410d4-a5ea-424c-8ef1-4847fc23723e",
+      "name": "VISA",
+      "regex": "^4\\\\d{12}(?:\\\\d{3})?$",
+      "description": "Visa",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "ca518725-c712-4828-9039-f9070be3622a",
+    "name": "CRÉDITO - BANRICOMPRAS (MÁQUINA)",
+    "type": {
+      "name": "OFFLINE",
+      "description": "Pagamento na entrega"
+    },
+    "method": {
+      "name": "CREDIT",
+      "description": "Crédito"
+    },
+    "liability": "MERCHANT",
+    "brand": {
+      "id": "83f7d201-7d58-4d4e-8ef0-7111817230c7",
+      "name": "BANRICOMPRAS",
+      "description": "Banricompras",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "cb480d5f-14b1-4cab-ac68-7ffd290f5785",
+    "name": "Apple Pay Visa",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "3fc410d4-a5ea-424c-8ef1-4847fc23723e",
+      "name": "VISA",
+      "regex": "^4\\\\d{12}(?:\\\\d{3})?$",
+      "description": "Visa",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "973acff8-8be0-46e4-8e62-3a3fadbfda90",
+      "name": "APPLE_PAY",
+      "description": "Apple Pay"
+    },
+    "additional_data": {
+      "braintree_android_tokenization_key": "production_fwkgnqpq_bc5nbnhgs8zg5z7t\\t",
+      "braintree_ios_tokenization_key": "production_tvj5tx2m_bc5nbnhgs8zg5z7t",
+      "digital_wallet_brand_payment_method": "CREDIT",
+      "payment_methods_digital_wallet_preferred_gateway": "BRAINTREE"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "cec70d6e-1850-47a5-b0fb-bd3357984896",
+    "name": "CRÉDITO - HIPERCARD (MÁQUINA)",
+    "type": {
+      "name": "OFFLINE",
+      "description": "Pagamento na entrega"
+    },
+    "method": {
+      "name": "CREDIT",
+      "description": "Crédito"
+    },
+    "liability": "MERCHANT",
+    "brand": {
+      "id": "bdeb3d59-e42f-48a7-ae63-d064e3ef9cab",
+      "name": "HIPERCARD",
+      "regex": "^(606282(\\\\d{10,19})?)|(3841\\\\d{11,15})$",
+      "description": "Hipercard",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "ceddea85-022c-4a97-9c84-3887f7727798",
+    "name": "Movile Pay Elo",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "MOVILE_PAY",
+    "brand": {
+      "id": "70764a4a-84bb-4697-82e2-7e63d88f4aa3",
+      "name": "ELO",
+      "regex": "^(4(3(1274|8935)|0117[89]|57(393|63[12]))|50(67(0[78]|1[5789]|2[012456789]|3[01234569]|4[0-7]|53|7[4-8])|9(0(0[0-9]|14|2[0-9]|3[0356789]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-8]|9[1-9])|1(0[013456789]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|2(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|3(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|4(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[012346789]|9[0-9])|5(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|6(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|7(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|80[0-7]))|6(27780|36368|5(0(0(3[12356789]|4[0-9]|5[01789]|6[0-9]|7[0-6])|4(0[6-9]|1[0-9]|2[0-9]|3[0-9]|8[5-9]|9[0-9])|5(0[012346789]|1[0-9]|2[0-9]|3[0-8]|5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-8])|72[0-7]|9(0[1-9]|1[0-9]|2[0128]|3[89]|4[6-9]|5[0-9]|6[0123789]|7[0-8]))|1(6(5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|70[0-4])|50(0[0-9]|1[0-9]|2[1-9]|3[0-9]|4[0-9]|5[0-7])))|65(0(0(4[689]|5[01789]|6[0-9]|7[0-6])|4(1[1-9]|2[0-9]|3[012378])|5(3[1-8]|5[2-9]|6[0-9]|7[0-6]|81|9[2-8])|720|9(49|5[01236789]|6[014589]|7[02345678]))|1(6(6[89]|7[012349]|8[0-9]|9[0-9])|70[0-4])|50(1[16789]|2[1-9]|3[0-9]|4[0-9]|5[0345])))[0-9]{10,12}$",
+      "description": "Elo",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "840a9d09-7aed-41fb-ad94-a511c46b722a",
+      "name": "MOVILE_PAY",
+      "description": "Saldo da carteira"
+    },
+    "additional_data": {
+      "digital_wallet_brand_payment_method": "CREDIT"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "cf4e6e24-5adc-461e-a28d-48c9889a3d08",
+    "name": "Google Pay Visa Debit",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "48365b80-aedc-4d7b-92a5-5b3de326be88",
+      "name": "VISA_ELECTRON",
+      "regex": "^4\\\\d{12}(?:\\\\d{3})?$",
+      "description": "Visa Débito",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "97761f73-93e0-4cea-9585-5e780d1be268",
+      "name": "GOOGLE_PAY",
+      "description": "Google Pay"
+    },
+    "additional_data": {
+      "braintree_android_tokenization_key": "production_fwkgnqpq_bc5nbnhgs8zg5z7t\\t",
+      "braintree_ios_tokenization_key": "production_tvj5tx2m_bc5nbnhgs8zg5z7t",
+      "digital_wallet_brand_payment_method": "DEBIT",
+      "google_pay_gateway": "adyen",
+      "google_pay_merchant": "IFoodBR_PwGoogle",
+      "payment_methods_digital_wallet_preferred_gateway": "BRAINTREE"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "d500657a-c22c-472f-9f97-fccb57eeef55",
+    "name": "Movile Pay Diners",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "MOVILE_PAY",
+    "brand": {
+      "id": "ed4f2cee-a87d-4659-9b0b-c37b854c99eb",
+      "name": "DINERS",
+      "regex": "^3(?:0[0-5]|[68][0-9])[0-9]{11}$",
+      "description": "Diners",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "840a9d09-7aed-41fb-ad94-a511c46b722a",
+      "name": "MOVILE_PAY",
+      "description": "Saldo da carteira"
+    },
+    "additional_data": {
+      "digital_wallet_brand_payment_method": "CREDIT"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "d9cb1650-609a-4a85-98bc-1076835e409a",
+    "name": "VISA ELECTRON",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DEBIT",
+      "description": "Débito"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "48365b80-aedc-4d7b-92a5-5b3de326be88",
+      "name": "VISA_ELECTRON",
+      "regex": "^4\\\\d{12}(?:\\\\d{3})?$",
+      "description": "Visa Débito",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "token_configuration": {
+      "id": "b6ac2f32-9adf-4b18-858f-a2ff11a4f924",
+      "voucher": false,
+      "providers": [
+        {
+          "name": "ZOOP",
+          "zero_dollar": true,
+          "test": false,
+          "url": "https://payment.ifood.com.br/v1/customers/me/card-tokens",
+          "revalidation_url": "https://payment.ifood.com.br/v1/customers/me/card-tokens/retokenize",
+          "public_key": "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FnOEFNSUlDQ2dLQ0FnRUEweCsyN29YdGpjQllVdW9YR0hLNQo0ZjQ4WDIvV3VlUVVLTUZBWnNnZkZ0NjlicW5vRjdtWjZ5UVIwNEpkd0FWQkJYS2JIR3N2dFQva3RWZThDR3REClU1V1dMK1plV294T3FKM2cwaW1YMEdDMHlsQkdjWC82VVI0bkZ2OGRLWjhpd0NFcE9zV3I3a0NuLzZRWEV0QloKN2IzZzdmd2VDTS9DWTQrRnpTT2ZwbEJzUjgrdUJWcjlYT29wL2c0Z3NkeTdINkQyR2p2QmRaeGphdDNscHlBdwpGNVpwRkRUYmZjZXBDNWRYb3UwVkdhZzE1dUJaUUgwZEk5cFdhVER0MVJvWnJnTGZxN1NRZ3JsSHYzVzRGbXFFClN4RVNQS2RyUmxkUXJIWnJydnNlR1lIU2NNQTRIRk16Vjk3NlFraTZvRlUrY1pKY3ErZkVhcW9PaGtpZ0Q2bWYKaTQvTFZkL0tuYjdQeldMcXBReTNoMFkxOHl5cGdrK1ozN05PZzdDOFJqTEJ3RHdnL2RGMU0ydkRmaHZvdndLMwp3WjdoZGNxZTQwbG1Cd1dKa0dIb3N3bFZPZzh0RVJGK1RJdUlYRDdCVTAzMFlEVHlvSEVwUitMSHhIT3VMQmNoCndQQmcrSmlVQk5ZSERFMERub2xmV1VmeFV0ZkNQbTZ4MG1tSGgrZ1c3MGtLYzMyaVZrbVhNcE4xSmN2RWZPSkwKUTk5UDJaNkF4S0lGRllOYUh2cWNzRDhNSXI2MGJmNzh2ZDZCeDhhR1ZwaUpnK0RPZkwrdGNQUFFMS0tIdnIrOAoyMFRiUUFyeEhlZitGVXlObjc0blhjV0RQQzBoc3pCMEdGQnkreHZQczdhMThiR24vUmJ6T0hEU2VBVlVYTWlwCk9WWVNxY0MyMHEvZmZtRFdxY3NLR2FNQ0F3RUFBUT09Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQ==",
+          "acquirers": "Mn2o/22tptD8BdqYfFXEJWc2Ugx4r0x4n73ZGeZ4eiQ8GhAResn4xmWrksEZo5nmGXeHwDtx4AdmpnQQkk7y0aDRLFSEwxsWhyoqR2KjkERL8AYxKokupMAkZYmPmb9CB8fqn2pFONLCW405GwNdHhZdvZddVSfDeo2oXLLv74+z4tW5HH8Kl/fQlNVSwR9kgyyyKrCNiVB5jVTi2hYFFiDQjlSeqcare0nHIh+FdUHb3woXt7SRHUXWddO4YSa4rZfEZgjaBTuWCV/x0osSMUUKuScFPDIeqjKYvPlyq0oipeWuuFeITFNH64hDZo7leoKf19VIGPZ0z/Gfgr5MKKcmgf8TtG3mCzFv6/MujUH00imvdWdDFkor9SjvNG9gd+bC2mpfmLdtG+BtrT5J8WEcQDNN1+X1/5ThfHr6gSEJVtNkbVia0Gd45fHGPUiqa3O6S1Zz8qzWSgciKxt5Erdeqo1oG9ovSZtOeObJ+zRZ4Fi+aWus1c60TR80q91W1zBQf8PnDex+mmul5IlOf+DmXF57hYGNQFOaXk9ZkA1LQSJAzrHStoIwOodvH6oP/adVVE5G+JJkHsLdrpZB5nxtIqsphQ3aKBq9POzKKvYxg6SGQfB6jKvEM93fOj59DPLGHW5YSv/7hqD8NJ+uk3c7LsXfbagTQqtkUucPA9c=|phCbYloXEock2arb3lQDD93vcyhHYLGATQuwvTQrQt6OVpoXNFPDzkPoPkXDwhWSng70tGtki9WaAJf9zBX3XBc2weZMO7d+hwWmkCcN/NdNzCFd0YlPFAGmB0VYhhktFcVjOzcEEvv9blcJEu65NnyD7/m8MGJqWPqwd8pTHUDDNHra4dge+Atvbey9DmbQin2pthadeMdVwwGcdHS/sAKkUnXHD37zXpN7gDg7h0E9rOnIuP2fK2SHBb+fLehv0QaypZ7pd28biuJ4dmS3Ag=="
+        }
+      ]
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "df523875-eba1-4972-ba7e-2c3a6dd68eab",
+    "name": "ELO",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "CREDIT",
+      "description": "Crédito"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "70764a4a-84bb-4697-82e2-7e63d88f4aa3",
+      "name": "ELO",
+      "regex": "^(4(3(1274|8935)|0117[89]|57(393|63[12]))|50(67(0[78]|1[5789]|2[012456789]|3[01234569]|4[0-7]|53|7[4-8])|9(0(0[0-9]|14|2[0-9]|3[0356789]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-8]|9[1-9])|1(0[013456789]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|2(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|3(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|4(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[012346789]|9[0-9])|5(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|6(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|7(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|80[0-7]))|6(27780|36368|5(0(0(3[12356789]|4[0-9]|5[01789]|6[0-9]|7[0-6])|4(0[6-9]|1[0-9]|2[0-9]|3[0-9]|8[5-9]|9[0-9])|5(0[012346789]|1[0-9]|2[0-9]|3[0-8]|5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-8])|72[0-7]|9(0[1-9]|1[0-9]|2[0128]|3[89]|4[6-9]|5[0-9]|6[0123789]|7[0-8]))|1(6(5[2-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9])|70[0-4])|50(0[0-9]|1[0-9]|2[1-9]|3[0-9]|4[0-9]|5[0-7])))|65(0(0(4[689]|5[01789]|6[0-9]|7[0-6])|4(1[1-9]|2[0-9]|3[012378])|5(3[1-8]|5[2-9]|6[0-9]|7[0-6]|81|9[2-8])|720|9(49|5[01236789]|6[014589]|7[02345678]))|1(6(6[89]|7[012349]|8[0-9]|9[0-9])|70[0-4])|50(1[16789]|2[1-9]|3[0-9]|4[0-9]|5[0345])))[0-9]{10,12}$",
+      "description": "Elo",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "token_configuration": {
+      "id": "d9083a16-80ee-49a7-95db-c46e1efc83e2",
+      "voucher": false,
+      "providers": [
+        {
+          "name": "ZOOP",
+          "zero_dollar": true,
+          "test": false,
+          "url": "https://payment.ifood.com.br/v1/customers/me/card-tokens",
+          "revalidation_url": "https://payment.ifood.com.br/v1/customers/me/card-tokens/retokenize",
+          "public_key": "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FnOEFNSUlDQ2dLQ0FnRUEweCsyN29YdGpjQllVdW9YR0hLNQo0ZjQ4WDIvV3VlUVVLTUZBWnNnZkZ0NjlicW5vRjdtWjZ5UVIwNEpkd0FWQkJYS2JIR3N2dFQva3RWZThDR3REClU1V1dMK1plV294T3FKM2cwaW1YMEdDMHlsQkdjWC82VVI0bkZ2OGRLWjhpd0NFcE9zV3I3a0NuLzZRWEV0QloKN2IzZzdmd2VDTS9DWTQrRnpTT2ZwbEJzUjgrdUJWcjlYT29wL2c0Z3NkeTdINkQyR2p2QmRaeGphdDNscHlBdwpGNVpwRkRUYmZjZXBDNWRYb3UwVkdhZzE1dUJaUUgwZEk5cFdhVER0MVJvWnJnTGZxN1NRZ3JsSHYzVzRGbXFFClN4RVNQS2RyUmxkUXJIWnJydnNlR1lIU2NNQTRIRk16Vjk3NlFraTZvRlUrY1pKY3ErZkVhcW9PaGtpZ0Q2bWYKaTQvTFZkL0tuYjdQeldMcXBReTNoMFkxOHl5cGdrK1ozN05PZzdDOFJqTEJ3RHdnL2RGMU0ydkRmaHZvdndLMwp3WjdoZGNxZTQwbG1Cd1dKa0dIb3N3bFZPZzh0RVJGK1RJdUlYRDdCVTAzMFlEVHlvSEVwUitMSHhIT3VMQmNoCndQQmcrSmlVQk5ZSERFMERub2xmV1VmeFV0ZkNQbTZ4MG1tSGgrZ1c3MGtLYzMyaVZrbVhNcE4xSmN2RWZPSkwKUTk5UDJaNkF4S0lGRllOYUh2cWNzRDhNSXI2MGJmNzh2ZDZCeDhhR1ZwaUpnK0RPZkwrdGNQUFFMS0tIdnIrOAoyMFRiUUFyeEhlZitGVXlObjc0blhjV0RQQzBoc3pCMEdGQnkreHZQczdhMThiR24vUmJ6T0hEU2VBVlVYTWlwCk9WWVNxY0MyMHEvZmZtRFdxY3NLR2FNQ0F3RUFBUT09Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQ==",
+          "acquirers": "GQrmC2SombSuMEdHQiSth3zswXg9M8XFeHZ/EXzifoe/Fu2tPQEcVuv5935682JafFy9CWGsVwD5eQ9um/Mifx2GQ7RfhmKOLJRFjFbIQ5HEROagpaov2qBbuJpG72AJeadExlW2jmKtC9LU1r8TTIJZPUvHMBpsH4Tkq5Q/tpBbuyM8Npw+NmrUNfD7E+TFOM9M/mm5HhUgI67fdcgW4iqT4ADseItzqaXopLPjvw72Pmxx0OyHu7GcbJqp2l3Jr5Ga9p+JiqTLiTRl3ituWrYsGSllbGJVyEkIsJBAM7AS2z1HhIL2ANKLPVQcaJjRLC7KzKcdy13ztkUR4oUeyje3oFPY0s33DQ6WX/TtHWPu42/ulwiLrcy4dfuvwCwLKwfHmgO5WmXvmECDH6v0eL38/FA2KHIIIAvuqQAdfApFn09LTT7mClFp7jvWWxuWz4p1R+GPNft8sfrRQpg2pVZwK3Jdc8kjY3q+GCzTqBELxE36RexQeBKrgQmEXTctVmxuqh1O+FqqPnsijerwsoS2T5aeeVs5i1qvH9I6FYSL+Mt3ZY37wMkgb7SKTShhdNH4etyC5XS9IEuksZCRAbuPKEefK9yutmobHdFel7VribL/1VcdQi6iGx/1Uj1xsUJt5lmm54L2U/50hy+KcJAjtYTFUrnrZtdwYV+zKzs=|ApG0kpbyqk1ws/uiDXNMO18ewTr4OqghxQlTaOczEb7eQc9EcITCnCpUC27uz+1L7ADmyW5K2Hu+AvKO/H90d7YxhUUE7AKSF8WGZkKRWYS/3jsp6lGbzOpL7CmYjMIk22R4qvxa4RXealPufJHJOW7rHN2+U8VEZ5GIjHa3jUpUUa+BCfcvSvv9mnfRmLw17vCeYy5vkoCLAXIkw988Ha0oIWCNQiXVnQM4oGf5Dn1XouqQcLNlmhXlig/Gi8HJrI0fNJm8ZgDouia95jqBtg=="
+        }
+      ]
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "e33a2ebe-fccf-405b-8188-74fbcddf6162",
+    "name": "Apple Pay Master",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "ca34f400-9ba1-49c9-9f08-d269f97fd678",
+      "name": "MASTERCARD",
+      "regex": "^(5[1-5]|2[2-7])[0-9]{14}|(502120|502121)[0-9]{10}|(603326|608710|637529)[0-9]{10}$",
+      "description": "Mastercard",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "973acff8-8be0-46e4-8e62-3a3fadbfda90",
+      "name": "APPLE_PAY",
+      "description": "Apple Pay"
+    },
+    "additional_data": {
+      "braintree_android_tokenization_key": "production_fwkgnqpq_bc5nbnhgs8zg5z7t\\t",
+      "braintree_ios_tokenization_key": "production_tvj5tx2m_bc5nbnhgs8zg5z7t",
+      "digital_wallet_brand_payment_method": "CREDIT",
+      "payment_methods_digital_wallet_preferred_gateway": "BRAINTREE"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "e9fa3929-bfc7-413f-8d6a-1b01b079ed66",
+    "name": "DÉBITO - MASTERCARD (MÁQUINA)",
+    "type": {
+      "name": "OFFLINE",
+      "description": "Pagamento na entrega"
+    },
+    "method": {
+      "name": "DEBIT",
+      "description": "Débito"
+    },
+    "liability": "MERCHANT",
+    "brand": {
+      "id": "ca34f400-9ba1-49c9-9f08-d269f97fd678",
+      "name": "MASTERCARD",
+      "regex": "^(5[1-5]|2[2-7])[0-9]{14}|(502120|502121)[0-9]{10}|(603326|608710|637529)[0-9]{10}$",
+      "description": "Mastercard",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "additional_data": {},
+    "required_cvv": false,
+    "allowed_combination": false
+  },
+  {
+    "id": "f68b1d08-4667-46f5-b8a8-15b6c66e0460",
+    "name": "Google Pay Visa",
+    "type": {
+      "name": "ONLINE",
+      "description": "Pagamento pelo app"
+    },
+    "method": {
+      "name": "DIGITAL_WALLET",
+      "description": "Carteira digital"
+    },
+    "liability": "IFOOD",
+    "brand": {
+      "id": "3fc410d4-a5ea-424c-8ef1-4847fc23723e",
+      "name": "VISA",
+      "regex": "^4\\\\d{12}(?:\\\\d{3})?$",
+      "description": "Visa",
+      "cvv_regex": "^[0-9]{3}$"
+    },
+    "digital_wallet": {
+      "id": "97761f73-93e0-4cea-9585-5e780d1be268",
+      "name": "GOOGLE_PAY",
+      "description": "Google Pay"
+    },
+    "additional_data": {
+      "braintree_android_tokenization_key": "production_fwkgnqpq_bc5nbnhgs8zg5z7t\\t",
+      "braintree_ios_tokenization_key": "production_tvj5tx2m_bc5nbnhgs8zg5z7t",
+      "digital_wallet_brand_payment_method": "CREDIT",
+      "google_pay_gateway": "adyen",
+      "google_pay_merchant": "IFoodBR_PwGoogle",
+      "payment_methods_digital_wallet_preferred_gateway": "BRAINTREE"
+    },
+    "required_cvv": false,
+    "allowed_combination": false
+  }
+]

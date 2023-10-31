@@ -5,6 +5,12 @@ import _ from 'lodash';
 import type { Merchant } from '@/stores/merchant/merchant';
 import { getMerchantById } from '@/gateways';
 import { useAuthStore } from '@/stores/auth';
+import type {
+  PaymentMethodBrand,
+  PaymentLiability,
+  PaymentMethod,
+  PaymentOptionsType,
+} from '@/stores/payment';
 
 export type BagProduct = {
   id: string;
@@ -69,8 +75,22 @@ export type Bag = {
   items: BagProduct[];
 };
 
-type DeliveryType = 'DELIVERY' | 'TAKEOUT';
-type PaymentType = 'ONLINE' | 'ON_DELIVERY';
+type DeliveryMode = 'DELIVERY' | 'TAKEOUT';
+
+type BagPaymentMethod = {
+  id: string;
+  name: string;
+  type: {
+    name: PaymentOptionsType;
+    description: string;
+  };
+  method: {
+    name: PaymentMethod;
+    description: string;
+  };
+  liability: PaymentLiability;
+  brand: PaymentMethodBrand;
+};
 
 const defaultMerchantState = () => ({
   data: null,
@@ -92,8 +112,10 @@ export const useBagStore = defineStore(
 
     const bag = ref<Bag | null>(null);
 
-    const deliveryType = ref<DeliveryType>('DELIVERY');
-    const paymentType = ref<PaymentType>('ONLINE');
+    const deliveryType = ref<DeliveryMode>('DELIVERY');
+    const paymentType = ref<PaymentOptionsType>('ONLINE');
+
+    const paymentMethod = ref<BagPaymentMethod | null>(null);
 
     /* getters */
     const isEmpty = computed(() => {
@@ -209,6 +231,7 @@ export const useBagStore = defineStore(
       bag.value = null;
       deliveryType.value = 'DELIVERY';
       paymentType.value = 'ONLINE';
+      paymentMethod.value = null;
     };
 
     const addItem = async (bagItem: BagProduct, merchantId: string) => {
@@ -278,12 +301,16 @@ export const useBagStore = defineStore(
       return;
     };
 
-    const selectDeliveryType = (_deliveryType: DeliveryType): void => {
+    const selectDeliveryType = (_deliveryType: DeliveryMode): void => {
       deliveryType.value = _deliveryType;
     };
 
-    const selectPaymentType = (_paymentType: PaymentType): void => {
+    const selectPaymentType = (_paymentType: PaymentOptionsType): void => {
       paymentType.value = _paymentType;
+    };
+
+    const selectPaymentMethod = (_paymentMethod: BagPaymentMethod): void => {
+      paymentMethod.value = _paymentMethod;
     };
 
     return {
@@ -291,6 +318,7 @@ export const useBagStore = defineStore(
       bag,
       deliveryType,
       paymentType,
+      paymentMethod,
 
       /* getters */
       isEmpty,
@@ -313,6 +341,7 @@ export const useBagStore = defineStore(
       decrementProduct,
       selectDeliveryType,
       selectPaymentType,
+      selectPaymentMethod,
       purchase,
     };
   },

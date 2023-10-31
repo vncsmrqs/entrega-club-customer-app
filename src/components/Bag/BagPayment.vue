@@ -38,13 +38,13 @@
         name="payment-on-delivery"
         @update:model-value="(value) => bagStore.selectPaymentType(value)"
         :model-value="bagStore.paymentType"
-        value="ON_DELIVERY"
+        value="OFFLINE"
       >
         Pagar na entrega
       </ChipRadio>
     </div>
     <div class="text-lg font-medium mb-4">Forma de pagamento</div>
-    <template v-if="bagStore.paymentType === 'ON_DELIVERY'">
+    <template v-if="bagStore.paymentType === 'OFFLINE'">
       <div class="flex flex-col gap-4">
         <div class="border rounded-lg p-4 flex items-center gap-4">
           <div class="w-10 h-10 text-green-600">

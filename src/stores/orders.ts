@@ -4,6 +4,12 @@ import type { Address } from '@/stores/address/customer-address-list';
 import type { Phone } from '@/stores/auth';
 import type { Bag } from '@/stores/bag';
 import { timeout } from '@/utils';
+import type {
+  PaymentMethod,
+  PaymentMethodBrand,
+  PaymentOptionsType,
+} from '@/stores/payment';
+import type { DeliveryMode } from '@/stores/merchant/merchant';
 
 export type OrderMerchant = {
   id: string;
@@ -14,29 +20,12 @@ export type OrderMerchant = {
   address: Address;
 };
 
-export type OrderDeliveryMethod = {
-  mode: 'DELIVERY' | 'TAKEOUT';
-  note: string;
+export type OrderPaymentTotalType = {
+  currency: 'BRL';
+  value: number;
 };
 
-export type PaymentMethodType = {
-  name: 'MEAL_VOUCHER';
-  description: 'Vale-refeição';
-};
-
-export type PaymentType = {
-  name: 'ONLINE' | 'ON_DELIVERY';
-  description: string;
-};
-
-export type PaymentMethodBrand = {
-  id: string;
-  imageUrl?: string;
-  name: string;
-  description: string;
-};
-
-export type PaymentAmount = {
+export type OrderPaymentAmountType = {
   currency: 'BRL';
   value: number;
 };
@@ -45,22 +34,35 @@ export type OrderPayment = {
   methods: [
     {
       id: string;
-      method: PaymentMethodType;
-      type: PaymentType;
+      method: {
+        name: PaymentMethod;
+        description: string;
+      };
+      type: {
+        name: PaymentOptionsType;
+        description: string;
+      };
       brand: PaymentMethodBrand;
-      amount: PaymentAmount;
+      amount: OrderPaymentAmountType;
       credit?: {
+        cardNumber: string; // "************6814"
+      };
+      debit?: {
         cardNumber: string; // "************6814"
       };
       mealVoucher?: {
         cardNumber: string; // "************6814"
       };
+      foodVoucher?: {
+        cardNumber: string; // "************6814"
+      };
+      pix?: {};
+      digitalWallet?: {};
+      cash?: {};
+      transactions: [];
     },
   ];
-  total: {
-    currency: 'BRL';
-    value: number;
-  };
+  total: OrderPaymentTotalType;
 };
 
 export type Order = {
@@ -92,8 +94,10 @@ export type Order = {
   merchant: OrderMerchant;
   payments: OrderPayment;
   bag: Bag;
-  deliveryMethod: OrderDeliveryMethod;
-
+  deliveryMode: {
+    mode: DeliveryMode;
+    note: string;
+  };
   fees: [];
 };
 
