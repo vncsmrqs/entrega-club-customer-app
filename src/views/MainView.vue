@@ -8,7 +8,7 @@
   import ValidateAddressSelection from '@/components/Address/ValidateAddressSelection.vue';
   import { useAuthStore } from '@/stores/auth';
 
-  const loading = ref(false);
+  const loading = ref(true);
   const error = ref<string | null>(null);
   const showAddressSelectionScreen = ref(false);
 
@@ -46,9 +46,9 @@
         v-if="selectedAddressStore.selectedAddress"
         v-slot="{ Component }"
       >
-        <transition name="fade" mode="out-in">
+        <Transition name="fade" mode="out-in">
           <component :is="Component" />
-        </transition>
+        </Transition>
       </RouterView>
       <BagMobileBar />
     </div>

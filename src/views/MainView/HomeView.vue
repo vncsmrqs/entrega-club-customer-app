@@ -43,8 +43,8 @@
             v-slot="{ isActive, navigate }"
             custom
           >
-            <TabButton @click="navigate" :active="isActive"
-              >Restaurantes
+            <TabButton @click="navigate" :active="isActive">
+              Restaurantes
             </TabButton>
           </RouterLink>
           <RouterLink
@@ -55,9 +55,11 @@
             <TabButton @click="navigate" :active="isActive">Bebidas</TabButton>
           </RouterLink>
         </div>
-        <Transition name="fade" mode="out-in">
-          <RouterView></RouterView>
-        </Transition>
+        <RouterView v-slot="{ Component }">
+          <Transition name="fade" mode="out-in">
+            <component :is="Component" />
+          </Transition>
+        </RouterView>
       </ScreenContent>
     </ScreenMain>
   </ScreenRoot>
