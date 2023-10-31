@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 export const useDrawerNavigation = () => {
   const route = useRoute();
   const router = useRouter();
+
   const openDrawer = async (
     drawerId: string,
     options?: { preserveQuery?: boolean },
