@@ -107,9 +107,7 @@ const router = createRouter({
           path: '/pagamentos',
           name: 'payments',
           component: () => import('../components/Payment/PaymentScreen.vue'),
-          meta: {
-            showMenu: true,
-          },
+          meta: {},
         },
       ],
     },

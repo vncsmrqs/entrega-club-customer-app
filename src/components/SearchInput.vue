@@ -6,8 +6,9 @@
     defineProps<{
       modelValue: string;
       placeholder?: string;
+      small?: boolean;
     }>(),
-    { placeholder: 'Busque por item ou estabelecimento' },
+    { placeholder: 'Busque por item ou estabelecimento', small: false },
   );
   const emit = defineEmits(['focus', 'blur', 'submit', 'update:modelValue']);
 
@@ -34,7 +35,11 @@
       @blur="emit('blur')"
       type="search"
       id="default-search"
-      class="block w-full p-2.5 pl-10 text-gray-900 rounded-xl ring-primary-600 bg-gray-100 focus:outline-none focus:ring-2"
+      class="block w-full pl-10 text-gray-900 rounded-xl ring-primary-600 bg-gray-100 focus:outline-none focus:ring-2"
+      :class="{
+        'p-2': props.small,
+        'px-2.5 py-4': !props.small,
+      }"
       :placeholder="props.placeholder"
       required
     />

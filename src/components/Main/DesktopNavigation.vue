@@ -46,7 +46,7 @@
       <AppLogo />
       <div class="flex-1"></div>
       <form class="flex-1" @submit.prevent="submitSearch">
-        <SearchInput class="w-full" v-model="searchTerm" />
+        <SearchInput small class="w-full" v-model="searchTerm" />
       </form>
       <NotificationButton />
       <BagButton small />

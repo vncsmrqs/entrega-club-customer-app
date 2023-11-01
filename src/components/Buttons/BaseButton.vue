@@ -11,6 +11,7 @@
       full?: boolean;
       center?: boolean;
       blocked?: boolean;
+      icon?: boolean;
     }>(),
     {
       color: 'default',
@@ -19,6 +20,7 @@
       full: false,
       center: true,
       dense: false,
+      icon: false,
     },
   );
 
@@ -40,10 +42,14 @@
   <button
     class="base-button"
     :class="{
-      'px-6 py-4 text-lg h-14': !props.small && !props.dense,
-      'px-4 py-3 text-lg h-12': !props.small && props.dense,
-      'px-3 py-1.5 h-10': props.small && !props.dense,
-      'px-2 py-1 h-8': props.small && props.dense,
+      'px-6 py-4 text-lg h-14': !props.small && !props.dense && !props.icon,
+      'text-lg h-14 w-14': !props.small && !props.dense && props.icon,
+      'px-4 py-3 text-lg h-12': !props.small && props.dense && !props.icon,
+      'text-lg h-12 w-12': !props.small && props.dense && props.icon,
+      'px-3 py-1.5 h-10': props.small && !props.dense && !props.icon,
+      'h-10 w-10': props.small && !props.dense && props.icon,
+      'px-2 py-1 h-8': props.small && props.dense && !props.icon,
+      'h-8 w-8': props.small && props.dense && props.icon,
       [buttonColors]: true,
       'w-full': props.full,
       'flex justify-center': props.center,

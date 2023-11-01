@@ -68,23 +68,23 @@
     <ScreenMain>
       <template #side></template>
       <ScreenContent class="!col-span-full">
-        <div class="font-semibold text-lg mb-8">
-          Qual forma de pagamento você deseja cadastrar?
+        <div class="font-semibold text-lg mb-4">
+          Qual tipo de cartão você deseja cadastrar?
         </div>
         <div class="flex flex-col gap-4">
-          <div
+          <button
             v-for="(method, index) in paymentMethods"
             :key="index"
-            class="p-4 flex gap-4 items-center rounded-lg border"
+            class="p-4 flex gap-4 items-center rounded-xl border"
             @click="() => method.function()"
           >
             <div
-              class="w-10 h-10 rounded flex items-center bg-gray-100 text-gray-500 justify-center"
+              class="w-10 h-10 rounded-xl flex items-center bg-gray-100 text-gray-500 justify-center"
             >
               <component :is="method.icon" />
             </div>
             <div class="text-gray-800">{{ method.name }}</div>
-          </div>
+          </button>
         </div>
       </ScreenContent>
     </ScreenMain>

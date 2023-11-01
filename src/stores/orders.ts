@@ -8,7 +8,7 @@ import type {
   PaymentMethod,
   PaymentMethodBrand,
   PaymentOptionsType,
-} from '@/stores/payment';
+} from '@/stores/payment/list-payments';
 import type { DeliveryMode } from '@/stores/merchant/merchant';
 
 export type OrderMerchant = {

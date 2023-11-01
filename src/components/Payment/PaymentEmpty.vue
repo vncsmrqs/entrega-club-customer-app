@@ -25,12 +25,13 @@
     <div class="text-center">
       <div class="font-medium text-xl">Adicione um cartão no EntregaClub</div>
       <div class="text-gray-500 text-sm mt-2">
-        É prático, seguro e você não perde nenhum minuto a mais quando o seu pedido chegar.
+        É prático, seguro e você não perde nenhum minuto a mais quando o seu
+        pedido chegar.
       </div>
     </div>
     <div class="mt-4">
-      <PrimaryButton @click="openAddPaymentScreen"
-        >Adicionar cartão
+      <PrimaryButton @click="openAddPaymentScreen">
+        Adicionar cartão
       </PrimaryButton>
     </div>
   </div>

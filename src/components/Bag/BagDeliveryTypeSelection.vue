@@ -4,10 +4,10 @@
   import ChipRadio from '@/components/Search/ChipRadio.vue';
   import { useBagStore } from '@/stores/bag';
   import { useSelectedAddressStore } from '@/stores/address/selected-address';
-  import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
   import AddressSelection from '@/components/Address/ListAddressScreen.vue';
+  import DefaultButton from '@/components/Buttons/DefaultButton.vue';
 
   const bagStore = useBagStore();
   const selectedAddressStore = useSelectedAddressStore();
@@ -44,9 +44,9 @@
     </div>
     <div class="text-lg font-medium mb-2">No endereço:</div>
     <template v-if="bagStore.deliveryType === 'TAKEOUT'">
-      <div class="border border-primary-600 rounded-lg p-4 flex gap-4">
+      <div class="border border-primary-600 rounded-xl p-4 flex gap-4">
         <div
-          class="py-2 text-primary-600 bg-primary-100 rounded-lg w-10 h-10 flex justify-center"
+          class="py-2 text-primary-600 bg-primary-100 rounded-xl w-10 h-10 flex justify-center"
         >
           <MapMarkerOutlineIcon />
         </div>
@@ -72,7 +72,7 @@
     <template v-else>
       <div class="border border-primary-600 rounded-lg p-4 flex gap-4">
         <div
-          class="py-2 text-primary-600 bg-primary-100 rounded-lg w-10 h-10 flex justify-center"
+          class="py-2 text-primary-600 bg-primary-100 rounded-xl w-10 h-10 flex justify-center"
         >
           <MapMarkerOutlineIcon />
         </div>
@@ -97,9 +97,9 @@
         </div>
       </div>
       <div class="flex justify-end">
-        <SecondaryButton full class="mt-4" @click="openAddress">
+        <DefaultButton full class="mt-4" @click="openAddress">
           Trocar endereço de entrega
-        </SecondaryButton>
+        </DefaultButton>
       </div>
     </template>
   </div>

@@ -6,14 +6,16 @@
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
   import PaymentEmpty from '@/components/Payment/PaymentEmpty.vue';
   import { onMounted } from 'vue';
-  import { useOrdersStore } from '@/stores/orders';
   import ScreenLoader from '@/components/Screen/ScreenLoader.vue';
   import ScreenError from '@/components/Screen/ScreenError.vue';
+  import { useListCustomerCardStore } from '@/stores/payment/list-customer-card';
+  import CustomerCardPayment from '@/components/Payment/CustomerCardPayment.vue';
+  import ScreenSide from '@/components/Screen/ScreenSide.vue';
 
-  const ordersStore = useOrdersStore();
+  const listCustomerCardStore = useListCustomerCardStore();
 
   const load = async () => {
-    await ordersStore.fetch();
+    await listCustomerCardStore.fetch();
   };
 
   onMounted(load);
@@ -27,16 +29,34 @@
         <BackButton />
       </template>
     </ScreenHeader>
-    <ScreenLoader v-if="ordersStore.loading" />
-    <ScreenError v-else-if="ordersStore.error" />
     <ScreenMain
-      v-else
       @reload="load"
-      :loading="ordersStore.loading"
+      :loading="listCustomerCardStore.loading"
       with-reload
+      class="lg:gap-10"
     >
-      <ScreenContent class="!col-span-full">
+      <ScreenLoader v-if="listCustomerCardStore.loading" />
+      <ScreenError v-else-if="listCustomerCardStore.error" />
+      <ScreenContent
+        v-else-if="listCustomerCardStore.isEmpty"
+        class="!col-span-full"
+      >
         <PaymentEmpty />
+      </ScreenContent>
+      <template #side>
+        <ScreenSide class="hidden lg:block">
+          <PaymentEmpty />
+        </ScreenSide>
+      </template>
+      <ScreenContent>
+        <div class="font-semibold text-xl mb-4">Cartões disponíveis</div>
+        <div class="flex flex-col gap-4">
+          <CustomerCardPayment
+            v-for="card in listCustomerCardStore.cards"
+            :key="card.id"
+            :card="card"
+          />
+        </div>
       </ScreenContent>
     </ScreenMain>
   </ScreenRoot>

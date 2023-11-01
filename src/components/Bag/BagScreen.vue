@@ -234,7 +234,8 @@
       <div class="flex justify-between mb-2">
         <div class="font-semibold">Resumo de valores</div>
         <DefaultButton
-          v-show="step !== 'PAYMENT'"
+          :blocked="step === 'PAYMENT'"
+          :disabled="step === 'PAYMENT'"
           small
           dense
           @click="() => (showTotalDetails = !showTotalDetails)"

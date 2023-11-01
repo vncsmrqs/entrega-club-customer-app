@@ -10,7 +10,7 @@ import type {
   PaymentLiability,
   PaymentMethod,
   PaymentOptionsType,
-} from '@/stores/payment';
+} from '@/stores/payment/list-payments';
 
 export type BagProduct = {
   id: string;
