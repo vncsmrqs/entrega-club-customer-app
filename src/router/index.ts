@@ -38,6 +38,7 @@ const router = createRouter({
                 import('../views/MainView/HomeView/DefaultView.vue'),
               meta: {
                 showMenu: true,
+                showBagButton: true,
               },
             },
             {
@@ -47,6 +48,7 @@ const router = createRouter({
                 import('../views/MainView/HomeView/RestaurantsView.vue'),
               meta: {
                 showMenu: true,
+                showBagButton: true,
               },
             },
             {
@@ -56,6 +58,7 @@ const router = createRouter({
                 import('../views/MainView/HomeView/LiquorStoreView.vue'),
               meta: {
                 showMenu: true,
+                showBagButton: true,
               },
             },
           ],
@@ -66,6 +69,7 @@ const router = createRouter({
           component: () => import('../components/Search/SearchScreen.vue'),
           meta: {
             showMenu: true,
+            showBagButton: true,
           },
         },
         {
@@ -74,6 +78,7 @@ const router = createRouter({
           component: () => import('../components/Order/OrdersScreen.vue'),
           meta: {
             showMenu: true,
+            showBagButton: true,
           },
         },
         {
@@ -81,7 +86,7 @@ const router = createRouter({
           name: 'menu',
           component: () => import('../components/Menu/MenuScreen.vue'),
           meta: {
-            showMenu: true,
+            showMenu: false,
           },
         },
         {
@@ -100,6 +105,7 @@ const router = createRouter({
             scrollBehavior: {
               behavior: 'smooth',
             },
+            showBagButton: true,
           },
           component: () => import('../views/MainView/MerchantView.vue'),
         },

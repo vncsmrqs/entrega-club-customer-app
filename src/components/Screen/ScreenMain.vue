@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import ReloadIcon from 'vue-material-design-icons/Reload.vue';
   import { computed, ref, watch } from 'vue';
+  import { useBagStore } from '@/stores/bag';
+  import { useRoute } from 'vue-router';
 
   const emit = defineEmits(['reload']);
 
@@ -100,6 +102,13 @@
   const rotation = computed(
     () => ((360 * updateIconYPosition.value) / PULL_TO_SCROLL_LIMIT) * 1.25,
   );
+
+  const bagStore = useBagStore();
+  const route = useRoute();
+
+  const showBagFloatButton = computed(
+    () => !bagStore.isEmpty && route.meta.showBagButton,
+  );
 </script>
 
 <template>
@@ -153,6 +162,7 @@
       </slot>
       <slot>ScreenMain</slot>
     </div>
+    <div v-if="showBagFloatButton" class="h-24 md:hidden"></div>
   </div>
 </template>
 
