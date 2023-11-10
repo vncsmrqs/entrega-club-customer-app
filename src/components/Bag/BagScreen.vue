@@ -172,116 +172,120 @@
         </template>
 
         <template v-else>
-          <template v-if="step === 'BAG'">
-            <div v-if="bagStore.currentMerchant">
-              <div class="text-lg font-medium mb-2">Você está pedindo em:</div>
-              <MerchantHeader
-                :merchant="bagStore.currentMerchant"
-                class="border rounded-xl"
-              />
-            </div>
-            <div class="text-lg font-medium mt-8 mb-2">
-              Os itens selecionados são:
-            </div>
-            <div class="flex flex-col gap-4">
-              <TransitionGroup name="list">
-                <div
-                  v-for="bagProduct in bagStore.items"
-                  :key="bagProduct.id"
-                  class="rounded-lg border flex flex-col"
-                >
-                  <div class="flex gap-4 p-4">
-                    <div class="flex-shrink-0">
-                      <div
-                        class="w-24 aspect-photo border bg-gray-100 rounded-md overflow-hidden"
-                      >
-                        <img
-                          class="w-full"
-                          :src="bagProduct.productDetails?.imageUrl"
-                          :alt="bagProduct.productDetails?.name"
-                        />
-                      </div>
-                    </div>
-                    <div class="flex-1">
-                      <div class="font-medium">
-                        {{ bagProduct.productDetails?.name }}
-                      </div>
-                      <ul
-                        v-for="bagChoice in bagProduct.selectedChoices"
-                        :key="bagChoice.choiceDetails.id"
-                        class="text-sm"
-                      >
-                        <li
-                          v-for="bagGarnishItem in bagChoice.selectedGarnishItems.filter(
-                            (i) => i.quantity,
-                          )"
-                          :key="bagGarnishItem.garnishItemDetails.id"
-                          class="text-gray-500"
-                        >
-                          <span class="mr-2">{{
-                            bagGarnishItem.quantity
-                          }}</span>
-                          <span>
-                            {{ bagGarnishItem.garnishItemDetails.name }}
-                          </span>
-                        </li>
-                      </ul>
-                      <div
-                        v-if="bagProduct.comment?.length"
-                        class="mt-2 p-2 text-sm text-gray-600 bg-gray-100 rounded-xl"
-                      >
-                        {{ bagProduct.comment }}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex justify-end gap-2 border-t p-2">
-                    <div class="flex flex-col items-start">
-                      <div
-                        v-if="bagProduct.productDetails?.originalUnitPrice"
-                        class="text-gray-500 text-xs line-through"
-                      >
-                        {{ formatToCurrency(15) }}
-                      </div>
-                      <span class="text-green-700">
-                        {{
-                          formatToCurrency(
-                            bagStore.calcTotalProduct(bagProduct),
-                          )
-                        }}
-                      </span>
-                    </div>
-                    <div class="flex-1"></div>
-                    <IncrementControl
-                      @increment="bagStore.incrementProduct(bagProduct)"
-                      @decrement="bagStore.decrementProduct(bagProduct)"
-                      :quantity="bagProduct.quantity"
-                    ></IncrementControl>
-                    <div class="flex-shrink-0 text-danger-600">
-                      <IconButton @click="() => deleteItem(bagProduct)">
-                        <DeleteOutlineIcon></DeleteOutlineIcon>
-                      </IconButton>
-                    </div>
-                    <div class="flex-shrink-0">
-                      <IconButton
-                        @click="() => editItem(bagProduct)"
-                        class="text-primary-600"
-                      >
-                        <PencilOutlineIcon></PencilOutlineIcon>
-                      </IconButton>
-                    </div>
-                  </div>
+          <Transition name="fade" mode="out-in" appear>
+            <template v-if="step === 'BAG'">
+              <div class="flex flex-col gap-4">
+                <template v-if="bagStore.currentMerchant">
+                  <div class="text-lg font-medium">Você está pedindo em:</div>
+                  <MerchantHeader
+                    :merchant="bagStore.currentMerchant"
+                    class="border rounded-xl"
+                  />
+                </template>
+                <div class="text-lg font-medium">
+                  Os itens selecionados são:
                 </div>
-              </TransitionGroup>
-            </div>
-          </template>
+                <TransitionGroup name="list">
+                  <div
+                    v-for="bagProduct in bagStore.items"
+                    :key="bagProduct.id"
+                    class="rounded-lg border flex flex-col"
+                  >
+                    <div class="flex gap-4 p-4">
+                      <div class="flex-shrink-0">
+                        <div
+                          class="w-24 aspect-photo border bg-gray-100 rounded-md overflow-hidden"
+                        >
+                          <img
+                            class="w-full"
+                            :src="bagProduct.productDetails?.imageUrl"
+                            :alt="bagProduct.productDetails?.name"
+                          />
+                        </div>
+                      </div>
+                      <div class="flex-1">
+                        <div class="font-medium">
+                          {{ bagProduct.productDetails?.name }}
+                        </div>
+                        <ul
+                          v-for="bagChoice in bagProduct.selectedChoices"
+                          :key="bagChoice.choiceDetails.id"
+                          class="text-sm"
+                        >
+                          <li
+                            v-for="bagGarnishItem in bagChoice.selectedGarnishItems.filter(
+                              (i) => i.quantity,
+                            )"
+                            :key="bagGarnishItem.garnishItemDetails.id"
+                            class="text-gray-500"
+                          >
+                            <span class="mr-2">{{
+                              bagGarnishItem.quantity
+                            }}</span>
+                            <span>
+                              {{ bagGarnishItem.garnishItemDetails.name }}
+                            </span>
+                          </li>
+                        </ul>
+                        <div
+                          v-if="bagProduct.comment?.length"
+                          class="mt-2 p-2 text-sm text-gray-600 bg-gray-100 rounded-xl"
+                        >
+                          {{ bagProduct.comment }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex justify-end gap-2 border-t p-2">
+                      <div class="flex flex-col items-start">
+                        <div
+                          v-if="bagProduct.productDetails?.originalUnitPrice"
+                          class="text-gray-500 text-xs line-through"
+                        >
+                          {{ formatToCurrency(15) }}
+                        </div>
+                        <span class="text-green-700">
+                          {{
+                            formatToCurrency(
+                              bagStore.calcTotalProduct(bagProduct),
+                            )
+                          }}
+                        </span>
+                      </div>
+                      <div class="flex-1"></div>
+                      <IncrementControl
+                        @increment="bagStore.incrementProduct(bagProduct)"
+                        @decrement="bagStore.decrementProduct(bagProduct)"
+                        :quantity="bagProduct.quantity"
+                      ></IncrementControl>
+                      <div class="flex-shrink-0 text-danger-600">
+                        <IconButton @click="() => deleteItem(bagProduct)">
+                          <DeleteOutlineIcon></DeleteOutlineIcon>
+                        </IconButton>
+                      </div>
+                      <div class="flex-shrink-0">
+                        <IconButton
+                          @click="() => editItem(bagProduct)"
+                          class="text-primary-600"
+                        >
+                          <PencilOutlineIcon></PencilOutlineIcon>
+                        </IconButton>
+                      </div>
+                    </div>
+                  </div>
+                </TransitionGroup>
+              </div>
+            </template>
 
-          <template v-if="step === 'DELIVERY_TYPE'">
-            <BagDeliveryTypeSelection />
-          </template>
+            <template v-else-if="step === 'DELIVERY_TYPE'">
+              <BagDeliveryTypeSelection />
+            </template>
 
-          <template v-if="step === 'PAYMENT'">
-            <BagPayment />
-          </template>
+            <template v-else-if="step === 'PAYMENT'">
+              <BagPayment />
+            </template>
+
+            <template v-else>Erro</template>
+          </Transition>
         </template>
       </ScreenContent>
     </ScreenMain>
