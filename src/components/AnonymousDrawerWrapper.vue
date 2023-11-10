@@ -3,10 +3,12 @@
   import { markRaw, onMounted, ref, watch } from 'vue';
   import RightDrawer from '@/components/RightDrawer.vue';
   import { useRouter } from 'vue-router';
+  import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
 
   const drawersControlStore = useDrawersControlStore();
 
   const router = useRouter();
+  const drawerNavigation = useDrawerNavigation();
 
   watch(
     () => drawersControlStore.blockBodyScroll,
@@ -105,14 +107,17 @@
         toDrawerId.value;
       const backwardNavigation = ['BACKWARD'].includes(navigationAction.value);
 
-      if (backwardNavigation || !navigatingToDrawer) {
+      if (
+        fromDrawerId.value !== toDrawerId.value &&
+        (backwardNavigation || !navigatingToDrawer)
+      ) {
         drawersControlStore.hide(fromDrawerId.value);
       }
     }
 
-    if (toDrawerId.value) {
+    if (fromDrawerId.value !== toDrawerId.value && toDrawerId.value) {
       if (['PUSH', 'FORWARD'].includes(navigationAction.value)) {
-        drawersControlStore.show(toDrawerId.value);
+        drawersControlStore.show(toDrawerId.value, currentPosition.value);
       }
     }
 
@@ -121,8 +126,8 @@
     defineLastPosition();
   });
 
-  const hide = () => {
-    router.back();
+  const hide = (drawerId: string) => {
+    drawerNavigation.closeDrawer(drawerId);
   };
 </script>
 <template>
@@ -131,7 +136,7 @@
     :key="drawer.id"
     :show="drawer.state === 'OPENED'"
     :before-backdrop-close="drawer.beforeBackdropClose"
-    @hide="hide"
+    @hide="() => hide(drawer.id)"
     :index="index"
   >
     <Transition name="fade">
@@ -139,6 +144,7 @@
         v-if="drawer.state === 'OPENED' || !drawer.destroyWhenClosed"
         :is="drawer.component"
         v-bind="drawer.componentProps"
+        @hide="() => hide(drawer.id)"
       ></component>
     </Transition>
   </RightDrawer>

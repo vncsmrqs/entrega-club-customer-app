@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { markRaw, onMounted, ref } from 'vue';
+  import { markRaw, onMounted, ref, watch } from 'vue';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
@@ -30,32 +30,76 @@
   import DefaultButton from '@/components/Buttons/DefaultButton.vue';
   import BagPayment from '@/components/Bag/BagPayment.vue';
   import AccordionItem from '@/components/AccordionItem.vue';
+  import { useRoute, useRouter } from 'vue-router';
+  import type { LocationQueryValue } from 'vue-router';
+
+  const router = useRouter();
+  const route = useRoute();
+
+  const baseScreenHistoryPosition = ref(0);
 
   onMounted(async () => {
+    baseScreenHistoryPosition.value =
+      (router.options.history.state.position as number) || 0;
     await bagStore.loadBag();
   });
 
-  const step = ref<'BAG' | 'DELIVERY_TYPE' | 'PAYMENT'>('BAG');
+  type StepType = 'BAG' | 'DELIVERY_TYPE' | 'PAYMENT';
+
+  const step = ref<StepType>('BAG');
 
   const bagStore = useBagStore();
 
-  const nextStep = () => {
-    if (step.value === 'BAG') {
-      step.value = 'DELIVERY_TYPE';
-    } else if (step.value === 'DELIVERY_TYPE') {
-      step.value = 'PAYMENT';
-    } else {
-      step.value = 'BAG';
+  const setStep = (value: StepType | string | undefined | null) => {
+    if (value === step.value) {
+      return;
     }
+
+    const validSteps = ['BAG', 'DELIVERY_TYPE', 'PAYMENT'];
+
+    if (value && validSteps.includes(value)) {
+      step.value = value as StepType;
+      updateStepRoute();
+      return;
+    }
+    step.value = 'BAG';
+    updateStepRoute();
   };
 
-  const previousStep = () => {
-    if (step.value === 'PAYMENT') {
-      step.value = 'DELIVERY_TYPE';
+  const updateStepRoute = () => {
+    if (route.query.step === step.value) {
+      return;
+    }
+
+    drawerNavigation.navigate(
+      { query: { step: step.value } },
+      { preserveHash: true },
+    );
+  };
+
+  watch(
+    () => route.query.step,
+    (value: string | null | LocationQueryValue[]) => {
+      if (value) {
+        if (Array.isArray(value)) {
+          setStep(value[0]);
+          return;
+        }
+        setStep(value);
+        return;
+      }
+
+      step.value = 'BAG';
+    },
+  );
+
+  const nextStep = () => {
+    if (step.value === 'BAG') {
+      setStep('DELIVERY_TYPE');
     } else if (step.value === 'DELIVERY_TYPE') {
-      step.value = 'BAG';
+      setStep('PAYMENT');
     } else {
-      step.value = 'BAG';
+      setStep('PAYMENT');
     }
   };
 
@@ -84,6 +128,17 @@
 
   const drawersControlStore = useDrawersControlStore();
   const drawerNavigation = useDrawerNavigation();
+
+  const emit = defineEmits(['hide']);
+
+  const back = (isMobile: boolean) => {
+    if (!isMobile) {
+      emit('hide');
+      return;
+    }
+
+    router.back();
+  };
 </script>
 
 <template>
@@ -91,7 +146,7 @@
     <ScreenHeader>
       Sacola
       <template #left>
-        <BackButton />
+        <BackButton use-events @back="back" />
       </template>
     </ScreenHeader>
     <ScreenMain>
@@ -296,9 +351,9 @@
       </div>
       <DefaultButton
         v-if="step !== 'BAG'"
-        @click="previousStep"
+        @click="() => router.back()"
         full
-        class="mb-4"
+        class="hidden md:block mb-4"
       >
         Voltar
       </DefaultButton>

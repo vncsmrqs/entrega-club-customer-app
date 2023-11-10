@@ -10,6 +10,7 @@ export type Drawer<ComponentType = any, ComponentProps = any> = {
   component: ComponentType;
   componentProps: ComponentProps;
   beforeBackdropClose?: Function;
+  routePosition?: number;
 };
 
 export const useDrawersControlStore = defineStore('drawers-control', () => {
@@ -52,22 +53,23 @@ export const useDrawersControlStore = defineStore('drawers-control', () => {
     );
   };
 
+  const find = (drawerId: string) => {
+    return drawersControl.drawers.find((drawer) => drawer.id === drawerId);
+  };
+
   const hide = (drawerId: string) => {
-    const drawer = drawersControl.drawers.find(
-      (drawer) => drawer.id === drawerId,
-    );
+    const drawer = find(drawerId);
     if (drawer) {
       drawer.state = 'CLOSED';
     }
   };
 
-  const show = (drawerId: string) => {
-    const drawer = drawersControl.drawers.find(
-      (drawer) => drawer.id === drawerId,
-    );
+  const show = (drawerId: string, routePosition: number) => {
+    const drawer = find(drawerId);
     if (drawer) {
       // console.log('open:', drawerId);
       drawer.state = 'OPENED';
+      drawer.routePosition = routePosition;
     }
   };
 
@@ -85,5 +87,6 @@ export const useDrawersControlStore = defineStore('drawers-control', () => {
     remove,
     hide,
     show,
+    find,
   };
 });
