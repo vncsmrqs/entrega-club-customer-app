@@ -50,8 +50,8 @@
           <component :is="Component" />
         </Transition>
       </RouterView>
-      <BagMobileBar />
     </div>
+    <BagMobileBar />
     <div class="h-px w-full flex-none bg-gray-200"></div>
     <MainNavigation />
     <ValidateAddressSelection v-model:show="showAddressSelectionScreen" />

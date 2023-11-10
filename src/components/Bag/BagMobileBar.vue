@@ -16,7 +16,7 @@
   <Transition name="slide-down">
     <div
       v-if="showBagFloatButton"
-      class="md:hidden absolute w-full bottom-0 p-4 flex gap-4 z-50 bg-primary-100 border-t"
+      class="md:hidden w-full p-4 flex gap-4 bg-white border-t"
     >
       <BagButton full />
     </div>
