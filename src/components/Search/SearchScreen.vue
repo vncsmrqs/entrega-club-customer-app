@@ -10,8 +10,7 @@
   import { useSearchStore } from '@/stores/search/search';
   import { useRoute, useRouter } from 'vue-router';
   import type { LocationQueryValue } from 'vue-router';
-  import CloseIcon from 'vue-material-design-icons/Close.vue';
-  import IconButton from '@/components/IconButton.vue';
+  import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
 
   const router = useRouter();
   const route = useRoute();
@@ -88,12 +87,12 @@
           @submit.prevent="submitSearch"
         >
           <form class="w-full relative">
-            <SearchInput class="w-full" v-model="searchTerm" />
+            <SearchInput small class="w-full" v-model="searchTerm" />
             <SearchAutocomplete v-show="false" />
           </form>
-          <IconButton v-show="!showHome" @click="clearSearch">
-            <CloseIcon class="text-danger-600" />
-          </IconButton>
+          <SecondaryButton small v-show="!showHome" @click="clearSearch">
+            Limpar
+          </SecondaryButton>
         </div>
         <Transition name="fade" mode="out-in">
           <SearchHome v-if="showHome" />

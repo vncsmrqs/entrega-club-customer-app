@@ -1,16 +1,69 @@
 <script setup lang="ts">
   import TabButton from '@/components/Search/TabButton.vue';
-  import { ref } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
   import MerchantItem from '@/components/Home/MerchantItem.vue';
   import ProductListItem from '@/components/Product/ProductListItem.vue';
   import SearchFilterButton from '@/components/Search/SearchFilterButton.vue';
   import EmptyResult from '@/components/Search/EmptyResult.vue';
   import { useSearchStore } from '@/stores/search/search';
   import SearchLoader from '@/components/Search/SearchLoader.vue';
+  import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
+  import { useRoute } from 'vue-router';
+  import type { LocationQueryValue } from 'vue-router';
 
+  const route = useRoute();
   const searchStore = useSearchStore();
+  const drawerNavigation = useDrawerNavigation();
 
-  const selectedTab = ref(1);
+  type TabType = 'MERCHANTS' | 'PRODUCTS';
+  const DEFAULT_TAB = 'MERCHANTS';
+
+  const tab = ref<TabType>(DEFAULT_TAB);
+
+  const setTab = (value: TabType | string | undefined | null) => {
+    if (value === tab.value) {
+      return;
+    }
+
+    const validTabs = ['MERCHANTS', 'PRODUCTS'];
+
+    if (value && validTabs.includes(value)) {
+      tab.value = value as TabType;
+      updateTabRoute();
+      return;
+    }
+    tab.value = DEFAULT_TAB;
+    updateTabRoute();
+  };
+
+  const updateTabRoute = () => {
+    if (route.query.tab === tab.value) {
+      return;
+    }
+
+    drawerNavigation.navigate(
+      { query: { tab: tab.value } },
+      { preserveHash: true, preserveQuery: true },
+    );
+  };
+
+  const handleTabQuery = (value: string | null | LocationQueryValue[]) => {
+    if (value) {
+      if (Array.isArray(value)) {
+        setTab(value[0]);
+        return;
+      }
+      setTab(value);
+      return;
+    }
+
+    tab.value = DEFAULT_TAB;
+  };
+  watch(() => route.query.tab, handleTabQuery);
+
+  onMounted(() => {
+    handleTabQuery(route.query.tab);
+  });
 </script>
 
 <template>
@@ -31,15 +84,18 @@
       </div>
     </div>
     <div class="grid grid-cols-2 bg-white sticky top-0 z-10">
-      <TabButton :active="selectedTab === 1" @click="selectedTab = 1">
+      <TabButton
+        :active="tab === 'MERCHANTS'"
+        @click="() => setTab('MERCHANTS')"
+      >
         <span class="relative"> Estabelecimentos </span>
       </TabButton>
-      <TabButton :active="selectedTab === 2" @click="selectedTab = 2">
+      <TabButton :active="tab === 'PRODUCTS'" @click="() => setTab('PRODUCTS')">
         <span class="relative"> Produtos </span>
       </TabButton>
     </div>
     <Transition name="fade" mode="out-in" appear>
-      <div v-if="selectedTab === 1" class="w-full">
+      <div v-if="tab === 'MERCHANTS'" class="w-full">
         <template v-if="searchStore.loading">
           <SearchLoader class="mt-20" />
         </template>
@@ -59,7 +115,7 @@
           </div>
         </template>
       </div>
-      <div v-else-if="selectedTab === 2" class="w-full">
+      <div v-else-if="tab === 'PRODUCTS'" class="w-full">
         <template v-if="searchStore.loading">
           <SearchLoader class="mt-20" />
         </template>

@@ -46,7 +46,8 @@
 
   type StepType = 'BAG' | 'DELIVERY_TYPE' | 'PAYMENT';
 
-  const step = ref<StepType>('BAG');
+  const DEFAULT_STEP = 'BAG';
+  const step = ref<StepType>(DEFAULT_STEP);
 
   const bagStore = useBagStore();
 
@@ -62,7 +63,7 @@
       updateStepRoute();
       return;
     }
-    step.value = 'BAG';
+    step.value = DEFAULT_STEP;
     updateStepRoute();
   };
 
@@ -89,7 +90,7 @@
         return;
       }
 
-      step.value = 'BAG';
+      step.value = DEFAULT_STEP;
     },
   );
 
