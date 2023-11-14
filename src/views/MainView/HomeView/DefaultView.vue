@@ -1,9 +1,9 @@
 <script setup lang="ts">
   import { onMounted, ref } from 'vue';
-  import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
   import MerchantItem from '@/components/Home/MerchantItem.vue';
   import { useListMerchantStore } from '@/stores/merchant/list-merchant';
   import LoaderComponent from '@/components/LoaderComponent.vue';
+  import DefaultButton from '@/components/Buttons/DefaultButton.vue';
 
   const defaultMerchantLogoUrl = ref('/images/merchant/logo-default.png');
 
@@ -19,12 +19,14 @@
 </script>
 
 <template>
-  <div class="md:border md:rounded-xl">
-    <div class="flex items-center justify-between p-5 border-b">
+  <div>
+    <div
+      class="flex items-center justify-between p-5 md:px-0 border-b md:border-none"
+    >
       <span class="font-bold text-xl">Famosos no Entrega Club</span>
       <span class="text-sm text-primary-600">Ver mais</span>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-4 md:p-5">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-4">
       <MerchantItem
         v-for="merchant in listMerchantStore.merchantList"
         :key="merchant.id"
@@ -47,7 +49,7 @@
         v-if="!listMerchantStore.loading"
         class="col-span-full p-5 md:p-0 flex justify-center"
       >
-        <SecondaryButton @click="fetchMore" full>Ver mais</SecondaryButton>
+        <DefaultButton small @click="fetchMore">Carregar mais</DefaultButton>
       </div>
     </div>
   </div>
