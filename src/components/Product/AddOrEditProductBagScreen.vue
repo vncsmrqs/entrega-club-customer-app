@@ -161,7 +161,63 @@
     if (totalSelected >= choice.max) {
       return;
     }
+
     selectedGarnishItem.quantity++;
+
+    checkChoice(bagProduct, choice);
+  };
+
+  const checkChoice = (bagProduct: BagProduct, choice: Choice) => {
+    const totalSelected = getTotalOfSelectedItemsOnChoice(bagProduct, choice);
+
+    if (totalSelected >= choice.max) {
+      scrollToNextChoice(bagProduct, choice);
+    }
+  };
+
+  const validateBagProduct = (bagProduct: BagProduct): boolean => {
+    const choice = findRequiredChoices(bagProduct);
+
+    if (choice) {
+      scrollToChoice(choice.id);
+    }
+
+    return !choice;
+  };
+
+  const scrollToNextChoice = (
+    bagProduct: BagProduct,
+    currentChoice: Choice,
+  ): void => {
+    let foundCurrent = false;
+
+    const nextChoice = bagProduct?.productDetails?.choices?.find((choice) => {
+      if (foundCurrent) {
+        return true;
+      }
+
+      if (currentChoice.id === choice.id) {
+        foundCurrent = true;
+      }
+
+      return false;
+    });
+
+    if (nextChoice) {
+      scrollToChoice(nextChoice.id);
+      return;
+    }
+
+    validateBagProduct(bagProduct);
+  };
+
+  const showError = () => {
+    requiredChoiceError.value = true;
+    clearTimeout(requiredChoiceErrorTimeoutId);
+    requiredChoiceErrorTimeoutId = setTimeout(() => {
+      requiredChoiceError.value = false;
+    }, 3000);
+    return;
   };
 
   const decrementGarnishItem = (
@@ -275,9 +331,12 @@
     garnishItem: GarnishItem,
   ) => {
     if (choice.max === 1) {
-      return selectGarnishItem(bagProduct, choice, garnishItem);
+      selectGarnishItem(bagProduct, choice, garnishItem);
+    } else {
+      incrementGarnishItem(bagProduct, choice, garnishItem);
     }
-    incrementGarnishItem(bagProduct, choice, garnishItem);
+
+    checkChoice(bagProduct, choice);
   };
 
   const incrementBagProductItems = (bagProduct: BagProduct) => {
@@ -303,20 +362,15 @@
   };
 
   const addProductToBag = async (bagProduct: BagProduct) => {
-    const choice = findRequiredChoices(bagProduct);
+    const isValid = validateBagProduct(bagProduct);
 
-    if (choice) {
-      scrollToChoice(choice.id);
-      requiredChoiceError.value = true;
-      clearTimeout(requiredChoiceErrorTimeoutId);
-      requiredChoiceErrorTimeoutId = setTimeout(() => {
-        requiredChoiceError.value = false;
-      }, 3000);
+    if (isValid) {
+      await bagStore.addItem(bagProduct, merchant.id);
+      await back();
       return;
     }
 
-    await bagStore.addItem(bagProduct, merchant.id);
-    await back();
+    showError();
   };
 
   const scrollToChoice = (choiceId: string) => {
