@@ -15,6 +15,8 @@
   const searchStore = useSearchStore();
   const drawerNavigation = useDrawerNavigation();
 
+  const canUpdateTabRoute = false;
+
   type TabType = 'MERCHANTS' | 'PRODUCTS';
   const DEFAULT_TAB = 'MERCHANTS';
 
@@ -37,6 +39,10 @@
   };
 
   const updateTabRoute = () => {
+    if (!canUpdateTabRoute) {
+      return;
+    }
+
     if (route.query.tab === tab.value) {
       return;
     }

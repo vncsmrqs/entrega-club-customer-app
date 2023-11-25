@@ -16,7 +16,7 @@ export type MerchantPriceRange =
 
 export type MerchantType = 'RESTAURANT' | 'LIQUOR_STORE';
 
-export type CategoryType = {
+export type MerchantCategoryType = {
   id: string;
   name: string;
   description?: string;
@@ -32,7 +32,7 @@ export type Merchant = {
   bannerUrl?: string;
   minimumOrderValue: number;
   userRating: number;
-  categories: CategoryType[];
+  categories: MerchantCategoryType[];
   distance: number;
   type: MerchantType;
   priceRange: MerchantPriceRange;
@@ -40,14 +40,14 @@ export type Merchant = {
   deliveryMethods: MerchantDeliveryMethod[];
   address: Address;
   shifts: MerchantShift[];
-  mainCategory: CategoryType;
+  mainCategory: MerchantCategoryType;
 };
 
-export type DeliveryMode = 'DELIVERY' | 'TAKEOUT';
+export type MerchantDeliveryMode = 'DELIVERY' | 'TAKEOUT';
 
 export type MerchantDeliveryMethod = {
   deliveredBy: 'MERCHANT' | null;
-  mode: DeliveryMode;
+  mode: MerchantDeliveryMode;
   subtitle: string;
   title: string;
   maxTime: number;

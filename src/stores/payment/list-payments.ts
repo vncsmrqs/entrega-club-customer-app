@@ -25,7 +25,7 @@ export type PaymentMethodBrand = {
   cvv_regex?: string; //'^[0-9]{3}$';
 };
 
-export type PaymentLiability = 'APP' | 'MERCHANT';
+export type PaymentLiability = 'ENTREGA_CLUB' | 'MERCHANT';
 
 export type Payment = {
   id: string;

@@ -74,7 +74,7 @@
 
     drawerNavigation.navigate(
       { query: { step: step.value } },
-      { preserveHash: true },
+      { preserveHash: true, preserveQuery: true },
     );
   };
 

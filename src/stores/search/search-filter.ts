@@ -2,8 +2,8 @@ import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { generateHashId, timeout } from '@/utils';
 import type {
-  CategoryType,
-  DeliveryMode,
+  MerchantCategoryType,
+  MerchantDeliveryMode,
   MerchantPriceRange,
   MerchantType,
 } from '@/stores/merchant/merchant';
@@ -31,7 +31,7 @@ export type SearchFilter = {
   /* Básico */
   distance?: number;
   deliveryFee?: number;
-  deliveryMode?: DeliveryMode;
+  deliveryMode?: MerchantDeliveryMode;
   sortBy?: SortType;
 
   /* Categorias */
@@ -51,11 +51,11 @@ export type AvailableFilters = {
     max: number;
   };
   deliveryFee: number[];
-  deliveryMode: DeliveryMode[];
+  deliveryMode: MerchantDeliveryMode[];
   sortBy: SortType[];
 
   /* Categorias */
-  categories: CategoryType[];
+  categories: MerchantCategoryType[];
   merchantType: MerchantType[];
 
   /* Pagamento */

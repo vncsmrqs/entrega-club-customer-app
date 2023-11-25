@@ -27,7 +27,7 @@
   import TabButton from '@/components/Search/TabButton.vue';
   import ChipRadio from '@/components/Search/ChipRadio.vue';
   import type {
-    DeliveryMode,
+    MerchantDeliveryMode,
     MerchantPriceRange,
     MerchantType,
   } from '@/stores/merchant/merchant';
@@ -53,7 +53,7 @@
   });
 
   const form = ref<{
-    deliveryMode: DeliveryMode | null;
+    deliveryMode: MerchantDeliveryMode | null;
     sortBy: SortType | null;
     distance: number;
     categories: string[];
