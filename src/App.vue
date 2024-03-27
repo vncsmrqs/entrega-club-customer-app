@@ -4,8 +4,13 @@
   import TopLoadingBar from '@/components/TopLoadingBar.vue';
   import AnonymousDrawerWrapper from '@/components/AnonymousDrawerWrapper.vue';
   import LoaderComponent from '@/components/LoaderComponent.vue';
+  import { onMounted } from 'vue';
 
   const appStore = useAppStore();
+
+  onMounted(async () => {
+    await appStore.start();
+  });
 </script>
 
 <template>
@@ -23,15 +28,13 @@
         title="Logo EntregaClub"
         alt="Logo EntregaClub"
       />
-      <LoaderComponent />
-      <div class="mt-20">EntregaClub: Seu app de comida e bebida!</div>
+      <div class="font-bold">EntregaClub</div>
+      <LoaderComponent class="mt-48" />
     </div>
   </template>
   <template v-else>
     <RouterView v-slot="{ Component }">
-      <!--      <Transition name="fade" mode="out-in">-->
       <component :is="Component" />
-      <!--      </Transition>-->
     </RouterView>
     <AnonymousDrawerWrapper />
   </template>

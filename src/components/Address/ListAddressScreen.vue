@@ -6,7 +6,6 @@
   import PlusIcon from 'vue-material-design-icons/Plus.vue';
   import { useCustomerAddressStore } from '@/stores/address/customer-address-list';
   import type { Address } from '@/stores/address/customer-address-list';
-  import { useRouter } from 'vue-router';
   import BackButton from '@/components/BackButton.vue';
   import ScreenRoot from '@/components/Screen/ScreenRoot.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
@@ -25,7 +24,6 @@
   import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
   import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 
-  const router = useRouter();
   const customerAddressStore = useCustomerAddressStore();
   const selectedAddressStore = useSelectedAddressStore();
   const drawersControlStore = useDrawersControlStore();

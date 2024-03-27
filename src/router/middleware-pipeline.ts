@@ -1,46 +1,15 @@
 import type {
   NavigationGuard,
-  NavigationGuardNext,
   RouteLocationNormalized,
+  RouteLocationRaw,
   RouteRecordNormalized,
 } from 'vue-router';
 
-type NavigationGuardParams = {
-  to: RouteLocationNormalized;
-  from: RouteLocationNormalized;
-  next: NavigationGuardNext;
-};
-
-const nextFactory = (
-  context: NavigationGuardParams,
-  middlewares: NavigationGuard[],
-  index: number,
-): NavigationGuardNext => {
-  const subsequentMiddleware: NavigationGuard = middlewares[index];
-
-  if (!subsequentMiddleware) {
-    return context.next;
-  }
-
-  return (param?: any): unknown => {
-    if (param) {
-      return context.next(param);
-    }
-
-    const nextMiddleware: NavigationGuardNext = nextFactory(
-      context,
-      middlewares,
-      index + 1,
-    );
-
-    return subsequentMiddleware(context.to, context.from, nextMiddleware);
-  };
-};
+export type RouteMiddlewareResult = void | Error | RouteLocationRaw | boolean;
 
 export const middlewarePipeline: NavigationGuard = async (
   to: RouteLocationNormalized,
   from: RouteLocationNormalized,
-  next: NavigationGuardNext,
 ) => {
   const middlewares: NavigationGuard[] = to.matched.reduce<NavigationGuard[]>(
     (middlewares: NavigationGuard[], record: RouteRecordNormalized) => {
@@ -53,10 +22,18 @@ export const middlewarePipeline: NavigationGuard = async (
   );
 
   if (!middlewares || !middlewares.length) {
-    return next();
+    return;
   }
 
-  const context: NavigationGuardParams = { to, from, next };
+  for (const middleware of middlewares) {
+    const result = await middleware(to, from, () => {
+      throw new Error('Next function is deprecated');
+    });
 
-  return middlewares[0](to, from, nextFactory(context, middlewares, 1));
+    if (result === true || result === undefined) {
+      continue;
+    }
+
+    return result;
+  }
 };

@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory, type Router } from 'vue-router';
 import { middlewarePipeline } from '@/router/middleware-pipeline';
 import { useAppStore } from '@/stores/app';
-import { validateAddressSelectionMiddleware } from '@/router/middlewares/validate-address-selection.middleware';
 import { startApplicationMiddleware } from '@/router/middlewares/start-application.middleware';
 import { isGuestMiddleware } from '@/router/middlewares/is-guest.middleware';
 import { isAuthenticatedMiddleware } from '@/router/middlewares/is-authenticated.middleware';
@@ -31,7 +30,11 @@ const router: Router = createRouter({
       },
       children: [
         {
-          path: '/selecionar-endereco',
+          path: '/',
+          redirect: { name: 'home' },
+        },
+        {
+          path: 'selecionar-endereco',
           name: 'select-address',
           meta: {
             ignoreAddressValidationMiddleware: true,
@@ -40,7 +43,7 @@ const router: Router = createRouter({
             import('../components/Address/ValidateAddressSelection.vue'),
         },
         {
-          path: '/logout',
+          path: 'logout',
           name: 'logout',
           component: () => import('../components/Logout/LogoutScreen.vue'),
           meta: {
@@ -52,17 +55,17 @@ const router: Router = createRouter({
           name: 'required-address',
           component: () => import('../components/Main/MainView.vue'),
           meta: {
-            middlewares: [validateAddressSelectionMiddleware],
+            // middlewares: [validateAddressSelectionMiddleware],
           },
           children: [
             {
-              path: '/',
+              path: '/inicio',
               name: 'home',
               component: () => import('../components/Home/HomeView.vue'),
               redirect: { name: 'home.index' },
               children: [
                 {
-                  path: '/inicio',
+                  path: '',
                   name: 'home.index',
                   component: () =>
                     import('../components/Home/HomeDefaultScreen.vue'),
@@ -72,7 +75,7 @@ const router: Router = createRouter({
                   },
                 },
                 {
-                  path: '/restaurantes',
+                  path: 'restaurantes',
                   name: 'home.restaurants',
                   component: () =>
                     import('../components/Home/HomeRestaurantsScreen.vue'),
@@ -82,7 +85,7 @@ const router: Router = createRouter({
                   },
                 },
                 {
-                  path: '/bebidas',
+                  path: 'bebidas',
                   name: 'home.liquor-store',
                   component: () =>
                     import('../components/Home/HomeLiquorStoreScreen.vue'),
@@ -165,7 +168,7 @@ const router: Router = createRouter({
           },
           children: [
             {
-              path: '/login',
+              path: '/entrar',
               name: 'login',
               component: () => import('../components/Login/LoginScreen.vue'),
             },
@@ -181,12 +184,12 @@ const router: Router = createRouter({
   ],
 });
 
+router.beforeResolve(middlewarePipeline);
+
 router.beforeEach(() => {
   const appStore = useAppStore();
   appStore.startNavigationLoading();
 });
-
-router.beforeEach(middlewarePipeline);
 
 router.afterEach(() => {
   const appStore = useAppStore();

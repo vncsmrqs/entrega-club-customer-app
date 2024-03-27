@@ -8,7 +8,7 @@
 
 <template>
   <a
-    class="w-full flex items-center gap-4 px-4 h-24 border-b text-gray-500 cursor-pointer hover:bg-primary-50 hover:text-primary-600"
+    class="w-full flex items-center gap-4 px-4 h-24 text-gray-500 cursor-pointer hover:bg-primary-50 hover:text-primary-600"
     :class="{
       'opacity-50 pointer-events-none': props.disabled,
     }"

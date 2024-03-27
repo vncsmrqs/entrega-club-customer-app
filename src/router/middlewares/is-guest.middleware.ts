@@ -1,22 +1,10 @@
-import type {
-  NavigationGuard,
-  NavigationGuardNext,
-  RouteLocationNormalized,
-} from 'vue-router';
+import type { NavigationGuard } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 
-export const isGuestMiddleware: NavigationGuard = async (
-  to: RouteLocationNormalized,
-  from: RouteLocationNormalized,
-  next: NavigationGuardNext,
-) => {
-  alert(`isGuestMiddleware: ${from.name} -> ${to.name}`);
-
+export const isGuestMiddleware: NavigationGuard = async () => {
   const authStore = useAuthStore();
 
   if (authStore.isLogged) {
-    return next({ name: 'home' });
+    return { name: 'home' };
   }
-
-  next();
 };

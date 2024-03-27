@@ -9,7 +9,7 @@
   import BellOutlineIcon from 'vue-material-design-icons/BellOutline.vue';
   import TextBoxOutlineIcon from 'vue-material-design-icons/TextBoxOutline.vue';
   import ListItem from '@/components/ListItem.vue';
-  import { markRaw, ref } from 'vue';
+  import { computed, markRaw, ref } from 'vue';
   import { version } from '../../../package.json';
   import { useDrawersControlStore } from '@/stores/drawers-control';
   import AddressSelection from '@/components/Address/ListAddressScreen.vue';
@@ -23,6 +23,8 @@
   import NotificationScreen from '@/components/Notification/NotificationScreen.vue';
   import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
   import { useAuthStore } from '@/stores/auth';
+  import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
+  import SecondaryButton from '@/components/Buttons/SecondaryButton.vue';
 
   const authStore = useAuthStore();
   const drawersControlStore = useDrawersControlStore();
@@ -52,19 +54,47 @@
   };
 
   const appVersion = ref(version);
+
+  const title = computed(() => {
+    if (authStore.isLogged) {
+      return authStore.account.name;
+    }
+
+    return 'Menu';
+  });
 </script>
 
 <template>
   <ScreenRoot>
     <ScreenHeader>
-      Vinicius Marques
+      {{ title }}
       <template #left>
         <BackButton />
       </template>
     </ScreenHeader>
     <ScreenMain :with-padding="false">
       <ScreenContent class="!col-span-full">
+        <div class="p-5">
+          <div
+            class="p-4 border rounded-lg flex items-center gap-4 justify-between"
+          >
+            <div>
+              <div class="p-3 bg-primary-100 text-primary-600 rounded-2xl">
+                <BellOutlineIcon />
+              </div>
+            </div>
+            <div>
+              <p class="font-bold">Ative as notificações</p>
+              <p class="text-xs text-gray-600">
+                Acompanhe de perto o andamento dos seus pedidos, promoções e
+                novidades.
+              </p>
+            </div>
+            <SecondaryButton small>Ativar</SecondaryButton>
+          </div>
+        </div>
         <ListItem
+          v-if="authStore.isLogged"
           @click="navigateToNotificationScreen"
           :disabled="!authStore.isLogged"
         >
@@ -80,6 +110,7 @@
           <template #default>Endereços</template>
         </ListItem>
         <ListItem
+          v-if="authStore.isLogged"
           @click="navigateToOrderScreen"
           :disabled="!authStore.isLogged"
         >
@@ -89,6 +120,7 @@
           <template #default>Pedidos</template>
         </ListItem>
         <ListItem
+          v-if="authStore.isLogged"
           @click="navigateToPaymentScreen"
           :disabled="!authStore.isLogged"
         >
@@ -97,14 +129,14 @@
           </template>
           <template #default>Pagamento</template>
         </ListItem>
-        <ListItem :disabled="true">
+        <ListItem v-if="authStore.isLogged" :disabled="true">
           <template #icon>
             <ChatOutlineIcon></ChatOutlineIcon>
           </template>
           <template #default>Chats</template>
           <template #subtitle>Suas conversas com os estabelecimentos</template>
         </ListItem>
-        <ListItem :disabled="true">
+        <ListItem v-if="authStore.isLogged" :disabled="true">
           <template #icon>
             <HeartOutlineIcon></HeartOutlineIcon>
           </template>
@@ -116,13 +148,14 @@
           </template>
           <template #default>Ajuda</template>
         </ListItem>
-        <ListItem :disabled="true">
+        <ListItem v-if="authStore.isLogged" :disabled="true">
           <template #icon>
             <CogOutlineIcon></CogOutlineIcon>
           </template>
           <template #default>Meus dados</template>
         </ListItem>
         <ListItem
+          v-if="authStore.isLogged"
           @click="navigateToLogoutScreen"
           :disabled="!authStore.isLogged"
         >
@@ -131,6 +164,20 @@
           </template>
           <template #default>Sair</template>
         </ListItem>
+        <div class="p-5">
+          <div class="bg-gray-100 p-4 rounded-lg flex items-center gap-4">
+            <div>
+              <p class="font-bold mb-1">
+                Adicione o EntregaClub à tela inicial
+              </p>
+              <p class="text-xs text-gray-600">
+                Aproveite a versão mais leve do iFood, adicionando-a à sua tela
+                inicial
+              </p>
+            </div>
+            <PrimaryButton small>Adicionar</PrimaryButton>
+          </div>
+        </div>
       </ScreenContent>
     </ScreenMain>
     <ScreenFooter>

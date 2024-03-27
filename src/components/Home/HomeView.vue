@@ -7,7 +7,6 @@
   import AppLogo from '@/components/AppLogo.vue';
   import AddressSelectionBar from '@/components/Main/AddressSelectionBar.vue';
   import NotificationButton from '@/components/Notification/NotificationButton.vue';
-  import LoginButton from '@/components/Login/LoginButton.vue';
   import TabButton from '@/components/Search/TabButton.vue';
 
   onMounted(async () => {
@@ -21,7 +20,6 @@
       <template #right>
         <div class="flex gap-2">
           <NotificationButton />
-          <LoginButton />
         </div>
       </template>
     </ScreenHeader>

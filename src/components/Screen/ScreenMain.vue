@@ -113,7 +113,7 @@
       class="w-10 h-10 bg-white drop-shadow rounded-full absolute top-0 left-1/2 z-40 flex items-center justify-center text-primary-600"
       :class="{ 'transition-all duration-300': !touchY }"
       :style="{
-        'z-index': 99999,
+        'z-index': 999,
         transform: `translateX(-50%) translateY(calc(${updateIconYPosition}px - 100%)) rotate(${rotation}deg)`,
         opacity: updateIconYPosition,
       }"

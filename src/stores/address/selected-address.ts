@@ -52,8 +52,9 @@ export const useSelectedAddressStore = defineStore(
   },
   {
     persist: {
-      paths: ['userId', 'selectedAddress'],
-      afterRestore: () => {
+      paths: ['selectedAddress'],
+      afterRestore: ({ store }) => {
+        console.log(store);
         //todo: remover endereço caso usuário logado seja outro
       },
     },

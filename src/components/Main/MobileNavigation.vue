@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import HomeOutlineIcon from 'vue-material-design-icons/HomeOutline.vue';
+  import AccountOutlineIcon from 'vue-material-design-icons/AccountOutline.vue';
   import MagnifyIcon from 'vue-material-design-icons/Magnify.vue';
   import TextBoxOutlineIcon from 'vue-material-design-icons/TextBoxOutline.vue';
   import MobileMenuItem from '@/components/MobileMenuItem.vue';
@@ -10,6 +11,7 @@
   import { markRaw } from 'vue';
   import MenuScreen from '@/components/Menu/MenuScreen.vue';
   import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
+  import { useAuthStore } from '@/stores/auth';
 
   const drawersControlStore = useDrawersControlStore();
   const drawerNavigation = useDrawerNavigation();
@@ -18,6 +20,8 @@
     const drawer = drawersControlStore.add(markRaw(MenuScreen), {});
     drawerNavigation.openDrawer(drawer.id);
   };
+
+  const authStore = useAuthStore();
 </script>
 
 <template>
@@ -30,24 +34,29 @@
         </template>
       </MobileMenuItem>
     </RouterLink>
-    <RouterLink :to="{ name: 'search' }" v-slot="{ isActive }">
-      <MobileMenuItem title="Busca" :active="isActive">
+    <RouterLink :to="{ name: 'search' }" v-slot="{ isExactActive }">
+      <MobileMenuItem title="Busca" :active="isExactActive">
         <template #icon>
           <MagnifyIcon :size="24"></MagnifyIcon>
         </template>
       </MobileMenuItem>
     </RouterLink>
-    <RouterLink :to="{ name: 'orders' }" v-slot="{ isActive }">
-      <MobileMenuItem title="Pedidos" :active="isActive">
+    <RouterLink :to="{ name: 'orders' }" v-slot="{ isExactActive }">
+      <MobileMenuItem title="Pedidos" :active="isExactActive">
         <template #icon>
-          <TextBoxIcon v-if="isActive" :size="24"></TextBoxIcon>
+          <TextBoxIcon v-if="isExactActive" :size="24"></TextBoxIcon>
           <TextBoxOutlineIcon v-else :size="24"></TextBoxOutlineIcon>
         </template>
       </MobileMenuItem>
     </RouterLink>
-    <MobileMenuItem title="Menu" :active="false" @click="showMenu">
+    <MobileMenuItem
+      :title="authStore.isLogged ? 'Conta' : 'Menu'"
+      :active="false"
+      @click="showMenu"
+    >
       <template #icon>
-        <MenuIcon />
+        <AccountOutlineIcon v-if="authStore.isLogged" />
+        <MenuIcon v-else />
       </template>
     </MobileMenuItem>
   </nav>

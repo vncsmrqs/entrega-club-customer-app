@@ -49,7 +49,7 @@
 
   router.afterEach((to, from, failure) => {
     if (failure) {
-      console.log('NAVIGATION_ERROR::', failure);
+      console.log('router.afterEach::failure', failure);
       return;
     }
 
@@ -120,9 +120,6 @@
         drawersControlStore.show(toDrawerId.value, currentPosition.value);
       }
     }
-
-    console.log('route::action', navigationAction.value);
-
     defineLastPosition();
   });
 

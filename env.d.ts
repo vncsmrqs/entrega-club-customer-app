@@ -4,6 +4,7 @@
 declare module 'vue-material-design-icons/*.vue';
 declare module 'google.maps';
 import 'vue-router';
+import type { NavigationGuard } from 'vue-router';
 
 declare module 'rollup-plugin-typescript' {
   export default function (): any;

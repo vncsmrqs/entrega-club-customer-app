@@ -5,6 +5,8 @@
   import IconButton from '@/components/IconButton.vue';
   import MenuScreen from '@/components/Menu/MenuScreen.vue';
   import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
+  import { useAuthStore } from '@/stores/auth';
+  import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 
   const drawersControlStore = useDrawersControlStore();
   const drawerNavigation = useDrawerNavigation();
@@ -13,10 +15,15 @@
     const drawer = drawersControlStore.add(markRaw(MenuScreen), {});
     drawerNavigation.openDrawer(drawer.id);
   };
+
+  const authStore = useAuthStore();
 </script>
 
 <template>
-  <IconButton class="text-primary-600" @click="showMenu">
+  <RouterLink v-if="!authStore.isLogged" :to="{ name: 'login' }">
+    <PrimaryButton v-show="true" small>Entrar</PrimaryButton>
+  </RouterLink>
+  <IconButton v-else class="text-primary-600" @click="showMenu">
     <MenuIcon />
   </IconButton>
 </template>
