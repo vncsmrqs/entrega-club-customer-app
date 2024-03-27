@@ -1,6 +1,7 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { timeout } from '@/utils';
+import { useSelectedAddressStore } from '@/stores/address/selected-address';
 
 export type Phone = {
   countryCode: number; // 55
@@ -39,6 +40,8 @@ export const generateAccountFixture = (): Account => ({
 export const useAuthStore = defineStore(
   'auth',
   () => {
+    const selectedAddressStore = useSelectedAddressStore();
+
     /* state */
     const account = ref<Account | null>();
     const loading = ref<boolean>(false);
@@ -51,14 +54,20 @@ export const useAuthStore = defineStore(
     const auth = async (): Promise<void> => {
       loading.value = true;
       try {
-        await timeout(300);
+        await timeout(1000);
+        // throw new Error('Teste');
         account.value = generateAccountFixture();
+        await selectedAddressStore.loadCurrentAddress(true);
       } catch (e: any) {
         error.value = e.toString();
         account.value = null;
       } finally {
         loading.value = false;
       }
+    };
+
+    const logout = () => {
+      account.value = null;
     };
 
     return {
@@ -72,6 +81,7 @@ export const useAuthStore = defineStore(
 
       /* actions */
       auth,
+      logout,
     };
   },
   {

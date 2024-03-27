@@ -5,7 +5,7 @@
 <template>
   <RouterLink
     class="inline-flex items-center text-primary-600"
-    :to="{ name: 'home-default' }"
+    :to="{ name: 'home' }"
   >
     <MopedOutlineIcon :size="36"></MopedOutlineIcon>
     <h1 class="ml-1 text-lg font-bold">

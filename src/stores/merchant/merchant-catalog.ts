@@ -10,6 +10,7 @@ export type CatalogMenu = {
   available: boolean;
   products: Product[];
 };
+
 export type CatalogSection = {
   id: string;
   available: boolean;

@@ -1,9 +1,18 @@
 <script setup lang="ts">
   import ChevronRightIcon from 'vue-material-design-icons/ChevronRight.vue';
+
+  const props = defineProps<{
+    disabled?: boolean;
+  }>();
 </script>
 
 <template>
-  <a class="w-full flex items-center gap-4 px-4 h-24 border-b text-gray-500">
+  <a
+    class="w-full flex items-center gap-4 px-4 h-24 border-b text-gray-500 cursor-pointer hover:bg-primary-50 hover:text-primary-600"
+    :class="{
+      'opacity-50 pointer-events-none': props.disabled,
+    }"
+  >
     <div class="p-3 bg-gray-100 rounded-2xl">
       <slot name="icon"></slot>
     </div>

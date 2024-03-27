@@ -4,7 +4,7 @@ name: Deploy static content to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches: [ "main" ]
 
   pull_request:
     branches: [ "main" ]
@@ -45,7 +45,7 @@ jobs:
         run: npm install
 
       - name: Build project
-        run: npm run build
+        run: npm run build-only
         env:
           BASE_URL: https://vncsmrqs.github.io/entregra-club-customer-app/
 

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import { initDropdowns } from 'flowbite';
   import { onMounted } from 'vue';
   import ScreenRoot from '@/components/Screen/ScreenRoot.vue';
   import ScreenMain from '@/components/Screen/ScreenMain.vue';
@@ -12,7 +11,6 @@
   import TabButton from '@/components/Search/TabButton.vue';
 
   onMounted(async () => {
-    initDropdowns();
     // await customerAddressStore.loadCurrentAddress();
   });
 </script>
@@ -27,32 +25,36 @@
         </div>
       </template>
     </ScreenHeader>
-    <ScreenMain :with-padding="false" class="md:p-5">
+    <ScreenMain :with-padding="false">
       <ScreenContent class="!col-span-full">
         <AddressSelectionBar class="md:hidden" />
-        <div class="grid grid-flow-col lg:flex md:mb-5 overflow-x-auto">
+        <div class="grid grid-flow-col overflow-x-auto">
           <RouterLink
-            :to="{ name: 'home-default' }"
-            v-slot="{ isActive, navigate }"
+            :to="{ name: 'home.index' }"
+            v-slot="{ isExactActive, navigate }"
             custom
           >
-            <TabButton @click="navigate" :active="isActive">Início</TabButton>
+            <TabButton @click="navigate" :active="isExactActive">
+              Início
+            </TabButton>
           </RouterLink>
           <RouterLink
-            :to="{ name: 'restaurants' }"
-            v-slot="{ isActive, navigate }"
+            :to="{ name: 'home.restaurants' }"
+            v-slot="{ isExactActive, navigate }"
             custom
           >
-            <TabButton @click="navigate" :active="isActive">
+            <TabButton @click="navigate" :active="isExactActive">
               Restaurantes
             </TabButton>
           </RouterLink>
           <RouterLink
-            :to="{ name: 'liquor-store' }"
-            v-slot="{ isActive, navigate }"
+            :to="{ name: 'home.liquor-store' }"
+            v-slot="{ isExactActive, navigate }"
             custom
           >
-            <TabButton @click="navigate" :active="isActive">Bebidas</TabButton>
+            <TabButton @click="navigate" :active="isExactActive">
+              Bebidas
+            </TabButton>
           </RouterLink>
         </div>
         <RouterView v-slot="{ Component }">

@@ -13,10 +13,15 @@ export const useSelectedAddressStore = defineStore(
     const loading = ref<boolean>(false);
     const error = ref<string | null>(null);
 
-    const loadCurrentAddress = async (): Promise<void> => {
+    const loadCurrentAddress = async (
+      force: boolean = false,
+    ): Promise<void> => {
+      if (selectedAddress.value && !force) {
+        return;
+      }
       loading.value = true;
       try {
-        await timeout(300);
+        await timeout(1000);
         // selectAddress(null);
         error.value = null;
       } catch (e: any) {
@@ -27,7 +32,7 @@ export const useSelectedAddressStore = defineStore(
       }
     };
 
-    const selectAddress = (address: Address | null) => {
+    const selectAddress = async (address: Address | null): Promise<void> => {
       selectedAddress.value = _.cloneDeep(address);
     };
 

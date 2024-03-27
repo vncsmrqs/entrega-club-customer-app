@@ -22,10 +22,11 @@
   import ScreenContent from '@/components/Screen/ScreenContent.vue';
   import NotificationScreen from '@/components/Notification/NotificationScreen.vue';
   import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
+  import { useAuthStore } from '@/stores/auth';
 
+  const authStore = useAuthStore();
   const drawersControlStore = useDrawersControlStore();
   const drawerNavigation = useDrawerNavigation();
-
   const router = useRouter();
 
   const navigateToAddressScreen = () => {
@@ -40,6 +41,10 @@
 
   const navigateToOrderScreen = async () => {
     await router.push({ name: `orders`, replace: true });
+  };
+
+  const navigateToLogoutScreen = async () => {
+    await router.push({ name: `logout`, replace: true });
   };
 
   const navigateToPaymentScreen = async () => {
@@ -59,56 +64,68 @@
     </ScreenHeader>
     <ScreenMain :with-padding="false">
       <ScreenContent class="!col-span-full">
-        <ListItem @click="navigateToNotificationScreen" class="cursor-pointer">
+        <ListItem
+          @click="navigateToNotificationScreen"
+          :disabled="!authStore.isLogged"
+        >
           <template #icon>
             <BellOutlineIcon />
           </template>
           <template #default>Notificações</template>
         </ListItem>
-        <ListItem @click="navigateToAddressScreen" class="cursor-pointer">
+        <ListItem @click="navigateToAddressScreen">
           <template #icon>
             <MapMarkerOutlineIcon></MapMarkerOutlineIcon>
           </template>
           <template #default>Endereços</template>
         </ListItem>
-        <ListItem @click="navigateToOrderScreen" class="cursor-pointer">
+        <ListItem
+          @click="navigateToOrderScreen"
+          :disabled="!authStore.isLogged"
+        >
           <template #icon>
             <TextBoxOutlineIcon></TextBoxOutlineIcon>
           </template>
           <template #default>Pedidos</template>
         </ListItem>
-        <ListItem @click="navigateToPaymentScreen">
+        <ListItem
+          @click="navigateToPaymentScreen"
+          :disabled="!authStore.isLogged"
+        >
           <template #icon>
             <CreditCardOutlineIcon></CreditCardOutlineIcon>
           </template>
           <template #default>Pagamento</template>
         </ListItem>
-        <ListItem class="opacity-50">
+        <ListItem :disabled="true">
           <template #icon>
             <ChatOutlineIcon></ChatOutlineIcon>
           </template>
           <template #default>Chats</template>
           <template #subtitle>Suas conversas com os estabelecimentos</template>
         </ListItem>
-        <ListItem class="opacity-50">
+        <ListItem :disabled="true">
           <template #icon>
             <HeartOutlineIcon></HeartOutlineIcon>
           </template>
           <template #default>Favoritos</template>
         </ListItem>
-        <ListItem class="opacity-50">
+        <ListItem :disabled="true">
           <template #icon>
             <HelpIcon></HelpIcon>
           </template>
           <template #default>Ajuda</template>
         </ListItem>
-        <ListItem class="opacity-50">
+        <ListItem :disabled="true">
           <template #icon>
             <CogOutlineIcon></CogOutlineIcon>
           </template>
           <template #default>Meus dados</template>
         </ListItem>
-        <ListItem class="opacity-50">
+        <ListItem
+          @click="navigateToLogoutScreen"
+          :disabled="!authStore.isLogged"
+        >
           <template #icon>
             <ExitToAppIcon></ExitToAppIcon>
           </template>

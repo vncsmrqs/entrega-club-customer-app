@@ -1,19 +1,40 @@
 <script setup lang="ts">
-  import { onMounted } from 'vue';
   import { RouterView } from 'vue-router';
-  import { initFlowbite } from 'flowbite';
+  import { useAppStore } from '@/stores/app';
+  import TopLoadingBar from '@/components/TopLoadingBar.vue';
+  import AnonymousDrawerWrapper from '@/components/AnonymousDrawerWrapper.vue';
+  import LoaderComponent from '@/components/LoaderComponent.vue';
 
-  onMounted(() => {
-    initFlowbite();
-  });
+  const appStore = useAppStore();
 </script>
 
 <template>
-  <div
-    class="fixed top-0 left-0 w-full h-full z-0 flex flex-col md:flex-col-reverse"
-  >
-    <RouterView />
-  </div>
+  <TopLoadingBar
+    :show="appStore.showNavigationLoading"
+    :progress="appStore.navigationLoadingPercentage"
+  />
+  <template v-if="appStore.loading">
+    <div
+      class="w-screen h-screen flex flex-col justify-center items-center bg-primary-600 text-white"
+    >
+      <img
+        class="aspect-square w-24"
+        src="/logo/transparent-white/logo-transparent-white-96x96.png"
+        title="Logo EntregaClub"
+        alt="Logo EntregaClub"
+      />
+      <LoaderComponent />
+      <div class="mt-20">EntregaClub: Seu app de comida e bebida!</div>
+    </div>
+  </template>
+  <template v-else>
+    <RouterView v-slot="{ Component }">
+      <!--      <Transition name="fade" mode="out-in">-->
+      <component :is="Component" />
+      <!--      </Transition>-->
+    </RouterView>
+    <AnonymousDrawerWrapper />
+  </template>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped></style>

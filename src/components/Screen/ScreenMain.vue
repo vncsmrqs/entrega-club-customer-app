@@ -109,18 +109,6 @@
     :class="{ 'p-5': props.withPadding }"
     v-on="addHandlers"
   >
-    <!--    <div-->
-    <!--      class="fixed z-40 bg-red-500 bottom-0 left-0"-->
-    <!--      style="z-index: 99999999"-->
-    <!--    >-->
-    <!--      <div>start: {{ touchstartY }}</div>-->
-    <!--      <div>move: {{ touchY }}</div>-->
-    <!--      <div>diff: {{ touchDiff }}</div>-->
-    <!--      <div>top: {{ scrollTop }}</div>-->
-    <!--      <div>icon-position {{ updateIconYPosition }}</div>-->
-    <!--      <div>rotation: {{ rotation }}deg</div>-->
-    <!--    </div>-->
-
     <div
       class="w-10 h-10 bg-white drop-shadow rounded-full absolute top-0 left-1/2 z-40 flex items-center justify-center text-primary-600"
       :class="{ 'transition-all duration-300': !touchY }"
@@ -145,13 +133,13 @@
       </span>
     </div>
     <div
-      class="w-full min-h-full md:max-w-screen-xl mx-auto grid container grid-cols-1 lg:grid-cols-8"
+      class="w-full min-h-full md:max-w-screen-2xl mx-auto grid container grid-cols-1 lg:grid-cols-8"
       v-bind="$attrs"
     >
       <slot name="side">
-        <div class="bg-danger-500"></div>
+        <div></div>
       </slot>
-      <slot>ScreenMain</slot>
+      <slot></slot>
     </div>
   </div>
 </template>

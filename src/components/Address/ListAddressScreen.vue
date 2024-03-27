@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { markRaw, onMounted } from 'vue';
+  import { computed, markRaw, onMounted } from 'vue';
   import ScreenHeader from '@/components/Screen/ScreenHeader.vue';
   import ChevronRightIcon from 'vue-material-design-icons/ChevronRight.vue';
   import CheckIcon from 'vue-material-design-icons/Check.vue';
@@ -23,6 +23,7 @@
   import ListAddressEmpty from '@/components/Address/ListAddressEmpty.vue';
   import MapMarkerOutlineIcon from 'vue-material-design-icons/MapMarkerOutline.vue';
   import { useDrawerNavigation } from '@/composables/useDrawerNavigation';
+  import PrimaryButton from '@/components/Buttons/PrimaryButton.vue';
 
   const router = useRouter();
   const customerAddressStore = useCustomerAddressStore();
@@ -33,7 +34,7 @@
   const props = withDefaults(
     defineProps<{
       showBackButton?: boolean;
-      selected?: Function;
+      afterSelection?: Function;
     }>(),
     {
       showBackButton: true,
@@ -66,28 +67,27 @@
     drawerNavigation.openDrawer(drawer.id);
   };
 
-  const back = () => {
-    router.back();
-  };
-
   const isSelected = (address: Address) => {
     return selectedAddressStore.selectedAddress?.id === address.id;
   };
 
   const onSelected = () => {
     setTimeout(() => {
-      if (props.selected) {
-        props.selected();
+      if (props.afterSelection) {
+        props.afterSelection();
         return;
       }
-      back();
-    }, 500);
+    }, 100);
   };
 
   const selectAddress = (address: Address) => {
     selectedAddressStore.selectAddress(address);
     onSelected();
   };
+
+  const hasAddresses = computed(() => {
+    return customerAddressStore.sortedCustomerAddressList.length;
+  });
 </script>
 
 <template>
@@ -107,9 +107,7 @@
         with-reload
       >
         <ScreenContent class="!col-span-full">
-          <template
-            v-if="!customerAddressStore.sortedCustomerAddressList.length"
-          >
+          <template v-if="!hasAddresses">
             <ListAddressEmpty />
           </template>
           <template v-else>
@@ -151,12 +149,16 @@
         </ScreenContent>
       </ScreenMain>
       <ScreenFooter>
-        <SecondaryButton @click="addAddress" full>
+        <component
+          :is="hasAddresses ? SecondaryButton : PrimaryButton"
+          @click="addAddress"
+          full
+        >
           Adicionar endereço
           <template #left>
             <PlusIcon />
           </template>
-        </SecondaryButton>
+        </component>
       </ScreenFooter>
     </template>
   </ScreenRoot>
